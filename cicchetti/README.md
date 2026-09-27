@@ -27,18 +27,18 @@ To deploy, upload the folder to any static CDN host (Cloudflare Pages, Netlify, 
 ## Launch checklist (brief §13, and what this build still needs)
 
 **Facts. Verify each with the venue or its live Google Business Profile on launch day.**
-- [ ] `CONFIG.bookingUrl`: confirm the live Ontopo URL (currently `https://ontopo.co.il/cicchetti`, unverified)
+- [ ] `CONFIG.bookingUrl`: Ontopo is confirmed, but the button points at the Ontopo home page (`https://ontopo.com/`) until the restaurant's own Ontopo page URL is supplied
 - [ ] `hours.rows`: approximate ranges from research, **not confirmed**. Then set `hours.verify: false`
-- [ ] Delivery/takeaway: copy currently says "ask us". Replace with confirmed facts
-- [ ] Accessibility copy: confirm "step-free entrance" wording with the venue
+- [x] Dine-in, self-pickup and delivery: client-confirmed, shown in the location card with the ₪100–200 price range
+- [ ] Accessibility: the Google listing says wheelchair accessible, but the earlier brief said there is **no wheelchair-accessible restroom** (heritage building). The copy says "wheelchair accessible" and asks guests with specific needs to call ahead. Confirm the restroom situation with the venue and state it plainly
 - [ ] Add confirmed hours to the JSON-LD (`openingHoursSpecification`) in `index.html`
 
 **Content. None of this may be invented (brief §2).**
-- [ ] Menu: replace all sample dishes in `content.js → menu` (all tagged `sample: true`). Confirm whether pizza is offered before featuring it
+- [ ] Menu: replace all sample dishes in `content.js → menu` (all tagged `sample: true`). The dinner tab now features focaccia, gnocchi, carbonara, shrimp, crudo, wood-fired pizza and tiramisù as asked; confirm each against the current menu at cicchettitlv.com
 - [ ] Signature drinks: get Avi Kashi's real list (`drinks`, all samples)
 - [ ] Chef quote: source a real line from Michael Gartofsky (`chef.quote`, currently "coming soon")
 - [ ] Reviews: add 4–6 real, permissioned excerpts to `reviews` (empty on purpose. The section shows a holding line until then)
-- [ ] Rating: feed `CONFIG.rating` from a deploy-time job reading the live Google profile. Never hardcode it. Only then add `AggregateRating` to JSON-LD
+- [ ] Rating: `CONFIG.rating` holds the client-supplied Google figures (4.5★, 4,409 reviews). Re-check on launch day, and ideally feed it from a deploy-time job. `AggregateRating` stays out of JSON-LD (Google ignores self-published ratings)
 - [ ] Photography: replace every placeholder frame. Each slot is captioned with its shot-list brief. Add `src`/`alt` in `content.js` (gallery, dishes). The concept image and portraits are in `index.html`
 - [ ] Hero loop: set `CONFIG.heroVideo` (8–14 s, muted, < 6 MB, with poster). Shoot a vertical crop for mobile too
 - [ ] `media/og-image.jpg`: a real hero frame for WhatsApp/Instagram previews

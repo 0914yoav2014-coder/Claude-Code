@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Cicchetti — Venetian small plates, Tel Aviv</title>
-  <meta name="description" content="A Venetian neighbourhood bar reinterpreted for Tel Aviv. Small plates, wine and cocktails in a historic building at 58 Yehuda HaLevi Street. Aperitivo, dinner and weekend brunch.">
+  <meta name="description" content="A pleasant, relaxed restaurant serving Italian dishes — pasta, seafood, desserts, and wine. Small plates in a historic building at 58 Yehuda HaLevi Street, Tel Aviv. Aperitivo, dinner and weekend brunch.">
   <meta name="theme-color" content="#F6EFE4">
   <script>document.documentElement.classList.add("js")</script>
   <link rel="alternate" hreflang="en" href="https://cicchettitlv.com/">
@@ -24,8 +24,8 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23B5562F'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='18' fill='%23F6EFE4'%3Ec%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
 
-  <!-- Structured data: address/phone/cuisine only. Hours and AggregateRating are
-       deliberately omitted until verified live (brief §10). -->
+  <!-- Structured data. Hours stay out until verified. AggregateRating is omitted on
+       purpose: Google ignores self-published ratings on a business's own site. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -33,7 +33,9 @@
     "name": "Cicchetti",
     "url": "https://cicchettitlv.com/",
     "telephone": "+972-3-685-3499",
+    "description": "A pleasant, relaxed restaurant serving Italian dishes — pasta, seafood, desserts, and wine.",
     "servesCuisine": ["Italian", "Venetian", "Small plates"],
+    "priceRange": "₪100–200",
     "acceptsReservations": "True",
     "address": {
       "@type": "PostalAddress",
@@ -228,12 +230,18 @@
           <a class="btn btn--solid btn--sm js-directions" href="#" target="_blank" rel="noopener" data-i18n="location.directions">Get Directions</a>
           <a class="btn btn--line btn--sm js-phone" href="#"><span data-i18n="location.call">Call us</span> <span class="ltr js-phone-text">+972 3-685-3499</span></a>
         </div>
+        <h3 class="h4" data-i18n="location.options">Eat with us</h3>
+        <ul class="options">
+          <li data-i18n="location.optDine">Dine in</li>
+          <li data-i18n="location.optPickup">Self-pickup</li>
+          <li data-i18n="location.optDelivery">Delivery</li>
+        </ul>
+        <p class="price" data-i18n="location.price">Around ₪100–200 per person</p>
         <h3 class="h4" data-i18n="location.hours">Hours</h3>
         <dl class="hours" id="hours"></dl>
         <p class="fine js-hours-verify" hidden data-i18n="hours.verify">Hours shown are provisional.</p>
         <h3 class="h4" data-i18n="location.access">Access</h3>
-        <p data-i18n="location.accessBody">Step-free entrance. There is no wheelchair-accessible restroom — the building is heritage-protected and can't be altered. Call ahead and we'll make the evening work.</p>
-        <p class="fine" data-i18n="location.delivery">Delivery &amp; takeaway: ask us — details confirmed soon.</p>
+        <p data-i18n="location.accessBody">Wheelchair accessible. It's a heritage-protected building, so if you have specific access needs, call ahead and we'll have everything ready.</p>
       </div>
     </section>
 

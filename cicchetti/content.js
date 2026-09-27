@@ -13,10 +13,11 @@ window.CICCHETTI = {
     // Set to false only after every item in README's launch checklist is done.
     draft: true,
 
-    // [VERIFY] Confirm the live Ontopo booking URL with the venue.
-    bookingUrl: "https://ontopo.co.il/cicchetti",
+    // Booking is on Ontopo (client-confirmed). [VERIFY] swap in the restaurant's
+    // own Ontopo page URL — the site root is used until then.
+    bookingUrl: "https://ontopo.com/",
 
-    phone: "+972 3-685-3499",
+    phone: "03-685-3499",
     phoneHref: "tel:+97236853499",
     instagram: "https://www.instagram.com/cicchetti_tlv/",
     facebook: "https://www.facebook.com/cicchetti.tlv",
@@ -36,7 +37,12 @@ window.CICCHETTI = {
 
     // Live rating: supply from a build step that reads the Google Business
     // Profile on deploy day. Never hardcode a number you haven't checked same-day.
-    rating: null // e.g. { value: 4.5, count: 4400, source: "Google", checked: "2026-10-01" }
+    // Figures supplied by the client from the Google listing. Re-check and update
+    // on every deploy (or feed from a build step) — never let this go stale.
+    rating: { value: 4.5, count: 4409, source: "Google" },
+
+    // Client-confirmed service facts
+    priceRange: "₪100–200"
   },
 
   // Hours are approximate ranges from research — [VERIFY] against the
@@ -76,6 +82,8 @@ window.CICCHETTI = {
         he: { name: "שרימפס מהגריל", desc: "חרוכים בקצוות, לימון, צ׳ילי, ומותר עם הידיים." }, shot: "Shrimp, smoke, ¾ angle" },
       { sample: true, en: { name: "Seasonal crudo", desc: "Today's catch, sliced thin, dressed at the last second." },
         he: { name: "קרודו עונתי", desc: "הדג של היום, פרוס דק, מתובל ברגע האחרון." }, shot: "Crudo, cold light on ice-plate" },
+      { sample: true, en: { name: "Wood-fired pizza", desc: "Blistered crust, a short list of toppings, straight from the fire." },
+        he: { name: "פיצה מתנור עצים", desc: "קרום מפוחם, מעט תוספות, ישר מהאש." }, shot: "Pizza leaving the oven, flame behind" },
       { sample: true, en: { name: "Tiramisù", desc: "Made every morning, gone every night." },
         he: { name: "טירמיסו", desc: "נעשה כל בוקר, נגמר כל ערב." }, shot: "Tiramisù, spoon breaking the top" }
     ],
@@ -151,13 +159,15 @@ window.CICCHETTI = {
       "gallery.eyebrow": "The room", "gallery.title": "Warm light, low hum.",
       "reviews.eyebrow": "Guests", "reviews.title": "What people say on the way out.",
       "reviews.empty": "Guest words, verbatim and with permission — being gathered now.",
+      "reviews.count": "{n} Google reviews",
       "reviews.prev": "Previous review", "reviews.next": "Next review",
       "location.eyebrow": "Find us", "location.title": "An old Tel Aviv house on Yehuda HaLevi.",
       "location.address": "58 Yehuda HaLevi Street<br>Tel Aviv-Yafo",
       "location.hours": "Hours", "location.directions": "Get Directions", "location.call": "Call us",
       "location.access": "Access",
-      "location.accessBody": "Step-free entrance. There is no wheelchair-accessible restroom — the building is heritage-protected and can't be altered. Call ahead and we'll make the evening work.",
-      "location.delivery": "Delivery & takeaway: ask us — details confirmed soon.",
+      "location.accessBody": "Wheelchair accessible. It's a heritage-protected building, so if you have specific access needs, call ahead and we'll have everything ready.",
+      "location.options": "Eat with us", "location.optDine": "Dine in", "location.optPickup": "Self-pickup", "location.optDelivery": "Delivery",
+      "location.price": "Around ₪100–200 per person",
       "location.mapNote": "Yehuda HaLevi Street, in the heart of old Tel Aviv",
       "hours.verify": "Hours shown are provisional.",
       "slot.aperitivo": "Aperitivo", "slot.dinner": "Dinner", "slot.brunch": "Brunch",
@@ -205,13 +215,15 @@ window.CICCHETTI = {
       "gallery.eyebrow": "המקום", "gallery.title": "אור חם, רחש נמוך.",
       "reviews.eyebrow": "אורחים", "reviews.title": "מה אומרים בדרך החוצה.",
       "reviews.empty": "מילים של אורחים, מילה במילה ובאישור — נאספות עכשיו.",
+      "reviews.count": "{n} ביקורות בגוגל",
       "reviews.prev": "הביקורת הקודמת", "reviews.next": "הביקורת הבאה",
       "location.eyebrow": "איך מגיעים", "location.title": "בית תל אביבי ותיק ביהודה הלוי.",
       "location.address": "יהודה הלוי 58<br>תל אביב-יפו",
       "location.hours": "שעות פתיחה", "location.directions": "ניווט", "location.call": "התקשרו",
       "location.access": "נגישות",
-      "location.accessBody": "כניסה ללא מדרגות. אין שירותי נכים — המבנה לשימור ואי אפשר לשנות אותו. התקשרו מראש ונדאג שהערב יעבוד.",
-      "location.delivery": "משלוחים ואיסוף עצמי: שאלו אותנו — פרטים בקרוב.",
+      "location.accessBody": "המקום נגיש לכיסאות גלגלים. זה מבנה לשימור, אז אם יש לכם צרכי נגישות מיוחדים — התקשרו מראש ונדאג שהכול יהיה מוכן.",
+      "location.options": "איך נהנים מאיתנו", "location.optDine": "ישיבה במקום", "location.optPickup": "איסוף עצמי", "location.optDelivery": "משלוחים",
+      "location.price": "בערך <span class=\"ltr\">100–200</span> ₪ לסועד",
       "location.mapNote": "רחוב יהודה הלוי, בלב תל אביב הישנה",
       "hours.verify": "השעות המוצגות זמניות.",
       "slot.aperitivo": "אפריטיבו", "slot.dinner": "ערב", "slot.brunch": "בראנץ׳",

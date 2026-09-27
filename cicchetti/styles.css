@@ -346,7 +346,9 @@ body.menu-open .pill { opacity: 0; pointer-events: none; }
 /* ---------- Reviews ---------- */
 .reviews { border-top: 1px solid rgba(42, 36, 32, .12); }
 .rating { font-size: .9375rem; color: var(--charcoal-soft); margin: 0; }
-.rating strong { font: 400 2rem/1 var(--serif); color: var(--charcoal); margin-inline-end: .4rem; }
+.rating { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap; }
+.rating strong { font: 380 clamp(3rem, 6vw, 4.5rem)/1 var(--serif); color: var(--charcoal); letter-spacing: -0.02em; }
+.rating .stars { color: var(--terracotta-ink); font-size: 1.25rem; letter-spacing: .1em; }
 .quotes { position: relative; min-height: 14rem; }
 .quote { margin: 0; max-width: 58rem; }
 .quote p { font-size: clamp(1.75rem, 3.6vw, 3.25rem); line-height: 1.12; font-style: italic; margin-bottom: 1.5rem; }
@@ -382,6 +384,13 @@ body.menu-open .pill { opacity: 0; pointer-events: none; }
 .location__card .eyebrow { color: var(--charcoal-soft); } /* olive on stone is 3.5:1 */
 .location__card { padding: clamp(48px, 6vw, 96px) var(--gutter); }
 .location__card address { font-style: normal; font-size: 1.1875rem; margin-bottom: 1.5rem; }
+.options { list-style: none; display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 .75rem; padding: 0; }
+.options li {
+  display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .9rem; border-radius: 999px;
+  border: 1px solid rgba(42, 36, 32, .25); font-size: .9375rem;
+}
+.options li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--olive); }
+.price { font-size: .9375rem; margin: 0; }
 .card-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1rem; }
 .card-actions .btn--line { font-size: 1rem; font-weight: 500; }
 .hours { display: grid; grid-template-columns: auto 1fr; gap: .5rem 1.5rem; margin: 0 0 .75rem; }

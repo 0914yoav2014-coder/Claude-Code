@@ -271,7 +271,9 @@
     const ratingEl = $("#rating");
     if (r && r.value) {
       ratingEl.hidden = false;
-      ratingEl.innerHTML = `<strong>${r.value.toFixed(1)}</strong><span class="ltr">★</span> · ${r.count.toLocaleString(lang === "he" ? "he-IL" : "en-US")} · ${r.source}`;
+      const n = r.count.toLocaleString(lang === "he" ? "he-IL" : "en-US");
+      ratingEl.innerHTML = `<strong>${r.value.toFixed(1)}</strong><span class="stars" aria-hidden="true">★</span><span>${t("reviews.count").replace("{n}", n)}</span>`;
+      ratingEl.setAttribute("aria-label", `${r.value} / 5 · ${t("reviews.count").replace("{n}", n)}`);
     }
     if (!reviews.length) {
       box.innerHTML = `<p class="quotes__empty">${t("reviews.empty")}</p>`;
