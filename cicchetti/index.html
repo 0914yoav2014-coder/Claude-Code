@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Cicchetti — Venetian small plates, Tel Aviv</title>
+  <meta name="description" content="A Venetian neighbourhood bar reinterpreted for Tel Aviv. Small plates, wine and cocktails in a historic building at 58 Yehuda HaLevi Street. Aperitivo, dinner and weekend brunch.">
+  <meta name="theme-color" content="#F6EFE4">
+  <script>document.documentElement.classList.add("js")</script>
+  <link rel="alternate" hreflang="en" href="https://cicchettitlv.com/">
+  <link rel="alternate" hreflang="he" href="https://cicchettitlv.com/?lang=he">
+
+  <!-- Open Graph / Twitter — replace og-image.jpg with a real hero frame from the shoot -->
+  <meta property="og:type" content="restaurant.restaurant">
+  <meta property="og:title" content="Cicchetti — Small plates. Big appetite.">
+  <meta property="og:description" content="A Venetian neighbourhood bar, reinterpreted for Tel Aviv. 58 Yehuda HaLevi Street.">
+  <meta property="og:image" content="media/og-image.jpg">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="he_IL">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preload" href="fonts/fraunces-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23B5562F'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='18' fill='%23F6EFE4'%3Ec%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Structured data: address/phone/cuisine only. Hours and AggregateRating are
+       deliberately omitted until verified live (brief §10). -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "Cicchetti",
+    "url": "https://cicchettitlv.com/",
+    "telephone": "+972-3-685-3499",
+    "servesCuisine": ["Italian", "Venetian", "Small plates"],
+    "acceptsReservations": "True",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "58 Yehuda HaLevi Street",
+      "addressLocality": "Tel Aviv-Yafo",
+      "addressCountry": "IL"
+    },
+    "sameAs": ["https://www.instagram.com/cicchetti_tlv/", "https://www.facebook.com/cicchetti.tlv"]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <div class="draft" id="draft" hidden>
+    <p data-i18n="draft">Preview build — menu, hours, photography and booking link are placeholders pending verification with the venue.</p>
+    <button type="button" class="draft__close" aria-label="Dismiss">×</button>
+  </div>
+
+  <!-- NAV: transparent over hero, solid once past it -->
+  <header class="nav" id="nav">
+    <a class="nav__logo" href="#top" aria-label="Cicchetti — back to top">
+      <span class="wordmark">Cicchetti</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#concept" data-i18n="nav.concept">Concept</a>
+      <a href="#menu" data-i18n="nav.menu">Menu</a>
+      <a href="#people" data-i18n="nav.people">Chef &amp; Bar</a>
+      <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+      <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
+      <a href="#location" data-i18n="nav.location">Location</a>
+    </nav>
+    <div class="nav__actions">
+      <button type="button" class="lang" id="lang" data-i18n="lang.switch" data-i18n-aria="lang.label" aria-label="Switch to Hebrew" lang="he">עברית</button>
+      <a class="btn btn--solid btn--sm js-book" href="#" target="_blank" rel="noopener" data-i18n="cta.book">Book a Table</a>
+      <button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="drawer" aria-label="Menu"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <div class="drawer" id="drawer" hidden>
+    <nav aria-label="Mobile">
+      <a href="#concept" data-i18n="nav.concept">Concept</a>
+      <a href="#menu" data-i18n="nav.menu">Menu</a>
+      <a href="#people" data-i18n="nav.people">Chef &amp; Bar</a>
+      <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+      <a href="#reviews" data-i18n="nav.reviews">Reviews</a>
+      <a href="#location" data-i18n="nav.location">Location</a>
+    </nav>
+  </div>
+
+  <!-- Floating mobile CTA — present through the whole scroll -->
+  <a class="pill js-book" href="#" target="_blank" rel="noopener" data-i18n="cta.book">Book a Table</a>
+
+  <main id="main">
+
+    <!-- 6.1 HERO -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero__media" id="heroMedia" aria-hidden="true">
+        <!-- Atmospheric fallback until the real interior loop is shot -->
+        <div class="hero__glow hero__glow--a"></div>
+        <div class="hero__glow hero__glow--b"></div>
+        <div class="hero__glow hero__glow--c"></div>
+        <svg class="hero__arch" viewBox="0 0 400 600" preserveAspectRatio="xMidYMax meet">
+          <path d="M40 600V250a160 160 0 0 1 320 0v350" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path d="M70 600V255a130 130 0 0 1 260 0v345" fill="none" stroke="currentColor" stroke-width=".5"/>
+        </svg>
+        <div class="grain"></div>
+      </div>
+      <div class="hero__inner">
+        <p class="eyebrow reveal" data-i18n="hero.eyebrow">Yehuda HaLevi, Tel Aviv</p>
+        <h1 class="hero__title reveal" id="hero-title" data-i18n="hero.title">Small plates.<br>Big appetite.</h1>
+        <p class="hero__sub reveal" data-i18n="hero.sub">A Venetian neighbourhood bar, reinterpreted for Tel Aviv. Aperitivo, dinner, and weekend brunch.</p>
+        <div class="hero__ctas reveal">
+          <a class="btn btn--solid js-book" href="#" target="_blank" rel="noopener" data-i18n="cta.book">Book a Table</a>
+          <a class="btn btn--ghost-light" href="#menu" data-i18n="cta.menu">See Tonight's Menu</a>
+        </div>
+      </div>
+      <p class="hero__address" aria-hidden="true" dir="ltr">58 Yehuda HaLevi · Tel Aviv-Yafo</p>
+    </section>
+
+    <!-- 6.2 CONCEPT -->
+    <section class="concept section" id="concept" aria-labelledby="concept-title">
+      <figure class="concept__img reveal">
+        <div class="ph ph--tall ph--zoom" data-shot="Stone archway &amp; wood counter, practical light"></div>
+      </figure>
+      <div class="concept__text">
+        <p class="eyebrow reveal" data-i18n="concept.eyebrow">The concept</p>
+        <h2 class="h2 reveal" id="concept-title" data-i18n="concept.title">Not exactly a restaurant. Nor a wine bar.</h2>
+        <p class="lead reveal lines" data-i18n="concept.body">Cicchetti started as a Venetian habit — a glass of wine, a few bites, standing up, no reservation required. We kept the habit and lost the rules. Fresh pasta, wood smoke, and whatever the sea gave us this morning, served the way Tel Aviv actually eats: a little at a time, with everyone reaching across the table.</p>
+        <blockquote class="pull reveal">
+          <p data-i18n="concept.quote">A bit of booze, a lot of soul.</p>
+          <footer data-i18n="concept.quoteBy">Avi Kashi, Host &amp; Cocktail Director</footer>
+        </blockquote>
+        <a class="btn btn--solid reveal js-book" href="#" target="_blank" rel="noopener" data-i18n="cta.book">Book a Table</a>
+      </div>
+    </section>
+
+    <!-- 6.3 MENU -->
+    <section class="menu section" id="menu" aria-labelledby="menu-title">
+      <header class="section__head">
+        <p class="eyebrow reveal" data-i18n="menu.eyebrow">The menu</p>
+        <h2 class="h2 reveal" id="menu-title" data-i18n="menu.title">A little at a time.</h2>
+      </header>
+      <div class="tabs reveal" role="tablist" aria-label="Menu dayparts" id="tabs">
+        <button role="tab" id="tab-aperitivo" aria-controls="panel" aria-selected="true" data-tab="aperitivo">
+          <span data-i18n="menu.aperitivo">Aperitivo</span><small data-i18n="menu.aperitivoNote">Late afternoon</small></button>
+        <button role="tab" id="tab-dinner" aria-controls="panel" aria-selected="false" tabindex="-1" data-tab="dinner">
+          <span data-i18n="menu.dinner">Dinner</span><small data-i18n="menu.dinnerNote">Evenings</small></button>
+        <button role="tab" id="tab-brunch" aria-controls="panel" aria-selected="false" tabindex="-1" data-tab="brunch">
+          <span data-i18n="menu.brunch">Brunch</span><small data-i18n="menu.brunchNote">Friday &amp; Saturday</small></button>
+        <span class="tabs__ink" aria-hidden="true"></span>
+      </div>
+      <div class="dishes" id="panel" role="tabpanel" aria-labelledby="tab-aperitivo" tabindex="0"></div>
+      <p class="fine" data-i18n="menu.seasonal">The menu changes with the season. What's here is a taste, not a promise.</p>
+      <details class="allergens">
+        <summary data-i18n="menu.allergens">Allergens &amp; dietary notes</summary>
+        <p data-i18n="menu.allergensBody">Tell your server about any allergy — the kitchen adapts most dishes. A full allergen list is available at the bar.</p>
+      </details>
+      <div class="center"><a class="btn btn--solid js-book" href="#" target="_blank" rel="noopener" data-i18n="cta.book">Book a Table</a></div>
+    </section>
+
+    <!-- 6.4 CHEF & BAR -->
+    <section class="people section" id="people" aria-labelledby="people-title">
+      <header class="section__head">
+        <p class="eyebrow reveal" data-i18n="people.eyebrow">Chef &amp; Bar</p>
+        <h2 class="h2 reveal" id="people-title" data-i18n="people.title">Two people, one table.</h2>
+      </header>
+      <div class="people__grid">
+        <article class="person">
+          <div class="ph ph--portrait person__img reveal" data-shot="Michael at the pass, mid-service"></div>
+          <p class="eyebrow reveal" data-i18n="chef.role">Executive Chef</p>
+          <h3 class="h3 reveal" data-i18n="chef.name">Michael Gartofsky</h3>
+          <p class="reveal" data-i18n="chef.bio">Simple and precise. Michael cooks seasonal small plates rooted in traditional Italian regional technique — fewer ingredients, more attention, and a menu that moves when the market does.</p>
+          <!-- Brief §11: a real quote must be sourced from the chef. Placeholder until then. -->
+          <p class="person__quote person__quote--pending reveal" data-i18n="chef.quote">Chef's own words, coming soon.</p>
+        </article>
+        <article class="person person--offset">
+          <div class="ph ph--portrait person__img reveal" data-shot="Avi behind the bar, pouring"></div>
+          <p class="eyebrow reveal" data-i18n="host.role">Host &amp; Cocktail Director</p>
+          <h3 class="h3 reveal" data-i18n="host.name">Avi Kashi</h3>
+          <p class="reveal" data-i18n="host.bio">Avi runs the room and the bar: a short, opinionated wine list leaning Italian, and cocktails built for the hour before dinner — bitter, bright, and never too sweet.</p>
+          <p class="person__quote reveal" data-i18n="host.quote">A bit of booze, a lot of soul.</p>
+          <h4 class="drinks__title reveal" data-i18n="drinks.title">From the bar</h4>
+          <ul class="drinks" id="drinks"></ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- 6.5 GALLERY -->
+    <section class="gallery section" id="gallery" aria-labelledby="gallery-title">
+      <header class="section__head">
+        <p class="eyebrow reveal" data-i18n="gallery.eyebrow">The room</p>
+        <h2 class="h2 reveal" id="gallery-title" data-i18n="gallery.title">Warm light, low hum.</h2>
+      </header>
+      <ul class="masonry" id="masonry"></ul>
+    </section>
+
+    <!-- 6.6 REVIEWS -->
+    <section class="reviews section" id="reviews" aria-labelledby="reviews-title">
+      <header class="section__head section__head--row">
+        <div>
+          <p class="eyebrow reveal" data-i18n="reviews.eyebrow">Guests</p>
+          <h2 class="h2 reveal" id="reviews-title" data-i18n="reviews.title">What people say on the way out.</h2>
+        </div>
+        <p class="rating" id="rating" hidden></p>
+      </header>
+      <div class="quotes" id="quotes" aria-roledescription="carousel"></div>
+    </section>
+
+    <!-- 6.7 LOCATION & HOURS -->
+    <section class="location section" id="location" aria-labelledby="location-title">
+      <div class="location__map" id="map">
+        <div class="map-fallback" aria-hidden="true">
+          <svg viewBox="0 0 400 400" class="map-fallback__svg" preserveAspectRatio="xMidYMid slice">
+            <g stroke="currentColor" fill="none">
+              <path d="M-20 140 L420 250" stroke-width="14" opacity=".35"/>
+              <path d="M-20 60 L420 170" stroke-width="3" opacity=".25"/>
+              <path d="M-20 300 L420 410" stroke-width="3" opacity=".25"/>
+              <path d="M110 -20 L60 420" stroke-width="3" opacity=".25"/>
+              <path d="M300 -20 L250 420" stroke-width="3" opacity=".25"/>
+            </g>
+          </svg>
+          <span class="map-pin" id="pin"><span></span></span>
+          <p class="map-fallback__label" data-i18n="location.mapNote">Yehuda HaLevi Street, in the heart of old Tel Aviv</p>
+        </div>
+      </div>
+      <div class="location__card" id="infoCard">
+        <p class="eyebrow" data-i18n="location.eyebrow">Find us</p>
+        <h2 class="h2 h2--sm" id="location-title" data-i18n="location.title">An old Tel Aviv house on Yehuda HaLevi.</h2>
+        <address data-i18n="location.address">58 Yehuda HaLevi Street<br>Tel Aviv-Yafo</address>
+        <div class="card-actions">
+          <a class="btn btn--solid btn--sm js-directions" href="#" target="_blank" rel="noopener" data-i18n="location.directions">Get Directions</a>
+          <a class="btn btn--line btn--sm js-phone" href="#"><span data-i18n="location.call">Call us</span> <span class="ltr js-phone-text">+972 3-685-3499</span></a>
+        </div>
+        <h3 class="h4" data-i18n="location.hours">Hours</h3>
+        <dl class="hours" id="hours"></dl>
+        <p class="fine js-hours-verify" hidden data-i18n="hours.verify">Hours shown are provisional.</p>
+        <h3 class="h4" data-i18n="location.access">Access</h3>
+        <p data-i18n="location.accessBody">Step-free entrance. There is no wheelchair-accessible restroom — the building is heritage-protected and can't be altered. Call ahead and we'll make the evening work.</p>
+        <p class="fine" data-i18n="location.delivery">Delivery &amp; takeaway: ask us — details confirmed soon.</p>
+      </div>
+    </section>
+
+    <!-- 6.9 AMICI -->
+    <section class="amici" id="amici" aria-labelledby="amici-title">
+      <div class="grain"></div>
+      <div class="amici__inner">
+        <div class="amici__intro">
+          <svg class="emblem reveal" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="none" stroke="currentColor"/><circle cx="32" cy="32" r="25" fill="none" stroke="currentColor" stroke-width=".5"/><text x="32" y="38" text-anchor="middle" font-size="18" font-family="Fraunces, serif" fill="currentColor">A</text></svg>
+          <p class="eyebrow reveal" data-i18n="amici.eyebrow">Cicchetti Amici</p>
+          <h2 class="h2 reveal" id="amici-title" data-i18n="amici.title">The table's always a little warmer for friends.</h2>
+          <p class="reveal" data-i18n="amici.body">Seasonal menu previews before anyone else, invitations to small evenings at the bar, and something for your birthday. A few emails a season — never more.</p>
+        </div>
+        <form class="form" id="amiciForm" novalidate>
+          <div class="field">
+            <label for="f-name" data-i18n="amici.name">First name</label>
+            <input id="f-name" name="firstName" autocomplete="given-name" required aria-describedby="e-name">
+            <p class="err" id="e-name" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="f-email" data-i18n="amici.email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="e-email" dir="ltr">
+            <p class="err" id="e-email" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="f-phone" data-i18n="amici.phone">Phone for WhatsApp updates (optional)</label>
+            <input id="f-phone" name="phone" type="tel" autocomplete="tel" dir="ltr">
+          </div>
+          <div class="field field--check">
+            <input id="f-consent" name="consent" type="checkbox" required aria-describedby="e-consent">
+            <label for="f-consent" data-i18n="amici.consent">Yes, send me Cicchetti Amici updates by email (and WhatsApp, if I added a number). I can unsubscribe anytime.</label>
+            <p class="err" id="e-consent" aria-live="polite"></p>
+          </div>
+          <button class="btn btn--cream" type="submit" data-i18n="amici.submit">Join the Amici</button>
+          <div class="form__ok" id="amiciOk" role="status" hidden></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- 6.10 FOOTER -->
+  <footer class="footer">
+    <div class="footer__grid">
+      <div>
+        <span class="wordmark wordmark--lg">Cicchetti</span>
+        <p class="footer__hours" data-i18n="footer.hours">Aperitivo · Dinner · Brunch Fri–Sat</p>
+      </div>
+      <div>
+        <address data-i18n="location.address">58 Yehuda HaLevi Street<br>Tel Aviv-Yafo</address>
+        <p><a class="js-phone ltr" href="#"><span class="js-phone-text">+972 3-685-3499</span></a></p>
+      </div>
+      <div class="footer__links">
+        <a class="js-book" href="#" target="_blank" rel="noopener" data-i18n="cta.book">Book a Table</a>
+        <a href="#amici" data-i18n="footer.amici">Join Cicchetti Amici</a>
+        <span class="social">
+          <a class="js-ig" href="#" target="_blank" rel="noopener" aria-label="Instagram @cicchetti_tlv">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg></a>
+          <a class="js-fb" href="#" target="_blank" rel="noopener" aria-label="Facebook cicchetti.tlv">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v7h4v-7h3l1-4h-4V8.5a.5.5 0 0 1 .5-.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></a>
+        </span>
+      </div>
+    </div>
+    <p class="footer__legal"><span>© <span id="year">2026</span> Cicchetti</span> · <a href="#" data-i18n="footer.privacy">Privacy</a></p>
+  </footer>
+
+  <!-- Lightbox (dishes + gallery) -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lb-title" hidden>
+    <div class="lightbox__panel">
+      <button type="button" class="lightbox__close" id="lbClose" data-i18n-aria="lightbox.close" aria-label="Close">×</button>
+      <div class="lightbox__media" id="lbMedia"></div>
+      <div class="lightbox__text">
+        <h3 class="h3" id="lb-title"></h3>
+        <p id="lbDesc"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="content.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
