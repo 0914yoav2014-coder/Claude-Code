@@ -14,6 +14,18 @@ cd cicchetti && python3 -m http.server 8000   # → http://localhost:8000  (?lan
 
 To deploy, upload the folder to any static CDN host (Cloudflare Pages, Netlify, Vercel).
 
+
+## Adding photos
+
+Every image slot shows a coloured frame with a line drawing until a real photo is set. The photo then replaces it automatically.
+
+1. Put files in `media/dishes/` (dishes), `media/gallery/` (room, bar, guests), or `media/` (hero). JPG or WebP, about 1600px on the long side, under ~400 KB each.
+2. Point to them in `content.js`:
+   - a dish: `src: "media/dishes/focaccia.jpg"` on its menu item. Dishes with `fav: true` also appear in the "House favourites" carousel
+   - the gallery: add `src` (and `alt`) to a `gallery` entry
+   - the hero: `CONFIG.heroImages: [{ src: "media/hero-1.jpg" }, …]` gives a crossfading slideshow
+3. The concept collage and the two portraits are in `index.html`: replace their `<div class="ph" …>` with an `<img>` inside the same frame.
+
 ## Files
 
 | File | What it is |
@@ -21,6 +33,7 @@ To deploy, upload the folder to any static CDN host (Cloudflare Pages, Netlify, 
 | `index.html` | Semantic markup. English copy inline for SEO and no-JS. `Restaurant` JSON-LD, OG/Twitter meta |
 | `content.js` | **The only file staff need to edit**: config, hours, menu, drinks, gallery, reviews, EN + HE strings |
 | `styles.css` | Palette tokens, type scale, layout (logical properties → Hebrew mirrors the grid), motion |
+| `illustrations.js` | Line drawings shown in image slots until real photos arrive |
 | `main.js` | Nav, tabs, lightbox, carousel, parallax, reveals, form, language toggle (~10 KB, vanilla) |
 | `fonts/` | Self-hosted variable fonts: Fraunces, Inter, Frank Ruhl Libre, Assistant (SIL OFL, licences included) |
 

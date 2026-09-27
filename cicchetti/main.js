@@ -2,7 +2,8 @@
 (() => {
   "use strict";
 
-  const { CONFIG, i18n, menu, drinks, gallery, reviews, hours } = window.CICCHETTI;
+  const { CONFIG, i18n, menu, drinks, gallery, reviews, hours, ribbon } = window.CICCHETTI;
+  const ILLOS = window.CICCHETTI_ILLOS || {};
   const $ = (s, el = document) => el.querySelector(s);
   const $$ = (s, el = document) => [...el.querySelectorAll(s)];
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
@@ -27,6 +28,9 @@
     const langBtn = $("#lang");
     langBtn.lang = lang === "he" ? "en" : "he";
     renderMenu(currentTab, false);
+    renderFavs();
+    renderRibbon();
+    renderInfoRating();
     renderDrinks();
     renderGallery();
     renderReviews();
@@ -67,13 +71,16 @@
 
   /* ---------------- Shared: placeholder frame ---------------- */
   // Real photography replaces these: pass { src, alt } and an <img> renders instead.
-  function frame({ shot, cls = "", src, alt = "", tag }) {
+  // Without a photo, the slot shows a coloured frame with a line drawing of the dish.
+  function frame({ shot, cls = "", src, alt = "", tag, illo, tone }) {
     const div = document.createElement("div");
     div.className = `ph ${cls}`;
     if (src) {
+      div.classList.add("ph--photo");
       div.innerHTML = `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`;
       div.dataset.shot = "";
     } else {
+      dress(div, illo, tone);
       div.dataset.shot = `${t("shot")} · ${shot}`;
       div.setAttribute("role", "img");
       div.setAttribute("aria-label", `${t("shot")}: ${shot}`);
@@ -81,6 +88,13 @@
     if (tag) div.insertAdjacentHTML("afterbegin", `<span class="ph__tag">${tag}</span>`);
     return div;
   }
+  function dress(div, illo, tone) {
+    if (tone) div.classList.add(`ph--${tone}`);
+    if (illo && ILLOS[illo] && !div.querySelector(".illo")) div.insertAdjacentHTML("beforeend", ILLOS[illo]);
+  }
+  // Static frames in the HTML (concept, portraits) declare data-illo / data-tone
+  $$(".ph[data-illo]").forEach((el) => dress(el, el.dataset.illo, el.dataset.tone));
+
   const sampleTag = (item) => (CONFIG.draft && item.sample ? `<span class="tag">${t("sample")}</span>` : "");
 
   /* ---------------- Nav ---------------- */
@@ -194,11 +208,11 @@
         btn.style.setProperty("--i", i);
         const wrap = document.createElement("div");
         wrap.className = "dish__imgwrap";
-        wrap.append(frame({ shot: item.shot, src: item.src, alt: d.name }));
+        wrap.append(frame({ shot: item.shot, src: item.src, alt: d.name, illo: item.illo, tone: item.tone }));
         btn.append(wrap);
         btn.insertAdjacentHTML("beforeend",
           `<h3 class="dish__name">${d.name}${sampleTag(item)}</h3><p class="dish__desc">${d.desc}</p>`);
-        btn.addEventListener("click", () => openLightbox({ title: d.name, desc: d.desc, shot: item.shot, src: item.src }, btn));
+        btn.addEventListener("click", () => openLightbox({ title: d.name, desc: d.desc, shot: item.shot, src: item.src, illo: item.illo, tone: item.tone }, btn));
         panel.append(btn);
       });
       panel.scrollLeft = 0;
@@ -228,6 +242,65 @@
     tabs[next].focus();
   });
 
+  /* ---------------- House favourites ---------------- */
+  const favTrack = $("#favTrack");
+  function renderFavs() {
+    favTrack.innerHTML = "";
+    Object.entries(menu).forEach(([part, items]) => items.filter((it) => it.fav).forEach((it) => {
+      const d = pick(it);
+      const li = document.createElement("li");
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "fav";
+      btn.append(frame({ shot: it.shot, src: it.src, alt: d.name, illo: it.illo, tone: it.tone }));
+      btn.insertAdjacentHTML("beforeend",
+        `<span class="fav__part">${t(`menu.${part}`)}</span><h3 class="fav__name">${d.name}${sampleTag(it)}</h3><p class="fav__desc">${d.desc}</p>`);
+      btn.addEventListener("click", () => openLightbox({ title: d.name, desc: d.desc, shot: it.shot, src: it.src, illo: it.illo, tone: it.tone }, btn));
+      li.append(btn);
+      favTrack.append(li);
+    }));
+  }
+  $$(".favs__ctrl button").forEach((b) => b.addEventListener("click", () => {
+    const card = $("li", favTrack);
+    const step = card ? card.getBoundingClientRect().width + 24 : 320;
+    const rtl = document.documentElement.dir === "rtl" ? -1 : 1;
+    favTrack.scrollBy({ left: Number(b.dataset.dir) * step * rtl, behavior: reduceMotion.matches ? "auto" : "smooth" });
+  }));
+
+  /* ---------------- Ribbon ---------------- */
+  function renderRibbon() {
+    const words = (ribbon && (ribbon[lang] || ribbon.en)) || [];
+    const run = words.map((w) => `<span>${w}</span>${ILLOS.olive ? `<i>${ILLOS.olive}</i>` : "<i>·</i>"}`).join("");
+    $("#ribbon").innerHTML = `<div class="ribbon__run">${run}</div><div class="ribbon__run">${run}</div>`;
+  }
+
+  /* ---------------- Info bar rating ---------------- */
+  function renderInfoRating() {
+    const r = CONFIG.rating;
+    const el = $("#infoRating");
+    if (!r || !r.value) return;
+    el.hidden = false;
+    el.innerHTML = `<span class="infobar__score">${r.value.toFixed(1)}</span><span class="infobar__star" aria-hidden="true">★</span><a href="#reviews">${t("reviews.count").replace("{n}", r.count.toLocaleString(lang === "he" ? "he-IL" : "en-US"))}</a>`;
+  }
+
+  /* ---------------- Hero slideshow (real photos, when supplied) ---------------- */
+  const slides = CONFIG.heroImages || [];
+  if (slides.length && !CONFIG.heroVideo) {
+    const box = $("#heroSlides");
+    box.innerHTML = slides.map((s, i) =>
+      `<img src="${s.src}" alt="" ${i ? 'loading="lazy"' : 'fetchpriority="high"'} class="${i ? "" : "is-on"}">`).join("");
+    heroMedia.classList.add("has-photos");
+    if (slides.length > 1 && !reduceMotion.matches) {
+      let at = 0;
+      const imgs = $$("img", box);
+      setInterval(() => {
+        imgs[at].classList.remove("is-on");
+        at = (at + 1) % imgs.length;
+        imgs[at].classList.add("is-on");
+      }, 6000);
+    }
+  }
+
   /* ---------------- Drinks ---------------- */
   function renderDrinks() {
     $("#drinks").innerHTML = drinks.map((dr) => {
@@ -248,8 +321,8 @@
       btn.type = "button";
       const label = pick(g.shot);
       btn.setAttribute("aria-label", label);
-      btn.append(frame({ shot: label, cls: `${shapeClass[g.shape]}${g.tone === "dark" ? " ph--dark" : ""}`, src: g.src, alt: g.alt && pick(g.alt) }));
-      btn.addEventListener("click", () => openLightbox({ shot: label, src: g.src, gallery: true, ratio: shapeRatio[g.shape] }, btn));
+      btn.append(frame({ shot: label, cls: shapeClass[g.shape], src: g.src, alt: g.alt && pick(g.alt), illo: g.illo, tone: g.tone }));
+      btn.addEventListener("click", () => openLightbox({ shot: label, src: g.src, gallery: true, ratio: shapeRatio[g.shape], illo: g.illo, tone: g.tone }, btn));
       // 2–4px cursor-follow tactility on fine pointers only
       btn.addEventListener("pointermove", (e) => {
         if (e.pointerType !== "mouse" || reduceMotion.matches) return;
@@ -351,13 +424,13 @@
   /* ---------------- Lightbox ---------------- */
   const lb = $("#lightbox");
   let lbReturn = null;
-  function openLightbox({ title = "", desc = "", shot, src, gallery: isGallery, ratio }, from) {
+  function openLightbox({ title = "", desc = "", shot, src, gallery: isGallery, ratio, illo, tone }, from) {
     lbReturn = from;
     lb.classList.toggle("lightbox--gallery", !!isGallery);
     lb.style.setProperty("--lb-ar", ratio || "3 / 2");
     const media = $("#lbMedia");
     media.innerHTML = "";
-    media.append(frame({ shot, src, alt: title || shot }));
+    media.append(frame({ shot, src, alt: title || shot, illo, tone }));
     $("#lb-title").textContent = title || shot;
     $("#lbDesc").textContent = desc;
     lb.hidden = false;

@@ -28,6 +28,10 @@ window.CICCHETTI = {
     // the atmospheric fallback renders instead.
     heroVideo: null, // e.g. { mp4: "media/hero.mp4", webm: "media/hero.webm", poster: "media/hero.avif" }
 
+    // Hero slideshow (used when there's no video): 3–5 real photos, crossfading.
+    // e.g. [{ src: "media/hero-1.jpg", alt: { en: "…", he: "…" } }]
+    heroImages: [],
+
     // Optional: Google Maps JS API key → palette-styled map. Without it the
     // designed location card renders (no default-styled iframe, per brief §6.7).
     googleMapsApiKey: null,
@@ -62,37 +66,39 @@ window.CICCHETTI = {
     ]
   },
 
-  // Menu: the three confirmed dayparts. Dishes are ILLUSTRATIVE SAMPLES from
+  // Menu: the three confirmed dayparts.
+  // PHOTOS: put the file in media/dishes/ and set `src`, e.g. src: "media/dishes/focaccia.jpg".
+  // `fav: true` also shows the dish in the "House favourites" carousel. Dishes are ILLUSTRATIVE SAMPLES from
   // the brief — replace with the current menu. `sample: true` tags them in draft mode.
   menu: {
     aperitivo: [
-      { sample: true, en: { name: "Warm focaccia", desc: "Torn at the table, still steaming, olive oil pooling in the dimples." },
+      { sample: true, illo: "bread", tone: "terra", fav: true, src: null, en: { name: "Warm focaccia", desc: "Torn at the table, still steaming, olive oil pooling in the dimples." },
         he: { name: "פוקאצ׳ה חמה", desc: "נקרעת ליד השולחן, עוד מעלה אדים, שמן זית בכל גומה." }, shot: "Focaccia, torn, oil sheen" },
-      { sample: true, en: { name: "Cicchetti board", desc: "Whatever the kitchen is excited about tonight, one bite each." },
+      { sample: true, illo: "board", tone: "olive", src: null, en: { name: "Cicchetti board", desc: "Whatever the kitchen is excited about tonight, one bite each." },
         he: { name: "מגש צ׳יקטי", desc: "מה שהמטבח מתלהב ממנו הערב, ביס אחד מכל דבר." }, shot: "Board, overhead ¾, hands reaching" },
-      { sample: true, en: { name: "House spritz", desc: "Bitter, bright, and gone faster than you planned." },
+      { sample: true, illo: "spritz", tone: "terra", fav: true, src: null, en: { name: "House spritz", desc: "Bitter, bright, and gone faster than you planned." },
         he: { name: "ספריץ הבית", desc: "מריר, בהיר, ונגמר מהר ממה שתכננתם." }, shot: "Spritz on the bar, window light" }
     ],
     dinner: [
-      { sample: true, en: { name: "Asparagus gnocchi", desc: "Pillow-soft, spring-green, finished with brown butter." },
+      { sample: true, illo: "pasta", tone: "olive", src: null, en: { name: "Asparagus gnocchi", desc: "Pillow-soft, spring-green, finished with brown butter." },
         he: { name: "ניוקי אספרגוס", desc: "רכים כמו כרית, ירוקים של אביב, חמאה חומה בסוף." }, shot: "Gnocchi, shallow DOF, butter gloss" },
-      { sample: true, en: { name: "Egg-yolk carbonara", desc: "No cream, no shortcuts — yolk, pecorino, pepper, patience." },
+      { sample: true, illo: "pasta", tone: "stone", fav: true, src: null, en: { name: "Egg-yolk carbonara", desc: "No cream, no shortcuts — yolk, pecorino, pepper, patience." },
         he: { name: "קרבונרה חלמונים", desc: "בלי שמנת ובלי קיצורי דרך — חלמון, פקורינו, פלפל וסבלנות." }, shot: "Carbonara, fork mid-twirl" },
-      { sample: true, en: { name: "Shrimp from the grill", desc: "Charred at the edges, lemon, chilli, fingers encouraged." },
+      { sample: true, illo: "fish", tone: "terra", fav: true, src: null, en: { name: "Shrimp from the grill", desc: "Charred at the edges, lemon, chilli, fingers encouraged." },
         he: { name: "שרימפס מהגריל", desc: "חרוכים בקצוות, לימון, צ׳ילי, ומותר עם הידיים." }, shot: "Shrimp, smoke, ¾ angle" },
-      { sample: true, en: { name: "Seasonal crudo", desc: "Today's catch, sliced thin, dressed at the last second." },
+      { sample: true, illo: "fish", tone: "olive", src: null, en: { name: "Seasonal crudo", desc: "Today's catch, sliced thin, dressed at the last second." },
         he: { name: "קרודו עונתי", desc: "הדג של היום, פרוס דק, מתובל ברגע האחרון." }, shot: "Crudo, cold light on ice-plate" },
-      { sample: true, en: { name: "Wood-fired pizza", desc: "Blistered crust, a short list of toppings, straight from the fire." },
+      { sample: true, illo: "pizza", tone: "walnut", fav: true, src: null, en: { name: "Wood-fired pizza", desc: "Blistered crust, a short list of toppings, straight from the fire." },
         he: { name: "פיצה מתנור עצים", desc: "קרום מפוחם, מעט תוספות, ישר מהאש." }, shot: "Pizza leaving the oven, flame behind" },
-      { sample: true, en: { name: "Tiramisù", desc: "Made every morning, gone every night." },
+      { sample: true, illo: "dessert", tone: "stone", fav: true, src: null, en: { name: "Tiramisù", desc: "Made every morning, gone every night." },
         he: { name: "טירמיסו", desc: "נעשה כל בוקר, נגמר כל ערב." }, shot: "Tiramisù, spoon breaking the top" }
     ],
     brunch: [
-      { sample: true, en: { name: "Eggs in purgatory", desc: "Tomato, chilli, bread for mopping. Friday, sorted." },
+      { sample: true, illo: "pan", tone: "terra", src: null, en: { name: "Eggs in purgatory", desc: "Tomato, chilli, bread for mopping. Friday, sorted." },
         he: { name: "ביצים בגיהנום", desc: "עגבניות, צ׳ילי ולחם לניגוב. שישי מסודר." }, shot: "Skillet, sunlit table" },
-      { sample: true, en: { name: "Ricotta & honey toast", desc: "Whipped ricotta, wildflower honey, black pepper." },
+      { sample: true, illo: "bread", tone: "stone", src: null, en: { name: "Ricotta & honey toast", desc: "Whipped ricotta, wildflower honey, black pepper." },
         he: { name: "טוסט ריקוטה ודבש", desc: "ריקוטה מוקצפת, דבש פרחי בר, פלפל שחור." }, shot: "Toast, honey drip, macro" },
-      { sample: true, en: { name: "Brunch spritz", desc: "Because it's the weekend and nobody is driving." },
+      { sample: true, illo: "spritz", tone: "olive", src: null, en: { name: "Brunch spritz", desc: "Because it's the weekend and nobody is driving." },
         he: { name: "ספריץ בראנץ׳", desc: "כי זה סוף שבוע ואף אחד לא נוהג." }, shot: "Two spritzes clinking" }
     ]
   },
@@ -107,20 +113,26 @@ window.CICCHETTI = {
       he: { name: "טעימת אמרו", note: "שלושה מרירים, שלושה סיפורים, ערב אחד איטי." } }
   ],
 
-  // Gallery: shot-list slots. Replace `src` with real photography (AVIF/WebP).
+  // Gallery: shot-list slots. Add `src: "media/gallery/…jpg"` (and `alt`) as real photos arrive.
   // `shape` drives the masonry rhythm: wide | tall | square.
   gallery: [
-    { shape: "wide",   shot: { en: "Facade at golden hour — Jerusalem stone", he: "החזית בשעת הזהב — אבן ירושלמית" } },
-    { tone: "dark", shape: "tall",   shot: { en: "Bar, Avi mid-pour", he: "הבר, אבי באמצע מזיגה" } },
-    { shape: "square", shot: { en: "Crudo, close", he: "קרודו, תקריב" } },
-    { shape: "tall",   shot: { en: "Stone archway detail", he: "פרט קשת אבן" } },
-    { shape: "square", shot: { en: "Guests mid-laugh", he: "אורחים באמצע צחוק" } },
-    { tone: "dark", shape: "wide",   shot: { en: "Dining room, blue hour", he: "חדר האוכל, השעה הכחולה" } },
-    { shape: "square", shot: { en: "Hands sharing a plate", he: "ידיים חולקות צלחת" } },
-    { shape: "tall",   shot: { en: "Chef at the pass", he: "השף בפס" } },
-    { tone: "dark", shape: "square", shot: { en: "Wood counter, candle", he: "דלפק עץ, נר" } },
-    { tone: "dark", shape: "wide",   shot: { en: "Yehuda HaLevi at night", he: "יהודה הלוי בלילה" } }
+    { illo: "arch", tone: "stone", shape: "wide",   shot: { en: "Facade at golden hour — Jerusalem stone", he: "החזית בשעת הזהב — אבן ירושלמית" } },
+    { illo: "shaker", tone: "dark", shape: "tall",   shot: { en: "Bar, Avi mid-pour", he: "הבר, אבי באמצע מזיגה" } },
+    { illo: "fish", tone: "olive", shape: "square", shot: { en: "Crudo, close", he: "קרודו, תקריב" } },
+    { illo: "arch", tone: "stone", shape: "tall",   shot: { en: "Stone archway detail", he: "פרט קשת אבן" } },
+    { illo: "wine", tone: "terra", shape: "square", shot: { en: "Guests mid-laugh", he: "אורחים באמצע צחוק" } },
+    { illo: "wine", tone: "dark", shape: "wide",   shot: { en: "Dining room, blue hour", he: "חדר האוכל, השעה הכחולה" } },
+    { illo: "board", tone: "terra", shape: "square", shot: { en: "Hands sharing a plate", he: "ידיים חולקות צלחת" } },
+    { illo: "chef", tone: "olive", shape: "tall",   shot: { en: "Chef at the pass", he: "השף בפס" } },
+    { illo: "olive", tone: "dark", shape: "square", shot: { en: "Wood counter, candle", he: "דלפק עץ, נר" } },
+    { illo: "arch", tone: "dark", shape: "wide",   shot: { en: "Yehuda HaLevi at night", he: "יהודה הלוי בלילה" } }
   ],
+
+  // Scrolling ribbon under the hero
+  ribbon: {
+    en: ["Aperitivo", "Spritz", "Focaccia", "Crudo", "Fresh pasta", "Wood fire", "Negroni", "Brunch Fri–Sat", "Tiramisù"],
+    he: ["אפריטיבו", "ספריץ", "פוקאצ׳ה", "קרודו", "פסטה טרייה", "תנור עצים", "נגרוני", "בראנץ׳ שישי–שבת", "טירמיסו"]
+  },
 
   // Reviews: EMPTY on purpose. Add 4–6 real, permissioned excerpts
   // (or accurately quoted public platform reviews), e.g.:
@@ -160,6 +172,9 @@ window.CICCHETTI = {
       "reviews.eyebrow": "Guests", "reviews.title": "What people say on the way out.",
       "reviews.empty": "Guest words, verbatim and with permission — being gathered now.",
       "reviews.count": "{n} Google reviews",
+      "info.services": "Aperitivo · Dinner · Brunch Fri–Sat", "info.where": "58 Yehuda HaLevi, Tel Aviv", "info.call": "Call", "info.rating": "on Google",
+      "fav.eyebrow": "House favourites", "fav.title": "The plates people come back for.", "fav.all": "See the full menu",
+      "gallery.ig": "More on Instagram",
       "reviews.prev": "Previous review", "reviews.next": "Next review",
       "location.eyebrow": "Find us", "location.title": "An old Tel Aviv house on Yehuda HaLevi.",
       "location.address": "58 Yehuda HaLevi Street<br>Tel Aviv-Yafo",
@@ -216,6 +231,9 @@ window.CICCHETTI = {
       "reviews.eyebrow": "אורחים", "reviews.title": "מה אומרים בדרך החוצה.",
       "reviews.empty": "מילים של אורחים, מילה במילה ובאישור — נאספות עכשיו.",
       "reviews.count": "{n} ביקורות בגוגל",
+      "info.services": "אפריטיבו · ערב · בראנץ׳ שישי–שבת", "info.where": "יהודה הלוי 58, תל אביב", "info.call": "חייגו", "info.rating": "בגוגל",
+      "fav.eyebrow": "האהובות של הבית", "fav.title": "המנות שחוזרים בשבילן.", "fav.all": "לתפריט המלא",
+      "gallery.ig": "עוד באינסטגרם",
       "reviews.prev": "הביקורת הקודמת", "reviews.next": "הביקורת הבאה",
       "location.eyebrow": "איך מגיעים", "location.title": "בית תל אביבי ותיק ביהודה הלוי.",
       "location.address": "יהודה הלוי 58<br>תל אביב-יפו",

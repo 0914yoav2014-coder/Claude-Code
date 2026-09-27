@@ -94,6 +94,7 @@
     <!-- 6.1 HERO -->
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero__media" id="heroMedia" aria-hidden="true">
+        <div class="hero__slides" id="heroSlides"></div>
         <!-- Atmospheric fallback until the real interior loop is shot -->
         <div class="hero__glow hero__glow--a"></div>
         <div class="hero__glow hero__glow--b"></div>
@@ -116,10 +117,24 @@
       <p class="hero__address" aria-hidden="true" dir="ltr">58 Yehuda HaLevi · Tel Aviv-Yafo</p>
     </section>
 
+    <!-- Practical info, straight under the hero (hours, where, call, rating, book) -->
+    <div class="infobar" aria-label="At a glance">
+      <div class="infobar__inner">
+        <p class="infobar__item"><span class="infobar__k" data-i18n="location.hours">Hours</span><span data-i18n="info.services">Aperitivo · Dinner · Brunch Fri–Sat</span></p>
+        <p class="infobar__item"><span class="infobar__k" data-i18n="location.eyebrow">Find us</span><a href="#location" data-i18n="info.where">58 Yehuda HaLevi, Tel Aviv</a></p>
+        <p class="infobar__item"><span class="infobar__k" data-i18n="info.call">Call</span><a class="js-phone ltr" href="#"><span class="js-phone-text">03-685-3499</span></a></p>
+        <p class="infobar__item infobar__rating" id="infoRating" hidden></p>
+        <a class="btn btn--solid btn--sm js-book" href="#" target="_blank" rel="noopener" data-i18n="cta.book">Book a Table</a>
+      </div>
+    </div>
+
+    <div class="ribbon" aria-hidden="true"><div class="ribbon__track" id="ribbon"></div></div>
+
     <!-- 6.2 CONCEPT -->
     <section class="concept section" id="concept" aria-labelledby="concept-title">
       <figure class="concept__img reveal">
-        <div class="ph ph--tall ph--zoom" data-shot="Stone archway &amp; wood counter, practical light"></div>
+        <div class="ph ph--tall ph--arch" data-illo="arch" data-tone="stone" data-shot="Stone archway &amp; wood counter, practical light"></div>
+        <div class="ph ph--square concept__inset" data-illo="spritz" data-tone="terra" data-shot="Spritz on the bar, late sun"></div>
       </figure>
       <div class="concept__text">
         <p class="eyebrow reveal" data-i18n="concept.eyebrow">The concept</p>
@@ -130,6 +145,24 @@
           <footer data-i18n="concept.quoteBy">Avi Kashi, Host &amp; Cocktail Director</footer>
         </blockquote>
         <a class="btn btn--solid reveal js-book" href="#" target="_blank" rel="noopener" data-i18n="cta.book">Book a Table</a>
+      </div>
+    </section>
+
+    <!-- House favourites: photo-led carousel of signature dishes (fav: true in content.js) -->
+    <section class="favs" id="favourites" aria-labelledby="fav-title">
+      <div class="favs__inner">
+        <header class="favs__head">
+          <div>
+            <p class="eyebrow reveal" data-i18n="fav.eyebrow">House favourites</p>
+            <h2 class="h2 reveal" id="fav-title" data-i18n="fav.title">The plates people come back for.</h2>
+          </div>
+          <div class="favs__ctrl">
+            <button type="button" class="round" data-dir="-1" data-i18n-aria="reviews.prev" aria-label="Previous"><span>←</span></button>
+            <button type="button" class="round" data-dir="1" data-i18n-aria="reviews.next" aria-label="Next"><span>→</span></button>
+          </div>
+        </header>
+        <ul class="favs__track" id="favTrack"></ul>
+        <a class="btn btn--ghost-light" href="#menu" data-i18n="fav.all">See the full menu</a>
       </div>
     </section>
 
@@ -165,7 +198,7 @@
       </header>
       <div class="people__grid">
         <article class="person">
-          <div class="ph ph--portrait person__img reveal" data-shot="Michael at the pass, mid-service"></div>
+          <div class="ph ph--portrait person__img reveal" data-illo="chef" data-tone="olive" data-shot="Michael at the pass, mid-service"></div>
           <p class="eyebrow reveal" data-i18n="chef.role">Executive Chef</p>
           <h3 class="h3 reveal" data-i18n="chef.name">Michael Gartofsky</h3>
           <p class="reveal" data-i18n="chef.bio">Simple and precise. Michael cooks seasonal small plates rooted in traditional Italian regional technique — fewer ingredients, more attention, and a menu that moves when the market does.</p>
@@ -173,7 +206,7 @@
           <p class="person__quote person__quote--pending reveal" data-i18n="chef.quote">Chef's own words, coming soon.</p>
         </article>
         <article class="person person--offset">
-          <div class="ph ph--portrait person__img reveal" data-shot="Avi behind the bar, pouring"></div>
+          <div class="ph ph--portrait person__img reveal" data-illo="shaker" data-tone="terra" data-shot="Avi behind the bar, pouring"></div>
           <p class="eyebrow reveal" data-i18n="host.role">Host &amp; Cocktail Director</p>
           <h3 class="h3 reveal" data-i18n="host.name">Avi Kashi</h3>
           <p class="reveal" data-i18n="host.bio">Avi runs the room and the bar: a short, opinionated wine list leaning Italian, and cocktails built for the hour before dinner — bitter, bright, and never too sweet.</p>
@@ -189,6 +222,10 @@
       <header class="section__head">
         <p class="eyebrow reveal" data-i18n="gallery.eyebrow">The room</p>
         <h2 class="h2 reveal" id="gallery-title" data-i18n="gallery.title">Warm light, low hum.</h2>
+        <a class="iglink reveal js-ig" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="17.3" cy="6.7" r="1" fill="currentColor"/></svg>
+          <span data-i18n="gallery.ig">More on Instagram</span> <span class="ltr">@cicchetti_tlv</span>
+        </a>
       </header>
       <ul class="masonry" id="masonry"></ul>
     </section>
@@ -320,6 +357,7 @@
   </div>
 
   <script src="content.js"></script>
+  <script src="illustrations.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
