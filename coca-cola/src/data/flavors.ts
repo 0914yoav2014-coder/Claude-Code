@@ -23,8 +23,9 @@ export type Flavor = {
   nutrition: Nutrition
 }
 
-// Values are approximate, per 330 ml can, from UK/EU on-pack labels.
-// The flavor page shows them with an "approximate" note. Re-check against coca-cola.com before relying on them.
+// Values are approximate, per 330 ml can, from UK/EU on-pack labels (per-100 ml figures x 3.3).
+// Caffeine: Coca-Cola's published 34 mg (Coke, Zero Sugar) and 46 mg (Diet Coke) per 12 fl oz / 355 ml,
+// scaled to 330 ml. Recipes vary by country; the flavor page shows these with an "approximate" note.
 export const flavors: Flavor[] = [
   {
     slug: 'original',
@@ -60,7 +61,7 @@ export const flavors: Flavor[] = [
     tastingNotes: ['Crisp', 'Light', 'Bright citrus'],
     launched: 1982,
     colors: { body: '#D9DCE0', accent: '#E4002B', text: '#E4002B', bg: '#F1F2F4' },
-    nutrition: { servingMl: 330, energyKcal: 1, fatG: 0, saturatedFatG: 0, carbsG: 0, sugarsG: 0, proteinG: 0, sodiumMg: 20, caffeineMg: 42 },
+    nutrition: { servingMl: 330, energyKcal: 1, fatG: 0, saturatedFatG: 0, carbsG: 0, sugarsG: 0, proteinG: 0, sodiumMg: 20, caffeineMg: 43 },
   },
   {
     slug: 'cherry',
@@ -84,7 +85,7 @@ export const flavors: Flavor[] = [
     tastingNotes: ['Vanilla bean', 'Cream soda', 'Cola'],
     launched: 2002,
     colors: { body: '#F3E6CF', accent: '#A8733A', text: '#7A4A1E', bg: '#FAF3E6' },
-    nutrition: { servingMl: 330, energyKcal: 142, fatG: 0, saturatedFatG: 0, carbsG: 36, sugarsG: 36, proteinG: 0, sodiumMg: 10, caffeineMg: 32 },
+    nutrition: { servingMl: 330, energyKcal: 142, fatG: 0, saturatedFatG: 0, carbsG: 35, sugarsG: 35, proteinG: 0, sodiumMg: 10, caffeineMg: 32 },
   },
 ]
 

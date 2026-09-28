@@ -1,0 +1,129 @@
+.wheel {
+  /* radius of the ring and width of each can; both shrink on small screens */
+  --wheel-can-w: clamp(84px, 22vw, 150px);
+  --wheel-r: clamp(104px, 27vw, 250px);
+  --wheel-stage-h: calc(var(--wheel-can-w) * 1.9 + 3rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.wheel__header { text-align: center; margin-inline: auto; max-width: 640px; }
+.wheel__header .lead { margin-inline: auto; }
+
+.wheel__region {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  grid-template-areas: 'stage info' 'controls info';
+  align-items: center;
+  column-gap: var(--space-6);
+  margin-top: var(--space-5);
+  border-radius: var(--radius-lg);
+}
+.wheel__region:focus-visible { outline-offset: 6px; }
+
+/* ---------- 3D stage ---------- */
+.wheel__stage {
+  grid-area: stage;
+  position: relative;
+  height: var(--wheel-stage-h);
+  perspective: 1100px;
+  perspective-origin: 50% 35%;
+  overflow: hidden;
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.wheel__stage:active { cursor: grabbing; }
+
+.wheel__glow {
+  position: absolute; left: 50%; top: 50%;
+  width: calc(var(--wheel-can-w) * 2.2); aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.28;
+  transition: background-color 0.8s ease;
+  pointer-events: none;
+}
+
+.wheel__ring {
+  position: absolute; left: 50%; top: 50%;
+  width: 0; height: 0;
+  transform-style: preserve-3d;
+}
+.wheel__item {
+  position: absolute;
+  left: calc(var(--wheel-can-w) / -2);
+  top: calc(var(--wheel-can-w) * -0.92);
+  width: var(--wheel-can-w);
+  transform-style: preserve-3d;
+}
+.wheel__can {
+  display: block; width: 100%; padding: 0; margin: 0;
+  background: none; border: 0; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.wheel__can svg { pointer-events: none; filter: drop-shadow(0 18px 18px rgb(0 0 0 / 0.18)); }
+.wheel__can.is-active { cursor: grab; }
+
+/* ---------- reduced-motion flat slider ---------- */
+.wheel__flat {
+  grid-area: stage;
+  display: grid; place-items: center;
+  min-height: var(--wheel-stage-h);
+}
+.wheel__flat-can { width: calc(var(--wheel-can-w) * 1.1); filter: drop-shadow(0 18px 18px rgb(0 0 0 / 0.18)); }
+
+/* ---------- controls ---------- */
+.wheel__controls {
+  grid-area: controls;
+  display: flex; align-items: center; justify-content: center; gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+.wheel__arrow, .wheel__pause {
+  display: grid; place-items: center;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--white); color: var(--black);
+  border: 2px solid rgb(0 0 0 / 0.12);
+  box-shadow: var(--shadow-sm);
+  font-size: 1.25rem; font-weight: 700; line-height: 1; cursor: pointer;
+  transition: transform 0.2s var(--ease-out), background-color 0.2s, color 0.2s;
+}
+.wheel__arrow:hover { background: var(--red); color: var(--white); transform: scale(1.06); }
+.wheel__pause { width: 40px; height: 40px; font-size: 0.8rem; letter-spacing: -0.1em; }
+.wheel__pause:hover { background: var(--black); color: var(--white); }
+
+.wheel__dots { display: flex; gap: var(--space-1); }
+.wheel__dot {
+  width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer;
+  display: grid; place-items: center;
+  border-radius: 50%;
+}
+.wheel__dot::before {
+  content: ''; display: block; width: 10px; height: 10px; border-radius: 50%;
+  background: rgb(0 0 0 / 0.25);
+  transition: transform 0.2s var(--ease-out), background-color 0.2s;
+}
+.wheel__dot:hover::before { background: rgb(0 0 0 / 0.5); }
+.wheel__dot.is-active::before { background: var(--dot, var(--red)); transform: scale(1.4); box-shadow: 0 0 0 2px var(--white), 0 0 0 3px rgb(0 0 0 / 0.2); }
+
+/* ---------- active flavor info ---------- */
+.wheel__info { grid-area: info; }
+.wheel__count {
+  font-family: var(--font-display); font-weight: 800; font-size: var(--fs-sm);
+  letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: var(--space-2);
+}
+.wheel__name { font-size: var(--fs-2xl); margin-bottom: var(--space-3); }
+.wheel__tagline { font-size: var(--fs-lg); color: var(--text-muted); max-width: 32ch; }
+.wheel__cta { border-width: 2px; border-style: solid; box-shadow: var(--shadow-sm); }
+
+@media (max-width: 800px) {
+  .wheel__region {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'stage' 'controls' 'info';
+    text-align: center;
+  }
+  .wheel__info { margin-top: var(--space-5); }
+  .wheel__tagline { margin-inline: auto; }
+}

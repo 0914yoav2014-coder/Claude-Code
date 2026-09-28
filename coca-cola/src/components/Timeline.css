@@ -1,0 +1,42 @@
+/* Mobile: single column, line on the left */
+.timeline {
+  --tl-line: 20px;
+  list-style: none; margin: 0; padding: 0;
+  position: relative; display: grid; gap: var(--space-6);
+}
+.timeline::before {
+  content: ''; position: absolute; top: 0; bottom: 0; left: var(--tl-line); width: 4px; transform: translateX(-50%);
+  background: linear-gradient(to bottom, var(--red) 0%, var(--red-deep) 100%); border-radius: 4px;
+}
+
+.timeline__item { position: relative; padding-left: calc(var(--tl-line) * 2 + var(--space-3)); }
+.timeline__year {
+  position: relative; z-index: 1; display: inline-block; margin-bottom: var(--space-2);
+  background: var(--red); color: var(--white); font-family: var(--font-display); font-weight: 800; font-size: var(--fs-sm);
+  letter-spacing: 0.04em; padding: var(--space-1) var(--space-3); border-radius: var(--radius-pill); box-shadow: var(--shadow-sm);
+}
+/* dot on the line */
+.timeline__item::before {
+  content: ''; position: absolute; left: var(--tl-line); top: 0.55rem; width: 18px; height: 18px; transform: translateX(-50%);
+  background: var(--white); border: 4px solid var(--red); border-radius: 50%; z-index: 1;
+}
+.timeline__card { padding: var(--space-4) var(--space-5); border-top: 4px solid var(--red); }
+.timeline__title { font-size: var(--fs-lg); margin-bottom: var(--space-2); }
+.timeline__text { margin: 0; color: var(--text-muted); }
+
+/* Desktop: centered line, alternating sides */
+@media (min-width: 820px) {
+  .timeline { gap: var(--space-5); }
+  .timeline::before { left: 50%; }
+  .timeline__item {
+    width: 50%; padding-left: 0; padding-right: var(--space-7); text-align: right;
+  }
+  .timeline__item::before { left: 100%; }
+  .timeline__item--right { margin-left: 50%; padding-right: 0; padding-left: var(--space-7); text-align: left; }
+  .timeline__item--right::before { left: 0; }
+  .timeline__card { text-align: left; }
+  .timeline__item--left .timeline__card { border-top: 0; border-right: 4px solid var(--red); }
+  .timeline__item--right .timeline__card { border-top: 0; border-left: 4px solid var(--red); }
+  /* pull items together so they interleave */
+  .timeline__item + .timeline__item { margin-top: calc(var(--space-8) * -1); }
+}

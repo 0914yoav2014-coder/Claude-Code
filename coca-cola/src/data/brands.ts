@@ -20,27 +20,27 @@ export const brandCategories: BrandCategory[] = ['Soft drinks', 'Water', 'Sports
 export const brands: Brand[] = [
   {
     slug: 'sprite', name: 'Sprite', category: 'Soft drinks', since: 1961, origin: 'Created by Coca-Cola',
-    description: 'A crisp lemon-lime soda with no caffeine. Sprite first came out in the US in 1961 and is now one of the best-selling soft drinks in the world.',
+    description: 'A crisp lemon-lime soda with no caffeine. A version was first sold in West Germany in 1959, and Sprite launched in the US in 1961.',
     color: '#008B47', onColor: '#FFFFFF', pack: 'can',
   },
   {
-    slug: 'fanta', name: 'Fanta', category: 'Soft drinks', since: 1940, origin: 'Created by Coca-Cola',
+    slug: 'fanta', name: 'Fanta', category: 'Soft drinks', since: 1940, origin: 'Created by Coca-Cola in Germany',
     description: 'A bright, fruity, bubbly drink best known for its orange flavor. Fanta comes in more than 100 flavors around the world.',
     color: '#FF8200', onColor: '#FFFFFF', pack: 'can',
   },
   {
-    slug: 'schweppes', name: 'Schweppes', category: 'Soft drinks', since: 1783, origin: 'Acquired (in many markets)',
-    description: 'Tonic water, ginger ale and other mixers from one of the oldest soft-drink brands. Coca-Cola owns Schweppes in many countries.',
+    slug: 'schweppes', name: 'Schweppes', category: 'Soft drinks', since: 1783, origin: 'Acquired in 1999 (in many markets)',
+    description: 'Tonic water, ginger ale and other mixers from one of the oldest soft-drink brands. Coca-Cola owns Schweppes in many countries; other companies own it elsewhere, including the US and much of Europe.',
     color: '#F2C500', onColor: '#111111', pack: 'bottle',
   },
   {
     slug: 'minute-maid', name: 'Minute Maid', category: 'Juice', since: 1945, origin: 'Acquired in 1960',
-    description: 'Juices and juice drinks, starting with frozen orange concentrate in the 1940s. Today the range includes lemonades and fruit blends.',
+    description: 'Juices and juice drinks, starting with frozen orange juice concentrate in the 1940s. Today the range includes lemonades and fruit blends.',
     color: '#F7A600', onColor: '#111111', pack: 'bottle',
   },
   {
     slug: 'powerade', name: 'Powerade', category: 'Sports & energy', since: 1988, origin: 'Created by Coca-Cola',
-    description: 'A sports drink with electrolytes that helps athletes stay hydrated during training and competition.',
+    description: 'A sports drink with electrolytes for staying hydrated during exercise. It was the official sports drink of the 1988 Seoul Olympics.',
     color: '#0057B8', onColor: '#FFFFFF', pack: 'bottle',
   },
   {
@@ -65,7 +65,7 @@ export const brands: Brand[] = [
   },
   {
     slug: 'monster', name: 'Monster Energy', category: 'Sports & energy', since: 2002, origin: 'Strategic partnership (2015)',
-    description: 'An energy drink brand. Coca-Cola owns a large share of the company and distributes its drinks in many markets.',
+    description: 'An energy drink brand. Coca-Cola owns a minority stake in Monster Beverage, and Coca-Cola bottlers distribute its drinks in many markets.',
     color: '#1A1A1A', onColor: '#95D600', pack: 'can',
   },
   {

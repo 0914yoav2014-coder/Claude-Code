@@ -1,0 +1,64 @@
+.brands-hero__title { font-size: var(--fs-3xl); }
+
+/* ---------- filters ---------- */
+.brands__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+.brands__filter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0.45em 0.6em 0.45em 1.1em;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+.brands__filter:hover { border-color: var(--red); }
+.brands__filter[aria-pressed='true'] { background: var(--red); border-color: var(--red); color: var(--white); }
+
+.brands__count {
+  min-width: 1.8em;
+  padding: 0.1em 0.5em;
+  border-radius: var(--radius-pill);
+  background: var(--cream);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-align: center;
+}
+.brands__filter[aria-pressed='true'] .brands__count { background: rgb(255 255 255 / 0.22); color: var(--white); }
+
+/* ---------- grid ---------- */
+.brands__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+.brands__item { min-width: 0; }
+
+@media (min-width: 640px) { .brands__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 960px) { .brands__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1200px) { .brands__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* ---------- outro ---------- */
+.brands-outro { background: var(--surface); border-top: 1px solid var(--border); padding-block: var(--space-8); }
+.brands-outro__inner { display: grid; gap: var(--space-5); align-items: center; }
+.brands-outro__title { font-size: var(--fs-xl); }
+.brands-outro__text { color: var(--text-muted); max-width: 60ch; margin: 0; }
+.brands-outro__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.brands-outro__actions .btn--ghost { color: var(--red); }
+
+@media (min-width: 860px) {
+  .brands-outro__inner { grid-template-columns: 1fr auto; gap: var(--space-7); }
+}
