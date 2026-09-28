@@ -1,0 +1,3 @@
+.not-found { display: flex; align-items: center; gap: var(--space-7); min-height: 60vh; }
+.not-found__can { flex: none; transform: rotate(-12deg); }
+@media (max-width: 600px) { .not-found { flex-direction: column; text-align: center; } .not-found .lead { margin-inline: auto; } }
