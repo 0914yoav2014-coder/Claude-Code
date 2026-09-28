@@ -48,7 +48,7 @@ function WheelItem({ flavor, index, rot, active, onSelect }: ItemProps) {
   // 1 = front, 0 = back
   const depth = useTransform(rot, (r) => (Math.cos(((angle + r) * Math.PI) / 180) + 1) / 2)
   const counter = useTransform(rot, (r) => -(angle + r))
-  const scale = useTransform(depth, (d) => 0.62 + 0.46 * d * d)
+  const scale = useTransform(depth, (d) => 0.5 + 0.4 * d * d)
   const opacity = useTransform(depth, (d) => 0.35 + 0.65 * d * d)
   const filter = useTransform(depth, (d) => `brightness(${(0.55 + 0.45 * d).toFixed(3)}) saturate(${(0.6 + 0.4 * d).toFixed(3)})`)
 

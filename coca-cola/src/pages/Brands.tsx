@@ -53,7 +53,7 @@ export default function Brands() {
             >
               {value}
               <span className="brands__count" aria-hidden="true">{count}</span>
-              <span className="visually-hidden">({count} brands)</span>
+              <span className="visually-hidden">({count} {count === 1 ? 'brand' : 'brands'})</span>
             </button>
           ))}
         </div>

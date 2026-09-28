@@ -20,7 +20,7 @@ export default function BrandCard({ brand }: BrandCardProps) {
           color={brand.color}
           onColor={brand.onColor}
           label={brand.name}
-          width={96}
+          width={112}
         />
       </div>
       <div className="brand-card__body">

@@ -2,12 +2,13 @@
   /* radius of the ring and width of each can; both shrink on small screens */
   --wheel-can-w: clamp(84px, 22vw, 150px);
   --wheel-r: clamp(104px, 27vw, 250px);
-  --wheel-stage-h: calc(var(--wheel-can-w) * 1.9 + 3rem);
+  --wheel-stage-h: calc(var(--wheel-can-w) * 2.1 + 2rem);
   position: relative;
   overflow: hidden;
 }
 
 .wheel__header { text-align: center; margin-inline: auto; max-width: 640px; }
+.wheel__header h2 { font-size: var(--fs-2xl); }
 .wheel__header .lead { margin-inline: auto; }
 
 .wheel__region {
@@ -28,7 +29,7 @@
   height: var(--wheel-stage-h);
   perspective: 1100px;
   perspective-origin: 50% 35%;
-  overflow: hidden;
+  /* horizontal clipping is done by .wheel (overflow: hidden) so the glow and front can are never cut */
   touch-action: pan-y;
   cursor: grab;
   user-select: none;

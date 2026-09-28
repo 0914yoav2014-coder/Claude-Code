@@ -13,6 +13,15 @@ const GRAMS_PER_CUBE = 4
 /** Typical cup of brewed coffee (about 240 ml), for comparison. */
 const COFFEE_MG = 95
 
+/** Relative luminance of a #RRGGBB color (WCAG formula). */
+const luminance = (hex: string) => {
+  const [r, g, b] = [1, 3, 5].map((i) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+  })
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b
+}
+
 const canLabel = (f: FlavorData) => (f.slug === 'diet-coke' ? 'Diet Coke' : 'Coca-Cola')
 const canSublabel = (f: FlavorData) =>
   f.slug === 'original' || f.slug === 'diet-coke' ? undefined : f.shortName
@@ -41,6 +50,8 @@ function FlavorView({ flavor }: { flavor: FlavorData }) {
     '--flavor-body': colors.body,
     '--flavor-accent': colors.accent,
     '--flavor-bg': colors.bg,
+    // Light cans (Diet, Vanilla) use their darker accent where the color must stand out on white.
+    '--flavor-strong': luminance(colors.body) > 0.5 ? colors.accent : colors.body,
   } as CSSProperties
 
   const fadeUp = (delay = 0) =>
@@ -125,7 +136,7 @@ function FlavorView({ flavor }: { flavor: FlavorData }) {
                     ≈ {cubes} sugar {cubes === 1 ? 'cube' : 'cubes'}
                   </>
                 ) : (
-                  <>, no sugar cubes at all</>
+                  <>(no sugar cubes at all)</>
                 )}
               </p>
               {cubes > 0 ? (
@@ -135,9 +146,8 @@ function FlavorView({ flavor }: { flavor: FlavorData }) {
                       key={i}
                       className="glance__cube"
                       initial={reduce ? false : { opacity: 0, scale: 0.4, y: -10 }}
-                      whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: reduce ? 0 : i * 0.05, duration: 0.3 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      transition={{ delay: reduce ? 0 : 0.4 + i * 0.05, duration: 0.3 }}
                     />
                   ))}
                 </ul>
@@ -161,10 +171,8 @@ function FlavorView({ flavor }: { flavor: FlavorData }) {
                       <motion.span
                         className="glance__fill glance__fill--flavor"
                         initial={reduce ? false : { width: 0 }}
-                        whileInView={{ width: `${(nutrition.caffeineMg / maxCaffeine) * 100}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: 'easeOut' }}
-                        style={{ width: `${(nutrition.caffeineMg / maxCaffeine) * 100}%` }}
+                        animate={{ width: `${(nutrition.caffeineMg / maxCaffeine) * 100}%` }}
+                        transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
                       />
                     </span>
                     <span className="glance__value">{nutrition.caffeineMg} mg</span>
