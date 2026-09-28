@@ -88,7 +88,7 @@ export default function Can({
         y="92"
         textAnchor="middle"
         fontFamily="'Leckerli One', 'Brush Script MT', cursive"
-        fontSize={Math.min(22, 190 / Math.max(label.length, 1))}
+        fontSize={label === 'Coca-Cola' ? 22 : Math.min(20, 160 / Math.max(label.length, 1))}
         fill={textColor}
         transform="rotate(-8 60 92)"
       >
