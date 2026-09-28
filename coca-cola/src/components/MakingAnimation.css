@@ -20,7 +20,7 @@
 
 .making__label {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-anchor: middle;
@@ -31,7 +31,8 @@
 .making__zone.is-active .making__label { fill: var(--red); }
 .making__label--light,
 .making__zone.is-active .making__label--light { fill: var(--white); }
-.making__label--sm { font-size: 10px; }
+.making__label--sm { font-size: 11px; }
+.making__label--cold { fill: #3a93bb; }
 
 /* finished can: viewBox x 520 / y 193 / width 60 → percentages of the 800×360 stage */
 .making__finished {

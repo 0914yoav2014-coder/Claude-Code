@@ -175,6 +175,28 @@ export default function MakingAnimation({ compact = false }: MakingAnimationProp
             />
           </g>
 
+          {/* chilled halo while carbonating */}
+          <motion.rect
+            x="182"
+            y="142"
+            width="136"
+            height="166"
+            rx="18"
+            fill="#9fd3ea"
+            initial={false}
+            animate={{ opacity: step === 2 ? 1 : 0 }}
+            transition={t({ duration: 0.3 })}
+          />
+          <motion.text
+            x="234"
+            y="136"
+            className="making__label making__label--cold"
+            initial={false}
+            animate={{ opacity: step === 2 ? 1 : 0 }}
+            transition={t({ duration: 0.3 })}
+          >
+            CHILLED
+          </motion.text>
           <rect x="190" y="150" width="120" height="150" rx="12" fill="#fff" stroke={STEEL_DARK} strokeWidth="3" />
           <motion.rect
             x="196"
@@ -186,18 +208,6 @@ export default function MakingAnimation({ compact = false }: MakingAnimationProp
             initial={false}
             animate={{ scaleY: step === 0 ? 0.55 : 0.85, fill: step === 0 ? WATER : COLA }}
             transition={t({ duration: 1.4, ease: 'easeInOut' })}
-          />
-          {/* chilled jacket */}
-          <motion.rect
-            x="186"
-            y="238"
-            width="128"
-            height="10"
-            rx="5"
-            fill="#9fd3ea"
-            initial={false}
-            animate={{ opacity: step === 2 ? 1 : 0 }}
-            transition={t({ duration: 0.3 })}
           />
           {step === 2 &&
             BUBBLES.map((b, i) =>
@@ -316,8 +326,8 @@ export default function MakingAnimation({ compact = false }: MakingAnimationProp
           </motion.g>
           <motion.g
             initial={false}
-            animate={step === 5 ? { y: [-70, 0], opacity: [1, 1] } : { y: -70, opacity: 0 }}
-            transition={t(step === 5 ? { duration: 0.6, ease: 'easeIn' } : { duration: 0 })}
+            animate={step === 5 ? { y: [-70, 0, 0], opacity: [1, 1, 0] } : { y: -70, opacity: 0 }}
+            transition={t(step === 5 ? { duration: 1.2, times: [0, 0.5, 1], ease: 'easeIn' } : { duration: 0 })}
           >
             <ellipse cx="550" cy="194" rx="30" ry="5" fill="#d7dade" stroke={STEEL_DARK} strokeWidth="1.5" />
           </motion.g>
