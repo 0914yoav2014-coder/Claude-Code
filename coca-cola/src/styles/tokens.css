@@ -1,0 +1,76 @@
+@font-face {
+  font-family: 'Leckerli One';
+  src: url('/fonts/leckerli-one-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Archivo';
+  src: url('/fonts/archivo-latin-wght-normal.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  /* Brand */
+  --red: #f40009;
+  --red-deep: #b8000a;
+  --red-dark: #7a0006;
+  --black: #111111;
+  --white: #ffffff;
+  --cream: #fbf6ef;
+  --silver: #c9ccd1;
+  --silver-dark: #8b9097;
+
+  /* Surfaces & text */
+  --bg: var(--cream);
+  --surface: var(--white);
+  --text: var(--black);
+  --text-muted: #5b5b5b;
+  --border: #e6ded3;
+  --focus: #1a73e8;
+
+  /* Type */
+  --font-script: 'Leckerli One', 'Brush Script MT', cursive;
+  --font-display: 'Archivo', 'Inter', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --fs-2xl: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+  --fs-3xl: clamp(2.6rem, 1.6rem + 4.5vw, 5rem);
+
+  /* Space */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+  --space-9: 6rem;
+
+  /* Shape & depth */
+  --radius-sm: 8px;
+  --radius: 16px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06), 0 2px 6px rgb(0 0 0 / 0.05);
+  --shadow: 0 6px 24px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 20px 60px rgb(0 0 0 / 0.18);
+
+  --container: 1180px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --nav-h: 68px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
