@@ -11,23 +11,39 @@ A study app for students in grades 7–9. The student pastes notes, a chapter, a
 
 ## How a study set is built
 
-1. **Planner.** Claude reads the whole material and decides what the student must learn:
-   - It writes a list of units (rules, ideas, facts) and a word list.
-   - It skips everything a student is not tested on: test dates, word counts, page numbers, task instructions.
-   - When the material only names a topic (for example "Past simple"), the planner teaches it from general knowledge. Everything based on general knowledge is marked "הרחבה: לא מהחומר שלך" (Extra: not from your material).
-2. **Word cards** are made by code from the word list, in both directions: word → meaning and meaning → word.
-3. **Card writer.** Claude writes cards that make the student use the content, for example "Past simple of 'go'?" → "went". It does not ask what a topic includes.
-4. **Checker.** A second Claude pass drops cards that are about the document, vague, wrong or duplicated, and fixes small mistakes. The code also filters questions about word counts and pages, and word cards in disguise.
-5. **Quiz.** It mixes multiple choice, fill-in, true/false and one open question. A checker reviews the quiz too. Claude grades the open question; without AI, the student compares with a model answer.
-6. **Exam summary sheet**, in this order:
-   - a "Must know" box
-   - explained sections, with rule cards that include an example and a common mistake
-   - a word table
-   - the "Exam brief" at the end
+1. **Planner** (strong model). Claude reads the whole material and decides what the student must learn:
+   - It sorts the topics into parts (for example algebra, linear function, geometry) and suggests a study order.
+   - It stars the topics that are stressed or usually worth many points.
+   - When the material says the test includes prior knowledge ("ידע קודם"), it adds those topics.
+   - It skips test logistics. When the material only names a topic, it teaches that topic and marks it as extra.
+2. **Word cards** are made by code from the word list, in both directions.
+3. **Card writer and checker** (fast model). The cards make the student use the content, and the checker drops cards about the document itself.
+4. **Short quiz** (fast model): 10 mixed questions, checked when each is answered.
+5. **Exam summary sheet** (strong model, one call per part). Every topic follows the same template:
+   - what it is
+   - terms, each defined in one sentence
+   - formulas and rules in a blue box
+   - numbered steps
+   - an optional table or diagram
+   - a worked example in green, one step per line
+   - a common mistake in red, as "wrong" and "right"
+   - practice questions
 
-   It is at most two pages, and **Save as file** gives a printable copy.
+   The sheet ends with:
+   - a formula sheet
+   - how to check an answer
+   - a pre-test checklist the student ticks (saved)
+   - the answers to the practice questions
 
-Progress is shown as one sentence: "You already know 8 of 12 cards well". A card counts as known well after two correct answers in a row. The spaced-repetition schedule runs behind the scenes.
+   Diagrams are drawn by code from small JSON descriptions: number line, axes with lines, triangles with equal marks and medians or heights, parallel lines with a transversal.
+6. **Real test** (strong model, on request, 45 or 90 minutes). It is built like an Israeli school test:
+   - the header and instructions
+   - parts A and B
+   - questions with sub-questions and points that add up to 100
+   - multiple-choice options and writing lines
+   - figures
+
+   It downloads as a Word file. The file is written by the app itself (a ZIP of WordprocessingML, RTL, figures as PNG), with the full solution and marking guide on the last pages.
 
 ## Where it differs from the original spec
 
@@ -36,7 +52,7 @@ Progress is shown as one sentence: "You already know 8 of 12 cards well". A card
 | English first | Hebrew first | Asked by the product owner |
 | AI uses only the student's material | It also teaches topics the material only names, marked as extra | Asked by the product owner |
 | One AI call per job | Planner, writer and checker passes | Quality over speed, as asked. A build takes about a minute or two |
-| Quiz is multiple choice only | Multiple choice, fill-in, true/false and an open question | Asked by the product owner |
+| Quiz is multiple choice only | A choice between a short mixed quiz and a real test as a Word file | Asked by the product owner |
 | Summary in Markdown with Copy and Print | Structured exam summary sheet, Copy and Save as file | The viewer blocks printing; the sheet design follows the owner's reference page |
 | Mastery % and Leitner boxes on screen | One progress sentence | The percentage and the boxes were confusing |
 
