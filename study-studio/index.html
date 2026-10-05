@@ -453,6 +453,28 @@ textarea.input.open{min-height:120px;font-size:17px}
 @media (max-width:560px){.match-row{grid-template-columns:minmax(0,1fr)}.toc{margin-inline:-16px;padding-inline:16px}}
 @media print{.toc,.backlink,.head-row .row,.pq-help,.ans-row,.mockbar,#sec-review,.yn,.seg-yn{display:none!important}.more>summary{display:none}.more>.more-in{display:grid}.topic{break-inside:avoid}body{background:#fff}}
 
+/* v5: the summary reads like a well-written study document */
+.chap{background:var(--card);border:1px solid var(--line);border-radius:var(--r2);padding:28px 32px;display:grid;gap:14px;min-width:0}
+.chap-h{font-size:24px;font-weight:700;line-height:1.35;padding-bottom:10px;border-bottom:2px solid var(--acc)}
+.chap-intro{margin:0;font-size:17px;line-height:1.75;color:var(--ink);max-width:72ch}
+.chap .sec{display:grid;gap:10px;padding-top:6px}
+.chap .sec h3{font-size:19px;font-weight:700;display:flex;gap:8px;align-items:baseline}
+.chap .sec h3 .sn{color:var(--acc)}
+.sum-p{margin:0;font-size:16.5px;line-height:1.75;max-width:72ch}
+.sum-list{margin:0;padding-inline-start:24px;display:grid;gap:6px;font-size:16.5px;line-height:1.7;max-width:72ch}
+.sum-list>li::marker{color:var(--acc)}
+.sum-list strong{font-weight:700}
+.sum-list .sub{margin:4px 0 0;padding-inline-start:22px;list-style:circle;display:grid;gap:3px}
+.sum-q{margin:0;padding:10px 16px;border-inline-start:4px solid var(--gold);background:var(--gold-soft);border-radius:10px;display:grid;gap:4px}
+.sum-q p{margin:0;font-size:17px;line-height:1.7}
+.sum-q cite{font-style:normal;font-size:14px;color:var(--mut)}
+.concl{background:var(--soft);border-radius:14px;padding:14px 18px;display:grid;gap:6px}
+.concl h3{font-size:17px;color:var(--acc);font-weight:700}
+.chap .fbox{font-weight:500}
+.choices{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+@media (max-width:760px){.chap{padding:20px 18px}.chap-h{font-size:21px}}
+@media print{.chap{break-inside:auto;border:0;padding:0}.chap+.chap{break-before:page}.sec{break-inside:avoid}}
+
 /* Dialog, toast */
 dialog{border:0;border-radius:24px;padding:24px;background:var(--card);color:var(--ink);width:min(440px,calc(100% - 32px));box-shadow:0 24px 64px rgba(0,0,0,.25)}
 dialog::backdrop{background:var(--scrim)}
@@ -595,6 +617,7 @@ he: {
   checklistHint: 'סמן מה אתה כבר יודע. על מה שסימנת „עוד לא” כדאי לחזור.', yes: 'כן', notYet: 'עוד לא', checklistCount: '{k} מתוך {n} מוכנים',
   answersTitle: 'תשובות לתרגול', starTip: 'דגש במבחן: בדרך כלל הרבה נקודות', prior: 'ידע קודם',
   roundOf: '{n} כרטיסיות בסבב',
+  conclusionTitle: 'לסיכום', topicPractice: 'תרגול לפי נושאים', topicPracticeDesc: 'כל נושא עם הכלל, טעות נפוצה ותרגילים בשלוש רמות עם רמזים ופתרון מלא. כולל תוכנית לימוד לפי הימים שנשארו.', topicsReady: 'מוכן', makeTopics: 'להכין תרגול', newTopics: 'להכין תרגול חדש', writingTopics: 'מכין תרגול לפי נושאים… זה לוקח כדקה או שתיים.', topicsNote: 'התרגול נכתב לפי החומר שלך.', topicsStale: 'הוספת חומר מאז שהתרגול נכתב.', oldSheet5: 'הסיכום הזה נכתב בגרסה הקודמת, עם תרגילים בתוכו. התרגילים עברו למסך התרגול. אפשר לכתוב עכשיו סיכום נקי של החומר.',
   orderHint: 'לחץ על השורות לפי הסדר הנכון.', reset: 'להתחיל מחדש', pickReason: 'בחר נימוק', criteriaLbl: 'בדוק את עצמך: מה צריך להופיע בתשובה?', doneChecking: 'סיימתי לבדוק', showModel: 'להראות תשובה לדוגמה',
   likelyMistake: 'כנראה:', lvlBasic: 'בסיסי', lvlMedium: 'בינוני', lvlExam: 'ברמת מבחן', orderScore: '{k} מתוך {n} שורות במקום הנכון.', tryHint: 'נסה שוב, או פתח רמז.', hintLbl: 'רמז:', hintBtn: 'רמז', nextStep: 'צעד {k} מתוך {n}', fullSolution: 'פתרון מלא',
   topicScore: 'בנושא הזה: {k} מתוך {n} נכון.', reviewThese: 'נוסף לרשימת „לחזור על זה”: {list}.', conclusionLbl: 'מסקנה:', practiceStatic: 'תרגול', practiceLive: 'תרגל עכשיו: בסיסי, בינוני, ברמת מבחן', moreLbl: 'הסבר מלא, דוגמה ותרגול',
@@ -681,6 +704,7 @@ en: {
   checklistHint: 'Mark what you already know. Go back over anything marked “Not yet”.', yes: 'Yes', notYet: 'Not yet', checklistCount: '{k} of {n} ready',
   answersTitle: 'Answers to the practice questions', starTip: 'Stressed in the test: usually many points', prior: 'Prior knowledge',
   roundOf: '{n} cards in this round',
+  conclusionTitle: 'In short', topicPractice: 'Practice by topic', topicPracticeDesc: 'Each topic with its rule, a common mistake and exercises at three levels, with hints and full solutions. Includes a study plan for the days left.', topicsReady: 'Ready', makeTopics: 'Prepare practice', newTopics: 'Prepare new practice', writingTopics: 'Preparing practice by topic… this takes a minute or two.', topicsNote: 'The practice is written from your material.', topicsStale: 'You added material since this practice was written.', oldSheet5: 'This summary was written by the previous version, with exercises inside it. The exercises moved to the practice screen. You can now write a clean summary of the material.',
   orderHint: 'Tap the lines in the right order.', reset: 'Start over', pickReason: 'Pick a reason', criteriaLbl: 'Check yourself: what must your answer include?', doneChecking: 'Done checking', showModel: 'Show a model answer',
   likelyMistake: 'Likely mistake:', lvlBasic: 'Basic', lvlMedium: 'Medium', lvlExam: 'Test level', orderScore: '{k} of {n} lines are in the right place.', tryHint: 'Try again, or open a hint.', hintLbl: 'Hint:', hintBtn: 'Hint', nextStep: 'Step {k} of {n}', fullSolution: 'Full solution',
   topicScore: 'This topic: {k} of {n} right.', reviewThese: 'Added to “Go over again”: {list}.', conclusionLbl: 'Conclusion:', practiceStatic: 'Practice', practiceLive: 'Practice now: basic, medium, test level', moreLbl: 'Full explanation, example and practice',
@@ -740,7 +764,7 @@ const fmtScore = n => Number.isInteger(n) ? String(n) : n.toFixed(1);
 
 /* ---------- state + saving ---------- */
 let storageOk = true, saveState = 'ok', saveTimer = null;
-function blank() { return {v: 1, subjects: [], materials: [], cards: [], quizzes: {}, summaries: {}, exams: {}, checks: {}, attempts: {}, review: {}, planDone: {}, examRuns: {}, settings: {theme: 'system', lang: 'he', v: 2}}; }
+function blank() { return {v: 1, subjects: [], materials: [], cards: [], quizzes: {}, summaries: {}, exams: {}, checks: {}, attempts: {}, review: {}, planDone: {}, examRuns: {}, topicSets: {}, settings: {theme: 'system', lang: 'he', v: 2}}; }
 function load() {
   let d = null;
   try { const raw = localStorage.getItem(KEY); if (raw) d = JSON.parse(raw); } catch (e) { storageOk = false; }
@@ -750,7 +774,9 @@ function load() {
   out.settings = Object.assign(blank().settings, d.settings || {});
   if (!(d.settings && d.settings.v >= 2)) { out.settings.lang = 'he'; out.settings.v = 2; } // Hebrew is now the default for everyone once
   ['subjects', 'materials', 'cards'].forEach(k => { if (!Array.isArray(out[k])) out[k] = []; });
-  ['quizzes', 'summaries', 'exams', 'checks', 'attempts', 'review', 'planDone', 'examRuns'].forEach(k => { if (!out[k] || typeof out[k] !== 'object') out[k] = {}; });
+  ['quizzes', 'summaries', 'exams', 'checks', 'attempts', 'review', 'planDone', 'examRuns', 'topicSets'].forEach(k => { if (!out[k] || typeof out[k] !== 'object') out[k] = {}; });
+  // summaries from v3/v4 held topic cards with practice: that practice now lives on the practice screen
+  Object.entries(out.summaries).forEach(([sid, sum]) => { if (sum && sum.sheet && (sum.sheet.v === 3 || sum.sheet.v === 4) && !out.topicSets[sid]) out.topicSets[sid] = {sheet: sum.sheet, mids: sum.mids || [], builtAt: sum.builtAt}; });
   out.materials.forEach(m => { m.cardChunks = m.cardChunks || []; });
   Object.values(out.quizzes).forEach(q => { (q.questions || []).forEach(x => { if (!x.type) x.type = 'mc'; }); q.asked = q.asked || []; });
   return out;
@@ -1053,6 +1079,49 @@ const ACCURACY = `Accuracy rules (a wrong or vague line costs the student points
 - Each rule appears once on the whole sheet; do not repeat a rule in two topics.
 - Bold (**…**) at most one key word per topic.`;
 const MATH_CHECKLIST = `When the material is math, make sure the sheet covers, where they belong to the material: a proof whose reasons the student must work out; several word-problem types (ages, consecutive numbers, motion, work, percentages); solving a system by graph, substitution and elimination (with when to multiply an equation) plus the special cases (parallel lines: no solution; the same line: infinitely many); equations that simplify to $0 = 4$ or $0 = 0$; percentages (finding the whole, the original value, the percent change, successive changes); an equation with a denominator that is not just x; inequalities with an open or a closed circle on the number line, double inequalities, and flipping the sign; and the prior knowledge the test relies on.`;
+const SUMMARY_ACCURACY = `Accuracy (a wrong or vague line costs the student points):
+- Names, numbers, dates, verses, quotes and terms exactly as in the material. Never invent a quote: quote only words that appear in the material.
+- No vague words such as "somehow" or "kind of". Say exactly what happened or what the rule says.
+- Math: a median goes from a vertex to the MIDPOINT of the opposite side (it does not split the angle); the axis of symmetry of an isosceles triangle is the line from the apex to the middle of the base; a percent change can be negative (a decrease); S.S.A. is not a general congruence theorem; state the condition for the actual denominator (for $\\frac{6}{x-1}$ it is $x \\ne 1$); for similarity define the ratio k in one fixed direction and keep it.
+- Each fact appears once in the whole summary.`;
+function summaryPartPrompt(plan, part, units, text, cont) {
+  return `You are an excellent student who writes the clearest exam summaries in the class. Write the summary of one part of the study material below, for ${AUDIENCE}. The summary is the material itself, summarised: someone who reads only the summary knows everything the test can ask about this part, and understands what to learn and remember.
+
+This part: "${part}"${cont ? ' (it continues an earlier call: write only the sections for the topics below, and leave "intro" and "conclusion" empty)' : ''}. Its topics:
+${unitsText(units)}
+Never include: ${plan.ignored.join('; ') || 'instructions or logistics'}, or any other instructions, logistics or remarks about the document itself.
+
+How the summary looks (follow this closely):
+- "title": the name of the chapter or part and its main idea, for example "מלכים א' פרק א' – המאבק על ירושת דוד" or "Systems of linear equations".
+- "intro": 1 to 3 sentences: what this part is about, the background, and the central problem or idea.
+- "sections": the content in the order of the material. Each section has a short "heading" (the page numbers the sections) and "blocks":
+  - {"type":"text","text":""}: a short paragraph, when a few connected sentences explain best.
+  - {"type":"list","items":[{"text":"","sub":[""]}]}: bullet points, with details as "sub" points. Start a bullet with a short bold label and a colon when it helps: "**The flight to the altar:** out of fear, Adonijah…". Use this for people and camps, causes and results, stages, features.
+  - {"type":"list","ordered":true,"items":[…]}: when the order matters (stages of a story, steps of a method, a list the material numbers).
+  - {"type":"table","headers":[""],"rows":[[""]]}: when several items are compared by the same features (for example character / what they did / what happened to them, or the methods for solving a system). Every row has a cell for every header.
+  - {"type":"quote","text":"","source":""}: an important quote copied exactly from the material, with where it comes from when the material says.
+  - {"type":"rule","text":""}: a formula, theorem or rule, stated exactly and completely (math and grammar).
+- Explain a hard term in parentheses the first time it appears: "exposition (the opening that presents the problem)".
+- Math and grammar: explain each topic in plain words and give its rules. Do NOT include worked examples, exercises, questions or tips; only the explanation and the rules (the steps of a method may be an ordered list).
+- "conclusion": 1 to 4 short lines: what this part means as a whole and what follows from it.
+- Cover every fact, name, idea and rule in this part that could be on the test. The length follows the material: a long part gets a long summary, a short one a short summary. Do not pad and do not repeat.
+- When the material only names a topic without explaining it, explain it briefly and correctly.
+- No questions, no exercises, no "remember for the test" remarks, no emojis.
+- Bold (**…**) only for the labels at the start of bullets and for key terms, not whole sentences.
+
+${SUMMARY_ACCURACY}
+
+Write in ${plan.explainIn || 'the language of the study content'}, in simple, clear language. Write every math expression in LaTeX between single dollar signs, for example $3x + 5 = 20$, $x \\le 4$, $\\triangle ABC \\cong \\triangle DEF$. Do not number headings or bullets yourself.
+
+Before you answer, read your summary again against the material and fix anything wrong, missing or vague.
+
+Reply with JSON only:
+{"title":"","intro":"","sections":[{"heading":"","blocks":[{"type":"list","items":[{"text":"","sub":[""]}]}]}],"conclusion":[""]}
+
+<material>
+${text}
+</material>`;
+}
 function sheetPartPrompt(plan, part, units, text) {
   return `You are the best teacher in the school, writing one part of an exam summary sheet for ${AUDIENCE}. The student must be able to LEARN and PRACTISE from it alone.
 
@@ -1263,6 +1332,30 @@ function cleanTopic(x) {
     check: clip(x.check, 220), prior: !!x.prior
   };
 }
+function cleanBlock(b) {
+  if (!b || typeof b !== 'object') return null;
+  if (b.type === 'text') { const text = clip(b.text, 2000); return text ? {type: 'text', text} : null; }
+  if (b.type === 'quote') { const text = clip(b.text, 800); return text ? {type: 'quote', text, source: clip(b.source, 120)} : null; }
+  if (b.type === 'rule') { const text = stripNum(clip(b.text, 500)); return text ? {type: 'rule', text} : null; }
+  if (b.type === 'table') { const tb = cleanTable(b); return tb ? Object.assign({type: 'table'}, tb) : null; }
+  const items = (Array.isArray(b.items) ? b.items : []).map(it => typeof it === 'string' ? {text: it} : it).map(it => it && {text: stripNum(clip(it.text, 700)), sub: arrN(it.sub, 12, 500)}).filter(it => it && it.text).slice(0, 30);
+  return items.length ? {type: 'list', ordered: !!b.ordered, items} : null;
+}
+function cleanSummaryPart(d) {
+  if (!d || typeof d !== 'object' || !Array.isArray(d.sections)) throw {code: 'invalid_json'};
+  const sections = d.sections.map(s => s && {heading: stripNum(clip(s.heading, 160)), blocks: (Array.isArray(s.blocks) ? s.blocks : []).map(cleanBlock).filter(Boolean).slice(0, 20)}).filter(s => s && s.blocks.length).slice(0, 20);
+  if (!sections.length) throw {code: 'invalid_json'};
+  return {title: clip(d.title, 160), intro: clip(d.intro, 900), sections, conclusion: arr(typeof d.conclusion === 'string' ? [d.conclusion] : d.conclusion, 6, 500)};
+}
+/* Older sheets and the examples are topic cards; this turns them into a plain summary. */
+function topicsToChapters(sh) {
+  return sh.parts.map(p => ({title: p.name, intro: '', conclusion: [], sections: p.topics.map(tp => ({heading: tp.title, blocks: [
+    tp.what && {type: 'text', text: tp.what},
+    ...tp.rules.map(r => ({type: 'rule', text: r})),
+    tp.terms.length && {type: 'list', items: tp.terms.map(x => ({text: `**${x.term}:** ${x.def}`, sub: []}))},
+    tp.steps.length && {type: 'list', ordered: true, items: tp.steps.map(x => ({text: x, sub: []}))},
+    tp.table && Object.assign({type: 'table'}, tp.table)].filter(Boolean)}))}));
+}
 function cleanSheetPart(d) {
   if (!d || typeof d !== 'object' || !Array.isArray(d.topics)) throw {code: 'invalid_json'};
   const topics = d.topics.map(cleanTopic).filter(Boolean).slice(0, 12);
@@ -1396,7 +1489,7 @@ function subjectText(sid, limit) {
   const mats = matsOf(sid), parts = mats.map(m => `### ${m.title}\n${m.text}`), total = parts.reduce((a, p) => a + p.length, 0);
   return total <= limit ? parts.join('\n\n') : parts.map(p => p.slice(0, Math.floor(limit * p.length / total))).join('\n\n');
 }
-const sheetPartCache = {};
+const sheetPartCache = {}, summaryCache = {};
 function makeSheet(sid) {
   if (sheetJobs[sid]) return sheetJobs[sid];
   const run = async () => {
@@ -1405,21 +1498,37 @@ function makeSheet(sid) {
     const plan = subjectPlan(sid), text = subjectText(sid, SHEET_INPUT), groups = sheetGroups(plan);
     const results = await Promise.all(groups.map(g => {
       const key = sid + '|' + g.name + '|' + g.units.map(u => u.title).join('|') + '|' + text.length;
-      if (sheetPartCache[key]) return sheetPartCache[key];
-      return askJson(sheetPartPrompt(plan, g.name, g.units, text), {modelTier: 'default'}).then(cleanSheetPart).then(r => (sheetPartCache[key] = r));
+      if (summaryCache[key]) return summaryCache[key];
+      return askJson(summaryPartPrompt(plan, g.name, g.units, text, g.cont), {modelTier: 'default'}).then(cleanSummaryPart).then(r => (summaryCache[key] = r));
     }));
     if (!subj(sid)) return;
-    const parts = [];
-    const unitOf = new Map(plan.units.map(u => [norm(u.title), u]));
-    results.forEach(r => r.topics.forEach(tp => { const u = unitOf.get(norm(tp.title)); tp.prior = !!(u && u.prior); if (u && u.star && !tp.star) { tp.star = true; tp.starWhy = tp.starWhy || u.starWhy; } }));
-    groups.forEach((g, i) => { const prev = parts[parts.length - 1]; if (g.cont && prev && prev.name === g.name) prev.topics.push(...results[i].topics); else parts.push({name: g.name, topics: results[i].topics.slice()}); });
-    const must = [], how = [];
-    results.forEach(r => { r.must.slice(0, 3).forEach(x => must.push(x)); r.howToCheck.forEach(x => { if (!how.some(h => norm(h) === norm(x))) how.push(x); }); });
-    S.summaries[sid] = {subjectId: sid, sheet: {v: 4, title: plan.subject || subj(sid).name, must: must.slice(0, 8), order: parts.map(p => p.name), parts, howToCheck: how.slice(0, 5)}, mids: mats.map(m => m.id), builtAt: Date.now()};
+    const chapters = [];
+    groups.forEach((g, i) => { const r = results[i], prev = chapters[chapters.length - 1]; if (g.cont && prev && prev.part === g.name) { prev.sections.push(...r.sections); prev.conclusion.push(...r.conclusion); } else chapters.push(Object.assign({part: g.name}, r, {title: r.title || g.name, sections: r.sections.slice(), conclusion: r.conclusion.slice()})); });
+    S.summaries[sid] = {subjectId: sid, sheet: {v: 5, title: plan.subject || subj(sid).name, chapters}, mids: mats.map(m => m.id), builtAt: Date.now()};
     save(); refresh();
   };
   sheetJobs[sid] = run().finally(() => { delete sheetJobs[sid]; });
   return sheetJobs[sid];
+}
+async function makeTopics(sid, signal) {
+  const mats = matsOf(sid); if (!mats.length) return null;
+  const plan = subjectPlan(sid), text = subjectText(sid, SHEET_INPUT), groups = sheetGroups(plan);
+  const opts = {modelTier: 'default'}; if (signal) opts.signal = signal;
+  const results = await Promise.all(groups.map(g => {
+    const key = sid + '|' + g.name + '|' + g.units.map(u => u.title).join('|') + '|' + text.length;
+    if (sheetPartCache[key]) return sheetPartCache[key];
+    return askJson(sheetPartPrompt(plan, g.name, g.units, text), opts).then(cleanSheetPart).then(r => (sheetPartCache[key] = r));
+  }));
+  if (!subj(sid)) return null;
+  const parts = [];
+  const unitOf = new Map(plan.units.map(u => [norm(u.title), u]));
+  results.forEach(r => r.topics.forEach(tp => { const u = unitOf.get(norm(tp.title)); tp.prior = !!(u && u.prior); if (u && u.star && !tp.star) { tp.star = true; tp.starWhy = tp.starWhy || u.starWhy; } }));
+  groups.forEach((g, i) => { const prev = parts[parts.length - 1]; if (g.cont && prev && prev.name === g.name) prev.topics.push(...results[i].topics); else parts.push({name: g.name, topics: results[i].topics.slice()}); });
+  const must = [], how = [];
+  results.forEach(r => { r.must.slice(0, 3).forEach(x => must.push(x)); r.howToCheck.forEach(x => { if (!how.some(h => norm(h) === norm(x))) how.push(x); }); });
+  S.topicSets[sid] = {sheet: {v: 4, title: plan.subject || subj(sid).name, must: must.slice(0, 8), order: parts.map(p => p.name), parts, howToCheck: how.slice(0, 5)}, mids: mats.map(m => m.id), builtAt: Date.now()};
+  save();
+  return S.topicSets[sid];
 }
 async function makeExam(sid, minutes, signal) {
   const plan = subjectPlan(sid);
@@ -1553,7 +1662,7 @@ function renderNow(nav) {
 }
 function refresh() {
   if (route.name === 'add' && !route.buildId) return;
-  if (['cards', 'quiz', 'exam', 'mock'].includes(route.name)) return;
+  if (['cards', 'quiz', 'exam', 'mock', 'topics'].includes(route.name)) return;
   render(false);
 }
 function go(r) { route = r; menuFor = null; render(true); }
@@ -1562,7 +1671,7 @@ function goBack() {
   if (r.name === 'add' && r.buildId) { const m = matById(r.buildId); return go(m ? {name: 'subject', id: m.subjectId} : {name: 'home'}); }
   if (r.name === 'subject' || (r.name === 'add' && !r.from)) return go({name: 'home'});
   if (r.name === 'add' && r.from) return go({name: 'subject', id: r.from});
-  if (['quiz', 'exam'].includes(r.name)) { if (r.name === 'quiz' && Q && Q.ctl) Q.ctl.abort(); if (r.name === 'exam' && EX && EX.ctl && EX.stage === 'gen') { EX.ctl.abort(); EX.stage = 'idle'; } return go({name: 'practice', id: r.id}); }
+  if (['quiz', 'exam', 'topics'].includes(r.name)) { if (r.name === 'quiz' && Q && Q.ctl) Q.ctl.abort(); if (r.name === 'topics' && TP && TP.ctl && TP.stage === 'gen') { TP.ctl.abort(); TP.stage = 'idle'; } if (r.name === 'exam' && EX && EX.ctl && EX.stage === 'gen') { EX.ctl.abort(); EX.stage = 'idle'; } return go({name: 'practice', id: r.id}); }
   if (r.name === 'mock') { clearInterval(mockTimer); mockTimer = null; return go({name: 'exam', id: r.id}); }
   if (['cards', 'summary', 'practice'].includes(r.name)) return go({name: 'subject', id: r.id});
 }
@@ -2169,7 +2278,7 @@ let katexState = 'idle';
 function ensureKatex() {
   if (katexState !== 'idle') return;
   katexState = 'loading';
-  loadScript(KATEX).then(() => { katexState = window.katex ? 'ready' : 'failed'; if (['summary', 'mock'].includes(route.name)) render(false); }, () => { katexState = 'failed'; });
+  loadScript(KATEX).then(() => { katexState = window.katex ? 'ready' : 'failed'; if (['summary', 'mock', 'topics'].includes(route.name)) render(false); }, () => { katexState = 'failed'; });
 }
 function deLatex(t) {
   let s = String(t);
@@ -2251,7 +2360,7 @@ function upgradeSheet(sum) {
 const openTopics = new Set(), PS = {};
 const attemptsOf = sid => (S.attempts[sid] = S.attempts[sid] || {});
 function findPractice(sid, pid) {
-  const sh = S.summaries[sid] && S.summaries[sid].sheet;
+  const sh = S.topicSets[sid] && S.topicSets[sid].sheet;
   if (!sh || !sh.parts) return null;
   for (const p of sh.parts) for (const tp of p.topics) for (const q of tp.practice) if (q.id === pid) return {tp, p: q};
   return null;
@@ -2374,7 +2483,6 @@ function sheetV4Html(s, sum, cd, isStatic) {
     ${planHtml(s, sh, isStatic)}
     ${sh.must.length ? `<section class="must"><span class="tag">${I.star}${t('mustKnow')}</span><ul dir="${cd}">${sh.must.map(x => `<li>${rich(x)}</li>`).join('')}</ul></section>` : ''}
     ${parts}
-    ${vocabTableHtml(vocab)}
     ${isStatic ? '' : reviewHtml(s)}
     ${formulas.length ? `<section class="formulas" id="sec-formulas"><h2>${t('formulaSheet')}</h2>${formulas.map(p => `<div class="stack" style="gap:8px">${formulas.length > 1 ? `<h3 dir="${cd}">${rich(p.name)}</h3>` : ''}<div class="fgrid">${p.items.map(r => `<div class="fbox">${richLine(r)}</div>`).join('')}</div></div>`).join('')}</section>` : ''}
     ${sh.howToCheck.length ? `<section class="panel stack" style="gap:8px"><h2>${t('howToCheck')}</h2><ul dir="${cd}" class="plain-ul">${sh.howToCheck.map(x => `<li>${rich(x)}</li>`).join('')}</ul></section>` : ''}
@@ -2382,9 +2490,28 @@ function sheetV4Html(s, sum, cd, isStatic) {
       <ul class="chk">${checks.map(c => { const k = checkKey(c), v = state[k]; return `<li><span dir="${cd}">${rich(c)}</span>${isStatic ? `<span class="chk-static">☐ ${t('yes')}&nbsp;&nbsp;☐ ${t('notYet')}</span>` : `<span class="seg-yn"><button type="button" class="yn ${v === 'yes' ? 'on yes' : ''}" data-act="chk" data-k="${esc(k)}" data-v="yes" aria-pressed="${v === 'yes'}">${t('yes')}</button><button type="button" class="yn ${v === 'no' ? 'on no' : ''}" data-act="chk" data-k="${esc(k)}" data-v="no" aria-pressed="${v === 'no'}">${t('notYet')}</button></span>`}</li>`; }).join('')}</ul></section>` : ''}
     ${isStatic && ctx.answers.length ? `<section class="answers"><h2>${t('answersTitle')}</h2><ol dir="${cd}">${ctx.answers.map(p => `<li><div>${p.steps.map(x => richLine(x)).join('')}${p.answer ? `<p><b>${t('answerLbl')}</b> ${rich(p.answer)}</p>` : p.type === 'order' ? p.lines.map(x => richLine(x)).join('') : p.type === 'match' ? p.pairs.map(x => `<p>${rich(x.claim)} — ${rich(x.reason)}</p>`).join('') : ''}</div></li>`).join('')}</ol></section>` : ''}`;
 }
+/* ---------- the summary itself: the material, summarised like a good student's notes ---------- */
+function blockHtml(b) {
+  if (b.type === 'text') return `<p class="sum-p">${rich(b.text)}</p>`;
+  if (b.type === 'rule') return `<div class="fbox">${richLine(b.text)}</div>`;
+  if (b.type === 'table') return tableHtml(b);
+  if (b.type === 'quote') return `<blockquote class="sum-q"><p dir="auto">״${rich(b.text)}״</p>${b.source ? `<cite>${rich(b.source)}</cite>` : ''}</blockquote>`;
+  const tag = b.ordered ? 'ol' : 'ul';
+  return `<${tag} class="sum-list">${b.items.map(it => `<li>${rich(it.text)}${it.sub.length ? `<ul class="sub">${it.sub.map(x => `<li>${rich(x)}</li>`).join('')}</ul>` : ''}</li>`).join('')}</${tag}>`;
+}
+function summaryV5Html(s, sum, cd) {
+  const sh = sum.sheet;
+  return sh.chapters.map(c => `<section class="chap" dir="${cd}"><h2 class="chap-h">${rich(c.title)}</h2>
+    ${c.intro ? `<p class="chap-intro">${rich(c.intro)}</p>` : ''}
+    ${c.sections.map((sec, j) => `<div class="sec">${sec.heading ? `<h3><span class="sn">${j + 1}.</span> ${rich(sec.heading)}</h3>` : ''}${sec.blocks.map(blockHtml).join('')}</div>`).join('')}
+    ${c.conclusion.length ? `<div class="concl"><h3>${t('conclusionTitle')}</h3>${c.conclusion.length > 1 ? `<ul class="sum-list">${c.conclusion.map(x => `<li>${rich(x)}</li>`).join('')}</ul>` : `<p class="sum-p">${rich(c.conclusion[0])}</p>`}</div>` : ''}
+  </section>`).join('') + vocabTableHtml(subjectPlan(s.id).vocab);
+}
 function sheetBodyHtml(s, sum, cd, isStatic) {
   if (!sum.sheet) return legacyHtml(sum, cd);
-  return sum.sheet.v >= 3 ? sheetV4Html(s, sum, cd, isStatic) : sheetV2Html(s, sum, cd);
+  if (sum.sheet.v >= 5) return summaryV5Html(s, sum, cd);
+  if (sum.sheet.v >= 3) return `<div class="panel status"><p>${t('oldSheet5')}</p><button type="button" class="btn pri" data-act="rewrite-sheet" id="rewriteBtn">${t('newSheet')}</button></div>`;
+  return sheetV2Html(s, sum, cd);
 }
 VIEWS.summary = () => {
   const s = subj(route.id);
@@ -2405,6 +2532,26 @@ VIEWS.summary = () => {
 };
 function sheetPlain(s, sum) {
   if (!sum.sheet) return `# ${s.name}\n\n${sum.markdown}\n\n## ${t('brief')}\n${(sum.facts || []).map(f => '- ' + f).join('\n')}\n`;
+  if (sum.sheet.v >= 5) {
+    const P = plainMath, out = [`# ${P(sum.sheet.title || s.name)}`], vocab = subjectPlan(s.id).vocab;
+    for (const c of sum.sheet.chapters) {
+      const b = [`## ${P(c.title)}`]; if (c.intro) b.push(P(c.intro));
+      c.sections.forEach((sec, j) => {
+        b.push(`\n${j + 1}. ${P(sec.heading)}`);
+        for (const x of sec.blocks) {
+          if (x.type === 'text') b.push(P(x.text));
+          else if (x.type === 'rule') b.push(`[ ${P(x.text)} ]`);
+          else if (x.type === 'quote') b.push(`"${P(x.text)}"${x.source ? ` (${P(x.source)})` : ''}`);
+          else if (x.type === 'table') b.push([x.headers.join(' | '), ...x.rows.map(r => r.join(' | '))].map(P).join('\n'));
+          else x.items.forEach((it, k) => { b.push(`${x.ordered ? (k + 1) + '.' : '•'} ${P(it.text)}`); it.sub.forEach(y => b.push(`   o ${P(y)}`)); });
+        }
+      });
+      if (c.conclusion.length) b.push(`\n${t('conclusionTitle')}\n` + c.conclusion.map(x => '• ' + P(x)).join('\n'));
+      out.push(b.join('\n'));
+    }
+    if (vocab.length) out.push(`## ${t('wordsTitle')}\n` + vocab.map(v => `${v.term} — ${v.meaning}`).join('\n'));
+    return out.join('\n\n').replace(/\*\*/g, '') + '\n';
+  }
   upgradeSheet(sum);
   const sh = sum.sheet, vocab = subjectPlan(s.id).vocab, P = plainMath, out = [`# ${P(sh.title || s.name)}`];
   if (sh.must.length) out.push(`★ ${t('mustKnow')}\n` + sh.must.map(x => '- ' + P(x)).join('\n'));
@@ -2509,9 +2656,38 @@ VIEWS.practice = () => {
     <h1 tabindex="-1">${t('practiceTitle')}</h1>
     <div class="choices">
       <button type="button" class="choice" data-act="quiz" data-id="${s.id}" id="choiceQuiz"><span class="ic">${I.quiz}</span><b>${t('quickQuiz')}</b><span>${t('quickQuizDesc')}</span>${quiz && quiz.lastScore ? `<span class="chip">${t('lastScore', {s: iso(quiz.lastScore)})}</span>` : ''}</button>
+      <button type="button" class="choice" data-act="topics" data-id="${s.id}" id="choiceTopics"><span class="ic">${I.edit}</span><b>${t('topicPractice')}</b><span>${t('topicPracticeDesc')}</span>${S.topicSets[s.id] ? `<span class="chip">${t('topicsReady')}</span>` : ''}</button>
       <button type="button" class="choice" data-act="exam" data-id="${s.id}" id="choiceExam"><span class="ic">${I.doc}</span><b>${t('realExam')}</b><span>${t('realExamDesc')}</span>${exam ? `<span class="chip">${t('lastExam', {d: esc(fmtDate(todayStr(new Date(exam.builtAt))))})}</span>` : ''}</button>
     </div></div>`;
 };
+let TP = null;
+VIEWS.topics = () => {
+  const s = subj(route.id);
+  if (!s) { route = {name: 'home'}; return VIEWS.home(); }
+  ensureKatex();
+  if (!TP || TP.sid !== s.id) TP = {sid: s.id, stage: 'idle', err: null, ctl: null};
+  const set = S.topicSets[s.id], cd = contentDir(s.id), head = `<div>${backBtn(t('practiceTitle'))}</div>`;
+  if (TP.stage === 'gen') return `<div class="stack">${head}<div class="panel result" aria-live="polite"><span class="spin" style="width:32px;height:32px"></span><h1 tabindex="-1">${t('writingTopics')}</h1><button type="button" class="btn big" data-act="stop-topics">${t('stop')}</button></div></div>`;
+  const err = TP.err ? `<p class="msg" role="alert">${errText(TP.err)}</p>` : '';
+  if (!set) return `<div class="stack">${head}<h1 tabindex="-1">${t('topicPractice')}</h1><p class="lead">${t('topicPracticeDesc')}</p>${err}<div class="row"><button type="button" class="btn pri big" data-act="make-topics" id="makeTopicsBtn">${t('makeTopics')}</button></div><p class="hint">${t('topicsNote')}</p></div>`;
+  const stale = matsOf(s.id).some(m => !(set.mids || []).includes(m.id));
+  return `<div class="stack sheet">${head}
+    <div class="stack" style="gap:8px"><p class="eyebrow">${t('topicPractice')}</p><h1 tabindex="-1" dir="${cd}">${esc(plainMath(set.sheet.title || s.name))}</h1></div>
+    ${stale ? `<div class="panel status"><p>${t('topicsStale')}</p><button type="button" class="btn pri" data-act="make-topics">${t('newTopics')}</button></div>` : ''}
+    ${err}${sheetV4Html(s, set, cd, false)}
+    ${stale ? '' : `<div class="row"><button type="button" class="btn" data-act="make-topics" id="makeTopicsBtn">${t('newTopics')}</button></div>`}</div>`;
+};
+async function generateTopics() {
+  const sid = TP.sid;
+  TP.stage = 'gen'; TP.err = null; TP.ctl = new AbortController();
+  const ctl = TP.ctl;
+  render(true);
+  try { if (!(await getSample())) throw {code: 'unavailable'}; Object.keys(sheetPartCache).forEach(k => { if (k.startsWith(sid + '|')) delete sheetPartCache[k]; }); await makeTopics(sid, ctl.signal); }
+  catch (e) { if (TP.ctl === ctl) TP.err = (e && e.code) === 'cancelled' ? null : ((e && e.code) || 'upstream_error'); }
+  if (TP.ctl !== ctl) return;
+  TP.stage = 'idle';
+  if (route.name === 'topics') render(true);
+}
 let EX = null;
 const examLabels = rtl => rtl ? {name: 'שם:', cls: 'כיתה:', date: 'תאריך:', time: 'זמן', minutes: 'דקות', total: 'סה״כ 100 נקודות', instr: 'הוראות לנבחן:', q: 'שאלה', pts: 'נקודות', good: 'בהצלחה!', sol: 'פתרון מלא ומחוון', answer: 'תשובה:', grading: 'ניקוד:', subs: 'אבגדהוזח'} : {name: 'Name:', cls: 'Class:', date: 'Date:', time: 'Time', minutes: 'minutes', total: 'Total: 100 points', instr: 'Instructions:', q: 'Question', pts: 'points', good: 'Good luck!', sol: 'Full solution and marking guide', answer: 'Answer:', grading: 'Points:', subs: 'abcdefgh'};
 function examPaperHtml(rec) {
@@ -2780,7 +2956,7 @@ function deleteSubject(id) {
     S.subjects = S.subjects.filter(x => x.id !== id);
     S.materials = S.materials.filter(x => x.subjectId !== id);
     S.cards = S.cards.filter(x => x.subjectId !== id);
-    delete S.quizzes[id]; delete S.summaries[id]; delete S.exams[id]; delete S.checks[id]; ['attempts', 'review', 'planDone', 'examRuns'].forEach(k => delete S[k][id]);
+    delete S.quizzes[id]; delete S.summaries[id]; delete S.exams[id]; delete S.checks[id]; ['attempts', 'review', 'planDone', 'examRuns', 'topicSets'].forEach(k => delete S[k][id]);
     Object.keys(jobs).forEach(k => { if (jobs[k].sid === id) delete jobs[k]; });
     save(); go({name: 'home'});
   }});
@@ -3038,7 +3214,9 @@ function insertExample({name, title, text, plan, cards, quiz, sheet, examIn, kno
   S.cards.push(...all);
   const qs = cleanQuestions(quiz.map(q => Object.assign({fromMaterial: true}, q)));
   S.quizzes[sid] = {subjectId: sid, questions: qs, asked: qs.map(x => x.q), lastScore: null};
-  S.summaries[sid] = {subjectId: sid, sheet: exampleSheet(sheet), mids: [mid], builtAt: now};
+  const tsh = exampleSheet(sheet);
+  S.topicSets[sid] = {sheet: tsh, mids: [mid], builtAt: now};
+  S.summaries[sid] = {subjectId: sid, sheet: {v: 5, title: tsh.title, chapters: topicsToChapters(tsh)}, mids: [mid], builtAt: now};
   return sid;
 }
 function addExamples() {
@@ -3098,6 +3276,9 @@ const ACT = {
   quiz: el => { const qz = S.quizzes[el.dataset.id]; startQuiz(el.dataset.id, qz && qz.questions ? qz.questions.slice() : [], 'full'); go({name: 'quiz', id: el.dataset.id}); },
   practice: el => go({name: 'practice', id: el.dataset.id}),
   exam: el => { EX = null; go({name: 'exam', id: el.dataset.id}); },
+  topics: el => { TP = null; go({name: 'topics', id: el.dataset.id}); },
+  'make-topics': () => generateTopics(),
+  'stop-topics': () => { if (TP && TP.ctl) TP.ctl.abort(); TP.stage = 'idle'; render(true); },
   'exam-len': el => { EX.minutes = Number(el.dataset.v); render(false); },
   'make-exam': () => generateExam(),
   'stop-exam': () => { if (EX && EX.ctl) EX.ctl.abort(); EX.stage = 'idle'; render(true); },
