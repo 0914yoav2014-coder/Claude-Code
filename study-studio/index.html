@@ -494,6 +494,8 @@ ol.sum-list>li::marker{font-weight:700;font-variant-numeric:tabular-nums}
   .sum-q,.concl,.vt th,.chap .fbox{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
 
+.sum-sh{font-size:17px;font-weight:700;margin:8px 0 0;display:flex;gap:8px;align-items:baseline}
+.sum-sh .sn{color:var(--acc)}
 /* Dialog, toast */
 dialog{border:0;border-radius:24px;padding:24px;background:var(--card);color:var(--ink);width:min(440px,calc(100% - 32px));box-shadow:0 24px 64px rgba(0,0,0,.25)}
 dialog::backdrop{background:var(--scrim)}
@@ -777,7 +779,14 @@ const ltr = s => `<span dir="ltr" class="num">${esc(s)}</span>`;
 const arr = (a, n, len) => (Array.isArray(a) ? a : []).map(x => clip(x, len)).filter(Boolean).slice(0, n);
 /* Keeps math like "5 + 3 = 8" reading left to right inside Hebrew text. Works on already-escaped HTML. */
 const MATH = /(?:[−\-](?=[0-9A-Za-z(]))?(?:[0-9A-Za-z(√△∠]|&lt;|&gt;)(?:[0-9A-Za-z\s+\-−×÷*/=().^%,·→²³√△∠⊥≅∥°≤≥≠]|&lt;|&gt;)*(?:[0-9A-Za-z)²³°]|&lt;|&gt;)/g;
-const bidiMath = h => h.replace(MATH, m => (/\d/.test(m) && /[=+\-−×÷*/^→≤≥≠]|&lt;|&gt;/.test(m)) || /[△∠⊥≅∥]/.test(m) ? `<span dir="ltr">${m}</span>` : m);
+const parenBal = m => (m.match(/\(/g) || []).length - (m.match(/\)/g) || []).length;
+const bidiMath = h => h.replace(MATH, m0 => {
+  // a bracket that belongs to the sentence, as in "(פסוקים 1-9)", stays outside the left-to-right run
+  let pre = '', m = m0, post = '';
+  while (parenBal(m) < 0 && m.endsWith(')')) { post = ')' + post; m = m.slice(0, -1); }
+  while (parenBal(m) > 0 && m.startsWith('(')) { pre += '('; m = m.slice(1); }
+  return pre + ((/\d/.test(m) && /[=+\-−×÷*/^→≤≥≠]|&lt;|&gt;/.test(m)) || /[△∠⊥≅∥]/.test(m) ? `<span dir="ltr">${m}</span>` : m) + post;
+});
 const tx = s => bidiMath(esc(s));
 const fmtScore = n => Number.isInteger(n) ? String(n) : n.toFixed(1);
 
@@ -1102,31 +1111,37 @@ const SUMMARY_ACCURACY = `Accuracy (a wrong or vague line costs the student poin
 - Names, numbers, dates, verses, quotes and terms exactly as in the material. Never invent a quote: quote only words that appear in the material.
 - No vague words such as "somehow" or "kind of". Say exactly what happened or what the rule says.
 - Math: a median goes from a vertex to the MIDPOINT of the opposite side (it does not split the angle); the axis of symmetry of an isosceles triangle is the line from the apex to the middle of the base; a percent change can be negative (a decrease); S.S.A. is not a general congruence theorem; state the condition for the actual denominator (for $\\frac{6}{x-1}$ it is $x \\ne 1$); for similarity define the ratio k in one fixed direction and keep it.
-- Each fact appears once in the whole summary.`;
+- Each fact appears once in this part. Other parts are summarised separately, so do not summarise them; but if the material opens this part with a short recap of an earlier part, keep it as a first section of 2 to 4 bullets (for example "הרקע: המאבק על הירושה (מפרק א')").`;
 function summaryPartPrompt(plan, part, units, text, cont) {
+  const he = /hebrew|עברית/i.test(plan.explainIn || '');
+  const ex = he ? {label: '"**הבריחה למזבח:** מתוך פחד, אדוניהו…"', term: '"מצג (אקספוזיציה)", "סיפור אטיולוגי (סיפור המסביר את המקור למשהו)"', lead: '"הפרק מתאר מאבק בין שני בניו של דוד:"', head: '"צוואת דוד (פסוקים 1-9)"', concl: '"**משמעות:**"'}
+    : {label: '"**The flight to the altar:** out of fear, Adonijah…"', term: '"exposition (the opening that presents the problem)"', lead: '"The chapter describes a struggle between two of David\'s sons:"', head: '"David\'s will (verses 1-9)"', concl: '"**Meaning:**"'};
+  const contNote = cont === 'middle' ? ' (it continues an earlier call: write only the sections for the topics below, and leave "intro" and "conclusion" empty)' : cont === 'last' ? ' (it continues an earlier call: write only the sections for the topics below, leave "intro" empty, and write "conclusion" for the whole part)' : cont === 'first' ? ' (later calls continue it: write the "intro" for the whole part, the sections for the topics below, and leave "conclusion" empty)' : '';
   return `You are an excellent student who writes the clearest exam summaries in the class. Write the summary of one part of the study material below, for ${AUDIENCE}. The summary is the material itself, summarised: someone who reads only the summary knows everything the test can ask about this part, and understands what to learn and remember.
 
-This part: "${part}"${cont ? ' (it continues an earlier call: write only the sections for the topics below, and leave "intro" and "conclusion" empty)' : ''}. Its topics:
+This part: "${part}"${contNote}. Its topics:
 ${unitsText(units)}
 Never include: ${plan.ignored.join('; ') || 'instructions or logistics'}, or any other instructions, logistics or remarks about the document itself.
 
 How the summary looks (follow this closely):
 - "title": the name of the chapter or part and its main idea, for example "מלכים א' פרק א' – המאבק על ירושת דוד" or "Systems of linear equations".
 - "intro": 1 to 3 sentences: what this part is about, the background, and the central problem or idea.
-- "sections": the content in the order of the material. Each section has a short "heading" (the page numbers the sections) and "blocks":
+- "sections": the content in the order of the material. Each section has a short "heading" (the page numbers the sections) and "blocks". When the material gives verse or page ranges for a topic, end the heading with them in parentheses exactly as written, for example ${ex.head}.
+  - A section may open with one short lead sentence (a text block ending with a colon) that introduces the list after it, for example ${ex.lead}.
+  - {"type":"subheading","text":""}: when the material divides a section into named sub-topics, start each one with a subheading (the page letters them) followed by its list.
   - {"type":"text","text":""}: a short paragraph, when a few connected sentences explain best.
-  - {"type":"list","items":[{"text":"","sub":[""]}]}: bullet points, with details as "sub" points. Start a bullet with a short bold label and a colon when it helps: "**The flight to the altar:** out of fear, Adonijah…". Use this for people and camps, causes and results, stages, features.
+  - {"type":"list","items":[{"text":"","sub":[""]}]}: bullet points, with details as "sub" points. Start a bullet with a short bold label and a colon when it helps: ${ex.label}. Use this for camps, causes and results, stages, features (when the items share the same columns, use a table instead).
   - {"type":"list","ordered":true,"items":[…]}: when the order matters (stages of a story, steps of a method, a list the material numbers).
-  - {"type":"table","headers":[""],"rows":[[""]]}: when several items are compared by the same features (for example character / what they did / what happened to them, or the methods for solving a system). Every row has a cell for every header.
-  - {"type":"quote","text":"","source":""}: an important quote copied exactly from the material, with where it comes from when the material says.
+  - {"type":"table","headers":[""],"rows":[[""]]}: use a table whenever 3 or more people, items or rules each get the same kind of facts (for example character / what they did / what happened to them, area / person / instruction / principle, or the methods for solving a system). In that case prefer a table to a list of bold-labelled bullets. Every row has a cell for every header; each cell is one or two short sentences.
+  - {"type":"quote","text":"","source":""}: only for a key verse or sentence that stands on its own. Put shorter quoted words inside the bullet in quotation marks, followed by a short explanation ("${he ? 'כלומר, …' : 'that is, …'}"). Copy every quote letter for letter, with niqqud if the material has it.
   - {"type":"rule","text":""}: a formula, theorem or rule, stated exactly and completely (math and grammar).
-- Explain a hard term in parentheses the first time it appears: "exposition (the opening that presents the problem)".
+- Explain a hard term in parentheses the first time it appears: ${ex.term}. When the material gives a term and its foreign name, give both.
 - Math and grammar: explain each topic in plain words and give its rules. Do NOT include worked examples, exercises, questions or tips; only the explanation and the rules (the steps of a method may be an ordered list).
-- "conclusion": 1 to 4 short lines: what this part means as a whole and what follows from it.
-- Cover every fact, name, idea and rule in this part that could be on the test. The length follows the material: a long part gets a long summary, a short one a short summary. Do not pad and do not repeat.
+- "conclusion": 1 to 4 short lines: what this part means as a whole and what follows from it. If the part ends with a key verse, quote it in the first line. A line may start with a bold label (${ex.concl}).
+- Cover every fact, name, idea and rule in this part that could be on the test. The length follows the material: a long part gets a long summary, a short one a short summary. Do not pad and do not repeat. Write notes, not prose: most bullets are one sentence, at most two, and sub points are short.
 - When the material only names a topic without explaining it, explain it briefly and correctly.
 - No questions, no exercises, no "remember for the test" remarks, no emojis.
-- Bold (**…**) only for the labels at the start of bullets and for key terms, not whole sentences.
+- Bold (**…**) only for the labels at the start of bullets and, rarely, a key term the first time it appears; never whole sentences or table cells.
 
 ${SUMMARY_ACCURACY}
 
@@ -1135,7 +1150,7 @@ Write in ${plan.explainIn || 'the language of the study content'}, in simple, cl
 Before you answer, read your summary again against the material and fix anything wrong, missing or vague.
 
 Reply with JSON only:
-{"title":"","intro":"","sections":[{"heading":"","blocks":[{"type":"list","items":[{"text":"","sub":[""]}]}]}],"conclusion":[""]}
+{"title":"","intro":"","sections":[{"heading":"","blocks":[{"type":"text","text":""},{"type":"list","items":[{"text":"","sub":[""]}]},{"type":"subheading","text":""},{"type":"list","items":[{"text":"","sub":[]}]}]}],"conclusion":[""]}
 
 <material>
 ${text}
@@ -1355,6 +1370,7 @@ function cleanBlock(b) {
   if (!b || typeof b !== 'object') return null;
   if (b.type === 'text') { const text = clip(b.text, 2000); return text ? {type: 'text', text} : null; }
   if (b.type === 'quote') { const text = clip(b.text, 800); return text ? {type: 'quote', text, source: clip(b.source, 120)} : null; }
+  if (b.type === 'subheading') { const text = stripNum(clip(b.text, 120)); return text ? {type: 'subheading', text} : null; }
   if (b.type === 'rule') { const text = stripNum(clip(b.text, 500)); return text ? {type: 'rule', text} : null; }
   if (b.type === 'table') { const tb = cleanTable(b); return tb ? Object.assign({type: 'table'}, tb) : null; }
   const items = (Array.isArray(b.items) ? b.items : []).map(it => typeof it === 'string' ? {text: it} : it).map(it => it && {text: stripNum(clip(it.text, 700)), sub: arrN(it.sub, 12, 500)}).filter(it => it && it.text).slice(0, 30);
@@ -1518,7 +1534,8 @@ function makeSheet(sid) {
     const results = await Promise.all(groups.map(g => {
       const key = sid + '|' + g.name + '|' + g.units.map(u => u.title).join('|') + '|' + text.length;
       if (summaryCache[key]) return summaryCache[key];
-      return askJson(summaryPartPrompt(plan, g.name, g.units, text, g.cont), {modelTier: 'default'}).then(cleanSummaryPart).then(r => (summaryCache[key] = r));
+      const same = groups.filter(x => x.name === g.name), idx = same.indexOf(g), cont = same.length < 2 ? '' : idx === 0 ? 'first' : idx === same.length - 1 ? 'last' : 'middle';
+      return askJson(summaryPartPrompt(plan, g.name, g.units, text, cont), {modelTier: 'default'}).then(cleanSummaryPart).then(r => (summaryCache[key] = r));
     }));
     if (!subj(sid)) return;
     const chapters = [];
@@ -2510,7 +2527,9 @@ function sheetV4Html(s, sum, cd, isStatic) {
     ${isStatic && ctx.answers.length ? `<section class="answers"><h2>${t('answersTitle')}</h2><ol dir="${cd}">${ctx.answers.map(p => `<li><div>${p.steps.map(x => richLine(x)).join('')}${p.answer ? `<p><b>${t('answerLbl')}</b> ${rich(p.answer)}</p>` : p.type === 'order' ? p.lines.map(x => richLine(x)).join('') : p.type === 'match' ? p.pairs.map(x => `<p>${rich(x.claim)} — ${rich(x.reason)}</p>`).join('') : ''}</div></li>`).join('')}</ol></section>` : ''}`;
 }
 /* ---------- the summary itself: the material, summarised like a good student's notes ---------- */
-function blockHtml(b) {
+const subLetter = k => (S.settings.lang === 'he' ? 'אבגדהוזחטי' : 'abcdefghij')[k] || String(k + 1);
+function blockHtml(b, k) {
+  if (b.type === 'subheading') return `<h4 class="sum-sh"><span class="sn">${subLetter(k)}.</span> <span>${rich(b.text)}</span></h4>`;
   if (b.type === 'text') return `<p class="sum-p">${rich(b.text)}</p>`;
   if (b.type === 'rule') return `<div class="fbox">${richLine(b.text)}</div>`;
   if (b.type === 'table') return tableHtml(b);
@@ -2522,7 +2541,7 @@ function summaryV5Html(s, sum, cd) {
   const sh = sum.sheet;
   return sh.chapters.map(c => `<section class="chap" dir="${cd}"><h2 class="chap-h">${rich(c.title)}</h2>
     ${c.intro ? `<p class="chap-intro">${rich(c.intro)}</p>` : ''}
-    ${c.sections.map((sec, j) => `<div class="sec">${sec.heading ? `<h3><span class="sn">${j + 1}.</span> ${rich(sec.heading)}</h3>` : ''}${sec.blocks.map(blockHtml).join('')}</div>`).join('')}
+    ${c.sections.map((sec, j) => `<div class="sec">${sec.heading ? `<h3><span class="sn">${j + 1}.</span> <span>${rich(sec.heading)}</span></h3>` : ''}${(n => sec.blocks.map(b => blockHtml(b, b.type === 'subheading' ? n++ : 0)).join(''))(0)}</div>`).join('')}
     ${c.conclusion.length ? `<div class="concl"><h3>${t('conclusionTitle')}</h3>${c.conclusion.length > 1 ? `<ul class="sum-list">${c.conclusion.map(x => `<li>${rich(x)}</li>`).join('')}</ul>` : `<p class="sum-p">${rich(c.conclusion[0])}</p>`}</div>` : ''}
   </section>`).join('') + vocabTableHtml(subjectPlan(s.id).vocab);
 }
@@ -2544,7 +2563,7 @@ VIEWS.summary = () => {
     <div class="head-row"><div class="stack" style="gap:8px;min-width:0"><p class="eyebrow">${t('sheetEyebrow')}</p>
       <h1 tabindex="-1" dir="${cd}">${esc(plainMath(title))}</h1>
       <p class="hint">${t('builtOn', {d: esc(fmtDate(todayStr(new Date(sum.builtAt))))})}</p></div>
-      <div class="row"><button type="button" class="btn" data-act="copy" id="copyBtn">${I.copy}<span>${t('copy')}</span></button>${downloadsApi ? `<button type="button" class="btn" data-act="save-file" id="saveBtn">${I.save}<span>${t('saveFile')}</span></button>` : ''}</div></div>
+      <div class="row" ${sum.sheet && sum.sheet.v >= 3 && sum.sheet.v < 5 ? 'hidden' : ''}><button type="button" class="btn" data-act="copy" id="copyBtn">${I.copy}<span>${t('copy')}</span></button>${downloadsApi ? `<button type="button" class="btn" data-act="save-file" id="saveBtn">${I.save}<span>${t('saveFile')}</span></button>` : ''}</div></div>
     ${job ? `<p class="msg info row" style="gap:10px"><span class="spin"></span>${t('writingSheet')}</p>` : ''}
     ${sheetBodyHtml(s, sum, cd, false)}
     <textarea id="copyArea" class="input" readonly hidden aria-label="${t('summary')}"></textarea></div>`;
@@ -2557,8 +2576,10 @@ function sheetPlain(s, sum) {
       const b = [`## ${P(c.title)}`]; if (c.intro) b.push(P(c.intro));
       c.sections.forEach((sec, j) => {
         b.push(`\n${j + 1}. ${P(sec.heading)}`);
+        let sk = 0;
         for (const x of sec.blocks) {
-          if (x.type === 'text') b.push(P(x.text));
+          if (x.type === 'subheading') b.push(`${subLetter(sk++)}. ${P(x.text)}`);
+          else if (x.type === 'text') b.push(P(x.text));
           else if (x.type === 'rule') b.push(`[ ${P(x.text)} ]`);
           else if (x.type === 'quote') b.push(`"${P(x.text)}"${x.source ? ` (${P(x.source)})` : ''}`);
           else if (x.type === 'table') b.push([x.headers.join(' | '), ...x.rows.map(r => r.join(' | '))].map(P).join('\n'));
