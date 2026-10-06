@@ -49,7 +49,7 @@ To deploy, upload the folder to any static host (Cloudflare Pages, Netlify, Verc
 | F2 | Globe auto-rotates, drag to spin, tap a route for airplane, distance, time | Must | Done |
 | F3 | Static map when the globe can't run (no canvas, reduced motion) | Must | Done |
 | F4 | 6 airplane cards; tapping opens more details | Must | Done (details dialog, plus "See its route") |
-| F5 | Email sign-up with checking and clear success/error messages | Must | Done on the page; needs `CONFIG.signupEndpoint` to actually subscribe people |
+| F5 | Email sign-up with checking and clear success/error messages | Must | Done on the page. Until `CONFIG.signupEndpoint` is set, it checks the address and then tells the visitor sign-ups aren't switched on yet |
 | F6 | Layout from 360 px phones to wide desktops | Must | Done, checked at 360, 768 and 1440 px |
 | F7 | Fun facts with a source link under each stat | Should | Done |
 | F8 | Track Start exploring, globe use, sign-ups | Should | Events wired up; no analytics tool connected |

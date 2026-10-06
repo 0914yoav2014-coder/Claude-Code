@@ -7,7 +7,7 @@
 
 window.CONFIG = {
   // POST endpoint for the email sign-up (Mailchimp, Buttondown, ConvertKit…).
-  // While it is null the form validates and shows the success message, but sends nothing.
+  // While it is null the form still checks the address, then tells the visitor sign-ups aren't on yet.
   signupEndpoint: null,
   // Route shown when the globe first loads (an id from ROUTES).
   defaultRoute: "sin-jfk",

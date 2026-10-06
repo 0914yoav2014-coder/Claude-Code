@@ -216,20 +216,22 @@
     if (!EMAIL.test(value)) { email.setAttribute("aria-invalid", "true"); email.focus(); return say("That email doesn't look right. Check for typos, like a missing @ or dot.", "error"); }
     if (!age.checked) { age.focus(); return say("Please tick the box to confirm your age, or ask a parent first.", "error"); }
 
+    // Until an email service is connected, say so instead of pretending the address was saved.
+    if (!CONFIG.signupEndpoint) {
+      form.reset();
+      return say("Thanks! Sign-ups aren't switched on yet, so your email wasn't saved. Please check back soon.", "ok");
+    }
+
     const btn = form.querySelector("button[type=submit]");
     btn.disabled = true;
     say("Signing you up…");
     try {
-      if (CONFIG.signupEndpoint) {
-        const res = await fetch(CONFIG.signupEndpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: value, ageConfirmed: true, consentText: age.parentElement.textContent.trim(), at: new Date().toISOString() }),
-        });
-        if (!res.ok) throw new Error(String(res.status));
-      } else {
-        await new Promise((r) => setTimeout(r, 400)); // preview: no endpoint configured yet
-      }
+      const res = await fetch(CONFIG.signupEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: value, ageConfirmed: true, consentText: age.parentElement.textContent.trim(), at: new Date().toISOString() }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
       form.reset();
       say("You're on the list! Your first airplane lands in your inbox next week.", "ok");
       track("signup_success");
