@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Airplanes Around the World: see where famous airplanes fly</title>
+  <meta name="description" content="Spin an interactive globe, follow six famous routes and meet the airplanes that fly them, from the world's shortest flight (53 seconds) to the longest (18+ hours).">
+  <meta name="theme-color" content="#8FC8FF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#081A33" media="(prefers-color-scheme: dark)">
+  <script>
+    document.documentElement.classList.add("js");
+    try { var t = localStorage.getItem("aatw-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Airplanes Around the World">
+  <meta property="og:description" content="Every airplane has a story. See where they fly.">
+  <meta property="og:image" content="og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preload" href="fonts/fredoka-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="data.js" defer></script>
+  <script src="planes.js" defer></script>
+  <script src="land.js" defer></script>
+  <script src="globe.js" defer></script>
+  <script src="main.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <div class="nav__inner container">
+      <a class="brand" href="#top" aria-label="Airplanes Around the World, back to top">
+        <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="2.6"/>
+          <ellipse cx="20" cy="20" rx="6.5" ry="15" fill="none" stroke="currentColor" stroke-width="2"/>
+          <path d="M5 20h30" stroke="currentColor" stroke-width="2"/>
+          <path d="M26 6.5l9.5 3.2-1.4 1.6-4.6-.5-2.6 3-1.5-.4 1.3-3.4-3-1.2.6-1.1z" fill="var(--sunset)"/>
+        </svg>
+        <span class="brand__name">Airplanes <span>Around the World</span></span>
+      </a>
+
+      <nav class="nav__menu" id="nav-menu" aria-label="Main">
+        <ul>
+          <li><a href="#globe">Globe</a></li>
+          <li><a href="#airplanes">Airplanes</a></li>
+          <li><a href="#facts">Fun facts</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav__actions">
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch to dark mode">
+          <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></svg>
+          <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <a class="btn btn--primary nav__cta" href="#globe" data-start="nav">Start exploring</a>
+        <button class="icon-btn nav__toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- 1 · HERO -->
+    <section class="hero" id="top">
+      <div class="hero__sky" aria-hidden="true">
+        <svg class="cloud cloud--1" viewBox="0 0 200 80"><path d="M30 70h140a26 26 0 0 0 0-52 34 34 0 0 0-62-8A30 30 0 0 0 52 28 22 22 0 0 0 30 70z"/></svg>
+        <svg class="cloud cloud--2" viewBox="0 0 200 80"><path d="M30 70h140a26 26 0 0 0 0-52 34 34 0 0 0-62-8A30 30 0 0 0 52 28 22 22 0 0 0 30 70z"/></svg>
+        <svg class="cloud cloud--3" viewBox="0 0 200 80"><path d="M30 70h140a26 26 0 0 0 0-52 34 34 0 0 0-62-8A30 30 0 0 0 52 28 22 22 0 0 0 30 70z"/></svg>
+      </div>
+      <div class="hero__inner container">
+        <div class="hero__copy">
+          <p class="eyebrow">6 airplanes · 6 routes · 1 globe</p>
+          <h1>Every airplane has a story. <span>See where they fly.</span></h1>
+          <p class="hero__sub">Spin the globe, follow famous routes and meet the airplanes that fly them, from a 53-second island hop to an 18-hour marathon.</p>
+          <div class="hero__actions">
+            <a class="btn btn--primary btn--lg" href="#globe" data-start="hero">Start exploring
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h11m-4-4.5L15.5 10 11 14.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="btn btn--ghost" href="#airplanes">Meet the airplanes</a>
+          </div>
+        </div>
+        <div class="hero__art" aria-hidden="true">
+          <svg class="hero__trail" viewBox="0 0 600 300" preserveAspectRatio="none"><path d="M-20 300 C 60 280, 110 240, 150 205" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 16"/></svg>
+          <div class="hero__plane" data-art="a380" data-uid="hero"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · INTERACTIVE GLOBE -->
+    <section class="explore" id="globe" aria-labelledby="globe-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Interactive globe</p>
+          <h2 id="globe-title">Six famous routes, one planet</h2>
+          <p>Drag to spin the globe. Tap a route, or pick one from the list, to see the airplane that flies it.</p>
+        </header>
+        <div class="explore__grid">
+          <div class="globe" id="globe-mount">
+            <noscript><p class="globe__noscript">Turn on JavaScript to spin the globe.</p></noscript>
+          </div>
+          <div class="explore__side">
+            <article class="route-card" id="route-card" aria-live="polite"></article>
+            <h3 class="route-list__title" id="route-list-title">All routes</h3>
+            <ul class="route-list" id="route-list" aria-labelledby="route-list-title"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 · FEATURED AIRPLANES -->
+    <section class="section" id="airplanes" aria-labelledby="airplanes-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Featured airplanes</p>
+          <h2 id="airplanes-title">From superjumbo to seaplane</h2>
+          <p>Six airplanes, each famous for something. Open a card for its story, or see where it flies.</p>
+        </header>
+        <div class="cards" id="cards"></div>
+      </div>
+    </section>
+
+    <!-- 4 · FUN FACTS -->
+    <section class="section section--alt" id="facts" aria-labelledby="facts-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Fun facts</p>
+          <h2 id="facts-title">Big numbers from the sky</h2>
+        </header>
+        <ul class="facts" id="facts-list"></ul>
+      </div>
+    </section>
+
+    <!-- 5 · EMAIL SIGN-UP -->
+    <section class="section" id="signup" aria-labelledby="signup-title">
+      <div class="container">
+        <div class="signup">
+          <div class="signup__copy">
+            <h2 id="signup-title">Get a new airplane every week</h2>
+            <p>One short email: one airplane, one route, one fact you can tell your friends. Unsubscribe any time.</p>
+            <div class="signup__art" data-art="islander" data-uid="signup" aria-hidden="true"></div>
+          </div>
+          <form class="signup__form" id="signup-form" novalidate>
+            <label class="field">
+              <span class="field__label">Email address</span>
+              <span class="field__row">
+                <input type="email" name="email" id="signup-email" autocomplete="email" inputmode="email" placeholder="you@example.com" required aria-describedby="signup-status">
+                <button class="btn btn--primary" type="submit">Subscribe</button>
+              </span>
+            </label>
+            <label class="check">
+              <input type="checkbox" name="age" id="signup-age" required>
+              <span>I'm 13 or older, or a parent or guardian said it's OK.</span>
+            </label>
+            <p class="signup__status" id="signup-status" role="status" aria-live="polite"></p>
+            <p class="signup__fine">We only keep your email address. Read the <a href="privacy.html">privacy policy</a>.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 7 · FOOTER -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div class="footer__about" id="about">
+        <p class="brand brand--footer">Airplanes <span>Around the World</span></p>
+        <p>A fun, visual place to see which airplanes fly where. Made for aviation fans, curious travelers, students and teachers.</p>
+      </div>
+      <nav aria-label="Footer">
+        <ul class="footer__links" id="footer-links">
+          <li><a href="#about">About</a></li>
+          <li data-contact hidden><a href="#">Contact</a></li>
+          <li><a href="privacy.html">Privacy policy</a></li>
+        </ul>
+        <ul class="footer__social" id="footer-social" aria-label="Social media"></ul>
+      </nav>
+      <p class="footer__legal">© <span id="year">2026</span> Airplanes Around the World. Map data: <a href="https://www.naturalearthdata.com/">Natural Earth</a>. Airplane drawings are illustrations, not exact liveries.</p>
+    </div>
+  </footer>
+
+  <dialog class="sheet" id="plane-dialog" aria-labelledby="sheet-title">
+    <div class="sheet__inner" id="sheet-body"></div>
+  </dialog>
+</body>
+</html>
