@@ -253,6 +253,14 @@ footer#footer  About / Contact (hidden while no address) / Privacy policy / soci
 
   - The first 2 s of hero rendering may drop two steps at once.
   - It never steps up within a visit. It stores `high-0|medium-0|medium-1` in localStorage key `aatw:tier`.
+- **Frozen signature** in `src/three/quality/governor.ts` (pure, no three import; QA unit-tests it):
+  ```ts
+  export interface FrameStats { p50: number; p90: number } // ms, over one 1 s window
+  export interface TierAt { tier: 'high' | 'medium'; step: 0 | 1 }
+  // slowWindows = consecutive previous windows with p50 > 33.3 on medium step 1
+  export function decide(stats: FrameStats, at: TierAt, slowWindows: number): 'keep' | 'down' | 'lite'
+  export function nextTier(at: TierAt): TierAt | null // high-0 → medium-0 → medium-1 → null (null = Lite)
+  ```
 - **Settings per tier:**
 
   | Setting | High | Medium | Medium step 1 |
@@ -351,3 +359,13 @@ All are equirectangular, longitude −180 → 180 left to right, north up. The p
 - **Frontend** builds against the Lead stub stage.
 - **QA** writes tests against this contract from day one. They stay red until features land and serve as the progress board.
 - **The Lead** merges branches (files are disjoint, so there are no conflicts), then asks QA for a full run. Bugs go back to the owning agent.
+
+### Messages and merges
+
+- **Messaging the Lead:** agents use `SendMessage` with `to: "main"`. Send a message only for:
+  - a hand-off (with the commit hash);
+  - a contract question that blocks you.
+
+  Otherwise keep going and list questions in your final report.
+- **"Merge `<hash>`" from the Lead:** run `git merge --no-edit <hash>` in your worktree. Files are disjoint, so it merges cleanly. Then run `npm ci` if `package-lock.json` changed.
+- **Never rebase or force anything.** Commit on your own branch only.
