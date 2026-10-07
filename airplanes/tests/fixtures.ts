@@ -263,8 +263,9 @@ export class App {
     return this.page.evaluate((h) => (window as any).__qa.setHidden(h), hidden)
   }
 
-  /** Boots and, in 3D, waits for the first frame. */
+  /** Opens the page (if nothing is open yet), boots and, in 3D, waits for the first frame. */
   async ready(): Promise<'3d' | 'lite'> {
+    if (this.page.url() === 'about:blank') await this.open({ wait: false })
     await this.booted()
     const mode = (await this.mode()) as '3d' | 'lite'
     if (mode === '3d') await this.ready3d()

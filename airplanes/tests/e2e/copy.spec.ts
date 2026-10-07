@@ -11,7 +11,7 @@ test('PRD copy appears verbatim on the page @common', async ({ app, page }) => {
     ['hero CTA', page.getByTestId('cta-hero'), PRD_COPY.cta],
     ['nav CTA', page.getByTestId('cta-nav'), PRD_COPY.cta],
     ['secondary', page.getByTestId('cta-planes'), PRD_COPY.secondary],
-    ['hangar title', page.locator('#airplanes h2'), PRD_COPY.hangar],
+    ['hangar title', page.locator('#airplanes h2:not(dialog h2)'), PRD_COPY.hangar],
     ['close-up', page.getByTestId('closeup-open'), PRD_COPY.closeup],
     ['facts title', page.locator('#facts h2'), PRD_COPY.facts],
     ['sign-up title', page.locator('#signup h2'), PRD_COPY.signup],
@@ -31,6 +31,6 @@ test('PRD copy appears verbatim on the page @common', async ({ app, page }) => {
 test('one h1, and every section has its heading @common', async ({ app, page }) => {
   await app.ready()
   await expect(page.locator('h1')).toHaveCount(1)
-  for (const id of ['globe', 'airplanes', 'facts', 'signup']) await expect(page.locator(`#${id} h2`), `#${id} h2`).toHaveCount(1)
+  for (const id of ['globe', 'airplanes', 'facts', 'signup']) await expect(page.locator(`#${id} h2:not(dialog h2)`), `#${id} h2 (outside dialogs)`).toHaveCount(1)
   await expect(page.locator('html')).toHaveAttribute('lang', 'en')
 })
