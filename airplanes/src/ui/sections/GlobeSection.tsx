@@ -60,7 +60,7 @@ export default function GlobeSection() {
             <FlatMap />
           </div>
         ) : (
-          <div ref={stageRef} className="stage-surface stage-surface--globe" data-stage="globe" data-testid="globe-stage" tabIndex={0} aria-label={COPY.globe.stageLabel} />
+          <div ref={stageRef} className="stage-surface stage-surface--globe" data-stage="globe" data-testid="globe-stage" role="group" tabIndex={0} aria-label={COPY.globe.stageLabel} />
         )}
 
         <header className="section-head globe__head" data-contrast-check>

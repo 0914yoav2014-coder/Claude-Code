@@ -294,6 +294,7 @@ html[data-mode='lite'] .section--climb {
 }
 .route-panel__close {
   position: absolute;
+  z-index: 1;
   top: 10px;
   right: 10px;
 }

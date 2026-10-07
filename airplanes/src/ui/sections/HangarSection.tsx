@@ -114,7 +114,7 @@ export default function HangarSection() {
         {mode === 'lite' ? (
           <HangarLite />
         ) : (
-          <div ref={stageRef} className="stage-surface stage-surface--hangar" data-stage="hangar" data-testid="hangar-stage" tabIndex={0} aria-label={COPY.hangar.stageLabel} />
+          <div ref={stageRef} className="stage-surface stage-surface--hangar" data-stage="hangar" data-testid="hangar-stage" role="group" tabIndex={0} aria-label={COPY.hangar.stageLabel} />
         )}
 
         <header className="section-head hangar__head" data-contrast-check>
