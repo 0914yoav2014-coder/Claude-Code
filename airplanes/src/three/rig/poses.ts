@@ -24,7 +24,7 @@ const add = (a: V3, b: V3, k = 1): V3 => [a[0] + b[0] * k, a[1] + b[1] * k, a[2]
 const HERO: Record<'intro' | 'hero' | 'climb' | 'clouds' | 'heroTop', { wide: Pose; tall: Pose }> = {
   intro: {
     wide: { pos: [-10.5, -0.9, 36], target: [-2.6, 0.5, -6], fov: 30 },
-    tall: { pos: [-5.5, -1.4, 44], target: [-0.6, 0.0, -6], fov: 40 },
+    tall: { pos: [-5.0, -3.4, 44], target: [-0.6, -5.6, -6], fov: 40 },
   },
   hero: {
     wide: { pos: [-5.6, 1.5, 13.5], target: [-1.9, 0.2, -2.5], fov: 32 },
