@@ -42,13 +42,14 @@ export default function SpaceScene() {
     const paths = prepRoutes(ROUTES)
     const seg = quality.settings.detail === 'rich' ? [128, 64] : [96, 48]
     const tex = {
-      day: solidTexture(28, 58, 96) as Texture,
+      day: solidTexture(14, 34, 66) as Texture,
       night: solidTexture(0, 0, 0) as Texture,
       normal: solidTexture(128, 128, 255) as Texture,
-      water: solidTexture(255, 255, 255) as Texture,
+      water: solidTexture(0, 0, 0) as Texture,
       clouds: solidTexture(0, 0, 0) as Texture,
     }
     const earthMat = earthMaterial(tex)
+    earthMat.uniforms.uBump.value = 0
     const earth = new Mesh(new SphereGeometry(1, seg[0], seg[1]), earthMat)
     earth.name = 'earth'
     const cloudMat = cloudMaterial(tex.clouds)
@@ -197,6 +198,8 @@ export default function SpaceScene() {
         const old = earthMat.uniforms[name].value as Texture
         earthMat.uniforms[name].value = tex
         old.dispose()
+        // relief only once the real day map is there (bumps on the flat fallback look odd)
+        if (name === 'uDay') earthMat.uniforms.uBump.value = 1
         demand.invalidate(2)
       })
     }
@@ -237,7 +240,7 @@ export default function SpaceScene() {
       if (!p) return
       const target = facing(p.mid)
       const y1 = st.yaw + angleTo(st.yaw, target.yaw)
-      const p1 = Math.max(PITCH_MIN, Math.min(PITCH_MAX, target.pitch * 0.9))
+      const p1 = Math.max(-0.55, Math.min(0.62, target.pitch * 0.9))
       st.tween = { y0: st.yaw, p0: st.pitch, y1, p1, t0: performance.now() }
       globeInput.vYaw = 0
       globeInput.vPitch = 0

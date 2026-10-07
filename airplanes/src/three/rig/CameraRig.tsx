@@ -9,7 +9,7 @@ import { clamp01 } from '../../state/timeline'
 import { demand } from '../core/demand'
 import { ease, smooth, view } from '../core/view'
 import { closeupPose, rigState } from './overrides'
-import { keyPose, mixPose, viewPose, type Pose } from './poses'
+import { keyPose, mixPose, viewPose, wideness, type Pose } from './poses'
 
 /**
  * The only code that writes the camera (CONTRACTS §8). Base pose from the scroll timeline,
@@ -63,14 +63,19 @@ export default function CameraRig() {
     const zt = s.globe.zoom
     rigState.zoom = reducedMotion ? zt : damp(rigState.zoom, zt, 140, dt)
     if (Math.abs(rigState.zoom - zt) > 1e-4) demand.keep(40)
-    // Phones: while the route panel (a bottom sheet) is open, lift the Earth into the upper half.
-    const sheetT = s.globe.route && aspect < 0.8 ? 1 : 0
+    // While the route panel is open: phones lift the Earth above the bottom sheet; wide screens
+    // move it left, away from the side panel.
+    const sheetT = s.globe.route ? 1 : 0
     rigState.sheet = reducedMotion ? sheetT : damp(rigState.sheet, sheetT, 220, dt)
     if (Math.abs(rigState.sheet - sheetT) > 1e-3) demand.keep(40)
     if (scene === 'space' && rigState.sheet > 0) {
       const d = Math.hypot(pose.pos[0], pose.pos[1], pose.pos[2])
-      const dy = rigState.sheet * zoomWeight() * d * Math.tan((pose.fov * Math.PI) / 360) * 0.42
-      pose = { pos: [pose.pos[0], pose.pos[1] - dy, pose.pos[2]], target: [pose.target[0], pose.target[1] - dy, pose.target[2]], fov: pose.fov }
+      const half = d * Math.tan((pose.fov * Math.PI) / 360)
+      const k = rigState.sheet * zoomWeight()
+      const w = wideness(aspect)
+      const dy = k * half * 0.42 * (1 - smooth(0.7, 0.9, aspect))
+      const dx = k * half * aspect * 0.12 * w
+      pose = { pos: [pose.pos[0] + dx, pose.pos[1] - dy, pose.pos[2]], target: [pose.target[0] + dx, pose.target[1] - dy, pose.target[2]], fov: pose.fov }
     }
     if (scene === 'space') {
       const k = 1 + (0.52 - 1) * rigState.zoom * zoomWeight()
