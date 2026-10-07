@@ -24,10 +24,11 @@ export const ROUTES: Route[] = [
     from: { city: 'Singapore', code: 'SIN', at: [1.3502, 103.994] },
     to: { city: 'Los Angeles', code: 'LAX', at: [33.9425, -118.408] },
     distanceKm: 14114, distanceLabel: '14,114 km', durationMin: 930, durationLabel: 'about 15 h 30 min',
-    note: 'Nonstop across the whole Pacific, from near the equator to California.', historic: false,
+    note: 'Opened by the ULR in 2018 across the whole Pacific; most days a regular A350-900 flies it now.', historic: false,
     sources: [
       { label: 'Singapore Airlines (2018)', url: 'https://www.singaporeair.com/fr_FR/fr/corporate/newsroom/press-release/2018/July-September/ne2218-180711/' },
       { label: 'FlightStats: SQ38', url: 'https://www.flightstats.com/v2/flight-tracker/SQ/38' },
+      { label: 'AeroRoutes (Jul 2026): ULR on LAX only part-time', url: 'https://www.aeroroutes.com/eng/260722-sqapr27lax' },
     ],
   },
   {

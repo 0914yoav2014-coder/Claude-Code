@@ -76,7 +76,7 @@ Where things appear: **H** hangar card (`planes.ts`: stats, fact, story); **G** 
 | sin-jfk | "The longest scheduled flight in the world" | true as of Sept 2026 | AeroCorner | Confirmed. **Expires** when Qantas starts Sydney–London (planned Oct 2027). |
 | sin-lax, SQ38 | Distance | 14,114 km | Computed | Computed |
 | sin-lax | Time | about 15 h 30 min | Trip.com: 15 h 10 – 16 h 25 by date | Unconfirmed (seasonal) |
-| sin-lax | Flown by an A350-900ULR | launched with the ULR in Nov 2018 | [Singapore Airlines 2018](https://www.singaporeair.com/fr_FR/fr/corporate/newsroom/press-release/2018/July-September/ne2218-180711/) | **Unconfirmed for 2026:** one booking site lists a standard A350-900 on SQ38. If so, either keep the route (same airframe family) or swap to SIN–EWR SQ21/22, which is ULR but whose arc overlaps SIN–JFK. |
+| sin-lax | Aircraft today | launched with the ULR (Nov 2018); in 2026 normally a standard 253-seat A350-900 | [Singapore Airlines 2018](https://www.singaporeair.com/fr_FR/fr/corporate/newsroom/press-release/2018/July-September/ne2218-180711/); [AeroRoutes, 22 Jul 2026](https://www.aeroroutes.com/eng/260722-sqapr27lax): ULR only on 3 of 10 weekly SIN–LAX flights (SQ36/35), 28 Mar – 30 Apr 2027 | Confirmed by search (resolved 2026-10-07). Route kept (same A350-900 family, good arc); its note says a regular A350-900 flies it most days. |
 | dxb-akl, EK448 | Distance | 14,200 km (14,199) | Computed; Emirates/Business Traveller figure | Confirmed |
 | dxb-akl | Time | about 16 h | Trip.com lists 15 h 50 min; 10:05 → 11:05 next day is 16 h 0 min in NZ summer | Confirmed (rounded) |
 | dxb-akl | Flown by an A380 | A380-842 | Trip.com | Confirmed |
