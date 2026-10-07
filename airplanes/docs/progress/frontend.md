@@ -1,28 +1,33 @@
 # Progress: frontend agent
 
 ## Done
-- (6e99019, Lead checkpoint of the first Frontend agent's work) Components are essentially complete:
-  - `src/scroll/`: Lenis controller on the loop's 'scroll' phase, markers, section/hold, nav hide,
-    scroll_depth, anchors → scrollToKey/scrollToId, lockScroll (menu, closeup), reduced-motion dip,
-    ?scene= jump, debug.ui hooks.
-  - `src/ui/`: Loader (time floor + assets, lift-off, aatw:visited), Nav (+ mobile menu), MotionToggle,
-    LiteNotice, CountUp, useTilt, motion tween helpers, whenBooted.
-  - Sections: Hero (word-by-word spans, poster, Lite video), Climb (scrubbed line), Globe (stage,
-    zoom, route list, glass route panel, Meet the …), Hangar (panel, stats count-up, prev/next,
-    keys, swipe, close-up dialog), Facts (count-up + contrail, tilt), Signup (all states, paper
-    plane), Footer (night sky + plane lights markup).
-  - `src/lite/`: FlatMap (land dots + great circles + pins), HangarLite, PlaneArt (6 v1 SVGs), HeroVideo.
-  - Styles started as `src/styles/{tokens,base,components}.css` but NOT imported yet.
-- Reviewed against the brief (this note).
+- Components (from the 6e99019 checkpoint, reviewed): scroll controller (Lenis on the loop's
+  'scroll' phase, markers, section/hold, nav hide, scroll_depth, anchors → scrollToKey, lockScroll,
+  reduced-motion dip, ?scene=), Loader, Nav + mobile menu, MotionToggle, LiteNotice, all sections
+  (hero, climb, globe, hangar + close-up dialog, facts, sign-up, footer), Lite (FlatMap, HangarLite,
+  PlaneArt, HeroVideo).
+- Styles split (9950c6f, 7010d9f, 2e0611e): `index.css` imports tokens / base / components /
+  layout / chrome / sections / lite / motion. Glass per tier, compact layout + marker positions
+  that stay strictly increasing in compact and Lite, loader runway + jet lift-off, word-by-word
+  hero rise keyed on html[data-loader], climb scrub, globe panel/rail (desktop, tablet, phone),
+  hangar panel, close-up dialog, facts contrails, sign-up + paper plane, footer night sky with
+  blinking plane lights; paused / reduced rules for every loop.
+- Paper plane rests folded; lite notice can be dismissed; lint warnings fixed.
+- `public/privacy.html` restyled (2c80c4f).
+- Verified: tsc, oxlint (clean), vite build to /tmp/frontend-dist; screenshots at 360, 390, 768,
+  1440, 1920 in 3D (?perfcaveat=0), Lite (software GPU) and reduced motion; flows: loader → done,
+  close-up open/Esc/focus return, sign-up invalid → disabled, mobile menu; no horizontal scroll at
+  390; zero console errors.
 
 ## Next
-1. Styles split: `src/styles/index.css` becomes `@import` of tokens/base/components + new
-   `layout.css` (layers, sections, sticky frames, compact), `sections.css` (hero, climb, globe,
-   route panel/rail, hangar panel/stats, close-up dialog, facts, signup, paper plane, footer sky),
-   `chrome.css` (nav + mobile menu, loader runway/jet, motion toggle, lite notice), `lite.css`
-   (flat map, hangar lite, hero video), `motion.css` (paused/reduced rules).
-2. `public/privacy.html` restyled to match (self-hosted fonts, glass card).
-3. Screenshots at 360/390/768/1440/1920 (3D via ?perfcaveat=0, Lite, reduced motion); fix issues.
+- Nothing blocking. Polish candidates: route list could reveal with a stagger; QA e2e run.
 
 ## Notes and questions
-- `main.tsx` (Lead) imports only `./styles/index.css`, so all styles go through it via `@import`.
+- `main.tsx` (Lead) imports only `./styles/index.css`; everything goes through it via `@import`.
+- LiteNotice close button uses a hard-coded label 'Hide this message' → Content: add
+  `COPY.lite.dismiss` and swap it in (src/ui/LiteNotice.tsx `DISMISS`).
+- 3D: on phones the hangar panel covers the lower ~45 % of the frame, so the plane should sit in
+  the upper half there; same for the globe when the route panel is open (it is a bottom sheet
+  ≤ 760 px). The hero jet currently sits behind the headline on phones.
+- The loader reaches 100 % as soon as `boot.assets` hits 1 (can be ~1 s); the 3 s cap is the
+  time floor.
