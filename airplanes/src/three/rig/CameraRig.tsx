@@ -63,6 +63,15 @@ export default function CameraRig() {
     const zt = s.globe.zoom
     rigState.zoom = reducedMotion ? zt : damp(rigState.zoom, zt, 140, dt)
     if (Math.abs(rigState.zoom - zt) > 1e-4) demand.keep(40)
+    // Phones: while the route panel (a bottom sheet) is open, lift the Earth into the upper half.
+    const sheetT = s.globe.route && aspect < 0.8 ? 1 : 0
+    rigState.sheet = reducedMotion ? sheetT : damp(rigState.sheet, sheetT, 220, dt)
+    if (Math.abs(rigState.sheet - sheetT) > 1e-3) demand.keep(40)
+    if (scene === 'space' && rigState.sheet > 0) {
+      const d = Math.hypot(pose.pos[0], pose.pos[1], pose.pos[2])
+      const dy = rigState.sheet * zoomWeight() * d * Math.tan((pose.fov * Math.PI) / 360) * 0.42
+      pose = { pos: [pose.pos[0], pose.pos[1] - dy, pose.pos[2]], target: [pose.target[0], pose.target[1] - dy, pose.target[2]], fov: pose.fov }
+    }
     if (scene === 'space') {
       const k = 1 + (0.52 - 1) * rigState.zoom * zoomWeight()
       if (k !== 1) pose = { pos: [pose.pos[0] * k, pose.pos[1] * k, pose.pos[2] * k], target: [pose.target[0] * k, pose.target[1] * k, pose.target[2] * k], fov: pose.fov }

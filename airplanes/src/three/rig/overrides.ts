@@ -19,6 +19,8 @@ export const rigState = {
   intro: 1,
   /** Damped globe zoom 0..1. */
   zoom: 0,
+  /** Damped 0..1: phone route sheet open (globe lifted into the upper half). */
+  sheet: 0,
   /** Damped parallax. */
   px: 0,
   py: 0,
