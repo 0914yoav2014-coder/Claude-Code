@@ -4,17 +4,17 @@ import type { Fact } from './types'
 export const FACTS: Fact[] = [
   {
     id: 'longest', value: 15349, format: 'int', unit: 'km',
-    text: 'Singapore to New York, the longest scheduled flight. It takes about 18 hours.',
-    source: { label: 'Flightradar24', url: 'https://www.flightradar24.com/blog/longest-flights/' },
+    text: 'Singapore to New York: the longest scheduled flight on Earth, about 18 hours 40 minutes nonstop.',
+    source: { label: 'AeroCorner', url: 'https://aerocorner.com/news/singapore-sq24-changi-turnback/' },
   },
   {
     id: 'shortest', value: 53, format: 'int', unit: 'seconds',
-    text: "The fastest-ever hop from Westray to Papa Westray, the world's shortest flight.",
-    source: { label: 'Guinness World Records', url: 'https://www.guinnessworldrecords.com/world-records/63191-shortest-domestic-scheduled-flight' },
+    text: "The fastest-ever hop from Westray to Papa Westray, the world's shortest scheduled flight.",
+    source: { label: 'Wikipedia', url: 'https://en.wikipedia.org/wiki/Westray_to_Papa_Westray_flight' },
   },
   {
     id: 'concorde', value: 2 * 3600 + 52 * 60 + 59, format: 'hms', unit: 'h:m:s',
-    text: "Concorde's record New York to London crossing on 7 February 1996.",
+    text: "Concorde's record crossing from New York to London, on 7 February 1996.",
     source: { label: 'Guinness World Records', url: 'https://www.guinnessworldrecords.com/world-records/fastest-flight-across-the-atlantic-in-a-commercial-aircraft' },
   },
   {

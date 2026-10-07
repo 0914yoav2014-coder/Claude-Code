@@ -1,8 +1,9 @@
 import type { Plane } from './types'
 
 /**
- * The six hangar airplanes (Content-owned). Seeded from v1 by the Lead; Content verifies every
- * number, adds the second route per plane and fills in sources.
+ * The six hangar airplanes (Content-owned). Every figure is listed with its source and check status
+ * in docs/FACTS.md. `shape` holds real proportions (metres) for the 3D models; the hangar also prints
+ * shape.lengthM and shape.spanM as stats.
  */
 export const PLANES: Plane[] = [
   {
@@ -15,12 +16,17 @@ export const PLANES: Plane[] = [
     cruiseKmh: 903,
     passengers: 161,
     passengersNote: 'on Singapore Airlines',
-    fact: 'No economy seats at all: just 67 in Business and 94 in Premium Economy.',
+    fact: '161 seats and not one in economy: 67 in Business and 94 in Premium Economy.',
     story:
-      'The "ULR" stands for Ultra Long Range. Extra fuel lets it fly nonstop for more than 18 hours, so Singapore Airlines uses it for the longest scheduled flight on Earth.',
-    routes: ['sin-jfk'],
+      'ULR stands for Ultra Long Range. It carries so much extra fuel that it can fly for more than 18 hours without stopping. That is long enough to watch nine movies in a row!',
+    routes: ['sin-jfk', 'sin-lax'],
+    // A350 wingtips are curved, blended winglets: 'sharklet' is the closest style.
     shape: { lengthM: 66.8, spanM: 64.75, heightM: 17.05, fuselageM: 5.96, engines: 2, engineType: 'turbofan', wing: 'low', gear: 'retractable', decks: 1, hump: false, tips: 'sharklet' },
-    sources: [{ label: 'The Points Guy', url: 'https://thepointsguy.com/news/singapore-airlines-new-york-longest-flights' }],
+    sources: [
+      { label: 'AeroCorner (2026)', url: 'https://aerocorner.com/news/singapore-sq24-changi-turnback/' },
+      { label: 'AIN Online', url: 'https://www.ainonline.com/aviation-news/air-transport/2018-04-24/airbus-a350-900-ulr-flies-first-time' },
+      { label: 'Lufthansa Group: A350-900', url: 'https://www.lufthansagroup.com/en/company/fleet/lufthansa-and-regional-partners/airbus-a350-900.html' },
+    ],
   },
   {
     id: 'a380',
@@ -32,12 +38,16 @@ export const PLANES: Plane[] = [
     cruiseKmh: 903,
     passengers: 545,
     passengersNote: 'typical, up to 853',
-    fact: 'Two full decks of passengers, nose to tail, under a 79.75 m wingspan.',
+    fact: '2 full-length passenger decks: no other jet airliner has that.',
     story:
-      'The biggest passenger airliner ever built. Airbus stopped making it in 2021, but airlines like Emirates still fly it on their longest routes.',
-    routes: ['dxb-akl'],
+      'The biggest passenger airliner ever built, with wings almost 80 m across. Airbus finished the last one in 2021, but A380s still fly every day, from Dubai to Auckland and from Tokyo to Hawaii.',
+    routes: ['dxb-akl', 'nrt-hnl'],
+    // The A380 has small wingtip fences; 'winglet' is the closest style.
     shape: { lengthM: 72.72, spanM: 79.75, heightM: 24.09, fuselageM: 7.14, engines: 4, engineType: 'turbofan', wing: 'low', gear: 'retractable', decks: 2, hump: false, tips: 'winglet' },
-    sources: [{ label: 'Airbus', url: 'https://aircraft.airbus.com/en/aircraft/a380' }],
+    sources: [
+      { label: 'Airbus', url: 'https://aircraft.airbus.com/en/aircraft/a380' },
+      { label: 'GlobalAir: A380 specifications', url: 'https://www.globalair.com/aircraft-specifications/airbus/airbus-a380-specifications/1545' },
+    ],
   },
   {
     id: 'b747',
@@ -48,13 +58,16 @@ export const PLANES: Plane[] = [
     firstFlight: '2011 (first 747: 1969)',
     cruiseKmh: 917,
     passengers: 410,
-    passengersNote: 'in three classes',
-    fact: 'At 76.25 m from nose to tail, it is the longest airliner ever built.',
+    passengersNote: 'typical, in three classes',
+    fact: '1,574 jumbo jets were built before the last one left the factory in 2023.',
     story:
-      'The famous hump holds an upper deck. The 747-8 is the last and longest version of the "Queen of the Skies"; the final one was delivered in 2023.',
-    routes: ['fra-lax'],
+      'That famous hump holds an upper deck, and the pilots sit up there too. On the cargo version, the whole nose swings up so freight can slide straight in. The 747-8 is the last and longest "Queen of the Skies".',
+    routes: ['fra-lax', 'fra-jnb'],
     shape: { lengthM: 76.25, spanM: 68.4, heightM: 19.4, fuselageM: 6.5, engines: 4, engineType: 'turbofan', wing: 'low', gear: 'retractable', decks: 1, hump: true, tips: 'raked' },
-    sources: [{ label: 'Boeing', url: 'https://www.boeing.com/commercial/747' }],
+    sources: [
+      { label: 'Boeing', url: 'https://boeing.mediaroom.com/2023-01-31-Boeing,-Atlas-Air-Celebrate-Delivery-of-Final-747,-an-Airplane-that-Transformed-Aviation-and-Global-Air-Travel' },
+      { label: 'PlaneFYI: 747-8 Intercontinental', url: 'https://planefyi.com/de/aircraft/boeing-747-8i/cathay-pacific/' },
+    ],
   },
   {
     id: 'concorde',
@@ -63,15 +76,18 @@ export const PLANES: Plane[] = [
     nickname: 'The supersonic jet',
     maker: 'Aérospatiale / BAC',
     firstFlight: '1969 (in service 1976–2003)',
-    cruiseKmh: 2179,
+    cruiseKmh: 2158,
     passengers: 100,
-    passengersNote: '',
-    fact: 'Cruising at 60,000 ft, passengers could see the curve of the Earth.',
+    passengersNote: 'typical',
+    fact: '60,000 ft up: so high that passengers could see the curve of the Earth.',
     story:
-      'Concorde flew at twice the speed of sound (Mach 2.04), so London to New York took about 3½ hours, half the time of other jets. It retired in 2003.',
-    routes: ['lhr-jfk'],
+      'Concorde flew at twice the speed of sound, so London to New York took under 4 hours. By the clock, you landed before you took off! Only 20 were ever built, and the last ones retired in 2003.',
+    routes: ['lhr-jfk', 'cdg-gig'],
     shape: { lengthM: 61.66, spanM: 25.6, heightM: 12.2, fuselageM: 2.88, engines: 4, engineType: 'turbojet', wing: 'delta', gear: 'retractable', decks: 1, hump: false, tips: 'plain' },
-    sources: [{ label: 'British Airways', url: 'https://www.britishairways.com/content/information/about-ba/history-and-heritage/celebrating-concorde' }],
+    sources: [
+      { label: 'British Airways', url: 'https://www.britishairways.com/content/information/about-ba/history-and-heritage/celebrating-concorde' },
+      { label: 'Wikipedia: Concorde', url: 'https://en.wikipedia.org/wiki/Concorde' },
+    ],
   },
   {
     id: 'twinotter',
@@ -82,13 +98,16 @@ export const PLANES: Plane[] = [
     firstFlight: '1965',
     cruiseKmh: 337,
     passengers: 19,
-    passengersNote: '',
-    fact: 'Floats instead of wheels: it takes off and lands on the lagoon.',
+    passengersNote: 'at most',
+    fact: '66 Twin Otters on floats fly for one Maldives airline: the biggest seaplane fleet on Earth.',
     story:
-      'In the Maldives there is often no runway, just water. Trans Maldivian Airways flies a fleet of Twin Otters on floats, the largest seaplane fleet in the world, to island resorts.',
-    routes: ['mle-baa'],
+      'In the Maldives there is often no runway, just turquoise water, so Twin Otters on floats take off from the lagoon. Swap the floats for wheels and it can land on Saba, the shortest airline runway in the world.',
+    routes: ['mle-baa', 'sxm-sab'],
     shape: { lengthM: 15.77, spanM: 19.8, heightM: 5.94, fuselageM: 1.6, engines: 2, engineType: 'turboprop', wing: 'high', gear: 'floats', decks: 1, hump: false, tips: 'plain' },
-    sources: [{ label: 'Hotelier Maldives', url: 'https://hoteliermaldives.com/tma-expands-fleet-with-addition-of-60th-seaplane/' }],
+    sources: [
+      { label: 'Trans Maldivian Airways', url: 'https://www.transmaldivian.com/66th-aircraft/' },
+      { label: 'GlobalAir: Twin Otter DHC-6-400', url: 'https://www.globalair.com/aircraft-specifications/viking-air-ltd/twin-otter-dhc-6-400-specifications/1566' },
+    ],
   },
   {
     id: 'islander',
@@ -100,12 +119,15 @@ export const PLANES: Plane[] = [
     cruiseKmh: 260,
     passengers: 8,
     passengersNote: 'on Loganair',
-    fact: 'Loganair has flown it between two Scottish islands since 1967.',
+    fact: '2.7 km: the length of its most famous trip, the shortest scheduled flight on Earth.',
     story:
-      "The hop from Westray to Papa Westray in Orkney is the world's shortest scheduled flight: 2.7 km, about a minute and a half in the timetable.",
-    routes: ['wry-ppw'],
+      'The Islander is built for short, bumpy island airstrips. In Scotland, Loganair has flown it from Westray to Papa Westray since 1967, and the record is 53 seconds. In New Zealand, it carries visitors to Stewart Island in 20 minutes.',
+    routes: ['wry-ppw', 'ivc-szs'],
     shape: { lengthM: 10.86, spanM: 14.94, heightM: 4.18, fuselageM: 1.2, engines: 2, engineType: 'piston', wing: 'high', gear: 'fixed', decks: 1, hump: false, tips: 'plain' },
-    sources: [{ label: 'Wikipedia', url: 'https://en.wikipedia.org/wiki/Westray_to_Papa_Westray_flight' }],
+    sources: [
+      { label: 'Guinness World Records', url: 'https://www.guinnessworldrecords.com/world-records/63191-shortest-domestic-scheduled-flight' },
+      { label: 'Wikipedia: Britten-Norman Islander', url: 'https://en.wikipedia.org/wiki/Britten-Norman_Islander' },
+    ],
   },
 ]
 

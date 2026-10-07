@@ -7,7 +7,7 @@ export const COPY = {
   meta: {
     title: 'Airplanes Around the World: see where famous airplanes fly',
     description:
-      'Fly through sunset clouds, spin a photo-real Earth with 12 famous routes, and meet six airplanes in a 3D hangar, from the 53-second island hop to the 18-hour marathon.',
+      'Fly through sunset clouds, spin a photo-real Earth with 12 famous routes, and meet 6 airplanes in a 3D hangar, from a 2-minute island hop to an 18-hour marathon.',
   },
   brand: { name: 'Airplanes Around the World', short: 'Airplanes', accent: 'Around the World' },
   nav: {
@@ -28,31 +28,31 @@ export const COPY = {
     line: 'Up through the clouds. The whole world is waiting.',
   },
   globe: {
-    eyebrow: 'Twelve famous routes',
-    title: 'One planet, twelve flights',
+    eyebrow: '12 famous routes',
+    title: 'One planet, 12 flights',
     hint: 'Drag to spin · Tap a route to fly there', // PRD
     listTitle: 'All routes',
     zoomIn: 'Zoom in',
     zoomOut: 'Zoom out',
-    stageLabel: 'Interactive globe. Drag to spin, use the arrow keys to turn it, and the plus and minus keys to zoom. Every route is also in the list.',
+    stageLabel: 'Interactive globe with 12 routes. Drag to spin it, use the arrow keys to turn it and the plus and minus keys to zoom. Every route is also in the list.',
     panel: {
       distance: 'Distance',
       time: 'Flight time',
       airline: 'Airline',
       close: 'Close route details',
       meet: 'Meet the {plane}',
-      historic: 'Flown until 2003',
+      historic: 'No longer flown',
     },
   },
   hangar: {
-    eyebrow: 'Six airplanes',
+    eyebrow: '6 airplanes',
     title: 'The hangar', // PRD
     closeup: 'Take a closer look', // PRD
-    closeupClose: 'Close the closer look',
-    prev: 'Previous airplane',
-    next: 'Next airplane',
+    closeupClose: 'Return to the hangar',
+    prev: 'Show the previous airplane',
+    next: 'Show the next airplane',
     count: '{n} of {total}',
-    stageLabel: 'Airplane on a turntable. Drag to turn it; use the arrow keys or the buttons to switch airplanes.',
+    stageLabel: 'Airplane on a turntable. Drag to turn it, and use the arrow keys or the buttons to switch airplanes.',
     stats: { speed: 'Cruising speed', passengers: 'Passengers', length: 'Length', span: 'Wingspan' },
     seeRoute: 'See its routes',
   },
