@@ -263,6 +263,88 @@ export class App {
     return this.page.evaluate((h) => (window as any).__qa.setHidden(h), hidden)
   }
 
+  /** Boots and, in 3D, waits for the first frame. */
+  async ready(): Promise<'3d' | 'lite'> {
+    await this.booted()
+    const mode = (await this.mode()) as '3d' | 'lite'
+    if (mode === '3d') await this.ready3d()
+    return mode
+  }
+
+  /** Screenshot of the canvas layer only (every other layer made transparent for the shot). */
+  async canvasShot(): Promise<Buffer> {
+    const style = await this.page.addStyleTag({ content: '#root > :not([data-testid=stage]) { opacity: 0 !important; transition: none !important; }' })
+    try {
+      return await this.page.locator('[data-testid=stage]').screenshot()
+    } finally {
+      await style.evaluate((el) => el.remove())
+    }
+  }
+
+  /**
+   * Points inside an element that actually receive input there (document.elementFromPoint hits the
+   * element, so no overlay covers it and pointer-events allow it), nearest to the centre first.
+   */
+  hitPoints(testid: string): Promise<{ x: number; y: number }[]> {
+    return this.page.evaluate((id) => {
+      const el = document.querySelector(`[data-testid="${id}"]`)
+      if (!el) return []
+      const r = el.getBoundingClientRect()
+      const x0 = Math.max(r.left, 0) + 4
+      const x1 = Math.min(r.right, window.innerWidth) - 4
+      const y0 = Math.max(r.top, 0) + 4
+      const y1 = Math.min(r.bottom, window.innerHeight) - 4
+      const cx = (x0 + x1) / 2
+      const cy = (y0 + y1) / 2
+      const pts: { x: number; y: number; d: number }[] = []
+      for (let gy = 0; gy <= 24; gy++)
+        for (let gx = 0; gx <= 24; gx++) {
+          const x = x0 + ((x1 - x0) * gx) / 24
+          const y = y0 + ((y1 - y0) * gy) / 24
+          const hit = document.elementFromPoint(x, y)
+          if (hit && (hit === el || el.contains(hit))) pts.push({ x, y, d: (x - cx) ** 2 + (y - cy) ** 2 })
+        }
+      return pts.sort((a, b) => a.d - b.d).map(({ x, y }) => ({ x, y }))
+    }, testid)
+  }
+
+  /** A straight path of `length` px across an element where every point receives input. */
+  async hitSegment(testid: string, length: number, axis: 'x' | 'y'): Promise<{ from: { x: number; y: number }; to: { x: number; y: number } }> {
+    const seg = await this.page.evaluate(
+      ({ id, len, ax }) => {
+        const el = document.querySelector(`[data-testid="${id}"]`)
+        if (!el) return null
+        const hits = (x: number, y: number) => {
+          const h = document.elementFromPoint(x, y)
+          return !!h && (h === el || el.contains(h))
+        }
+        const r = el.getBoundingClientRect()
+        const cx = (Math.max(r.left, 0) + Math.min(r.right, window.innerWidth)) / 2
+        const cy = (Math.max(r.top, 0) + Math.min(r.bottom, window.innerHeight)) / 2
+        const cands: { x: number; y: number; d: number }[] = []
+        for (let gy = 0; gy <= 30; gy++)
+          for (let gx = 0; gx <= 30; gx++) {
+            const x = r.left + (r.width * gx) / 30
+            const y = r.top + (r.height * gy) / 30
+            cands.push({ x, y, d: (x - cx) ** 2 + (y - cy) ** 2 })
+          }
+        cands.sort((a, b) => a.d - b.d)
+        for (const c of cands) {
+          let ok = true
+          for (let t = -len / 2; t <= len / 2 && ok; t += 8) ok = ax === 'x' ? hits(c.x + t, c.y) : hits(c.x, c.y + t)
+          if (ok)
+            return ax === 'x'
+              ? { from: { x: c.x - len / 2, y: c.y }, to: { x: c.x + len / 2, y: c.y } }
+              : { from: { x: c.x, y: c.y - len / 2 }, to: { x: c.x, y: c.y + len / 2 } }
+        }
+        return null
+      },
+      { id: testid, len: length, ax: axis },
+    )
+    if (!seg) throw new Error(`no ${length}px ${axis}-path across [data-testid=${testid}] receives input (covered by overlays, or pointer-events: none)`)
+    return seg
+  }
+
   /** Screenshot for the Lead: test-results/screens/<project>/<name>.png. */
   async shot(name: string, opts: { fullPage?: boolean; locator?: Locator } = {}): Promise<string> {
     const path = join(dirname(this.info.config.configFile ?? process.cwd() + '/x'), 'test-results', 'screens', this.info.project.name, `${name}.png`)
