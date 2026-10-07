@@ -2,24 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Privacy policy · Airplanes Around the World</title>
   <meta name="description" content="What Airplanes Around the World collects (only your email address, if you sign up) and how to unsubscribe.">
   <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0B1426">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <style>
-    :root { color-scheme: dark; }
-    body { margin: 0; background: #0B1426; color: #F5F8FC; font: 400 17px/1.6 Inter, system-ui, sans-serif; }
-    main { max-width: 720px; margin: 0 auto; padding: 48px 16px 80px; }
-    a { color: #4DA3FF; }
-    h1, h2 { font-family: "Space Grotesk", system-ui, sans-serif; line-height: 1.1; }
-    p { color: #A9B8CF; }
-    .note { padding: 14px 16px; border-radius: 14px; background: rgba(255, 138, 61, 0.14); color: #F5F8FC; }
+    @font-face { font-family: 'Space Grotesk'; font-weight: 300 700; font-display: swap; src: url('fonts/space-grotesk-latin-wght-normal.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-weight: 100 900; font-display: swap; src: url('fonts/inter-latin-wght-normal.woff2') format('woff2'); }
+    :root {
+      --navy: #0B1426; --sky: #4DA3FF; --sky-soft: #8EC5FF; --cloud: #F5F8FC; --mist: #A9B8CF; --line: rgba(245, 248, 252, 0.14);
+      --gutter: clamp(16px, 4.2vw, 48px);
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--navy); -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0; min-height: 100svh; color: var(--cloud);
+      font: 400 1.0625rem/1.65 Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background:
+        radial-gradient(90% 50% at 50% 0%, rgba(77, 163, 255, 0.14), transparent 70%),
+        radial-gradient(1px 1px at 12% 18%, rgba(245, 248, 252, 0.8), transparent 60%) 0 0 / 320px 320px,
+        radial-gradient(1px 1px at 58% 64%, rgba(245, 248, 252, 0.6), transparent 60%) 0 0 / 320px 320px,
+        radial-gradient(1.2px 1.2px at 84% 30%, rgba(245, 248, 252, 0.7), transparent 60%) 0 0 / 420px 380px,
+        var(--navy);
+    }
+    a { color: var(--sky); text-underline-offset: 0.18em; }
+    a:hover { color: var(--sky-soft); }
+    :focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; border-radius: 4px; }
+    .top { max-width: 760px; margin: 0 auto; padding: calc(env(safe-area-inset-top, 0px) + 20px) var(--gutter) 0; }
+    .back {
+      display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 18px 0 12px;
+      border: 1px solid var(--line); border-radius: 999px; background: rgba(14, 26, 48, 0.7);
+      color: var(--cloud); font-weight: 600; font-size: 0.9375rem; text-decoration: none;
+      transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s;
+    }
+    .back:hover, .back:focus-visible { color: var(--cloud); transform: translateY(-2px); box-shadow: 0 10px 24px -10px rgba(77, 163, 255, 0.7); }
+    .back svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    main {
+      max-width: 760px; margin: 24px auto 64px; padding: clamp(28px, 5vw, 52px);
+      border: 1px solid var(--line); border-radius: 24px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01) 60%), rgba(14, 25, 46, 0.92);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 30px 70px -30px rgba(2, 6, 16, 0.75);
+    }
+    @media (max-width: 792px) { main { margin-inline: var(--gutter); } }
+    .eyebrow { margin: 0 0 10px; color: var(--sky); font-weight: 600; font-size: 0.8125rem; letter-spacing: 0.16em; text-transform: uppercase; }
+    h1, h2 { font-family: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif; font-weight: 700; letter-spacing: -0.025em; line-height: 1.1; text-wrap: balance; }
+    h1 { margin: 0 0 20px; font-size: clamp(2.25rem, 1.6rem + 2.4vw, 3.25rem); }
+    h2 { margin: 36px 0 8px; font-size: 1.375rem; }
+    p { margin: 0 0 12px; color: var(--mist); }
+    .note { margin: 0 0 8px; padding: 14px 18px; border-radius: 14px; border: 1px solid rgba(255, 179, 107, 0.4); background: rgba(255, 179, 107, 0.08); color: var(--cloud); }
+    footer { max-width: 760px; margin: 0 auto; padding: 0 var(--gutter) calc(env(safe-area-inset-bottom, 0px) + 40px); color: var(--mist); font-size: 0.8125rem; }
   </style>
 </head>
 <body>
+  <div class="top">
+    <a class="back" href="./"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6m5-5.5L5.5 12l5.5 5.5"/></svg>Back to Airplanes Around the World</a>
+  </div>
   <main>
-    <p><a href="./">← Back to Airplanes Around the World</a></p>
+    <p class="eyebrow">Airplanes Around the World</p>
     <h1>Privacy policy</h1>
     <p class="note"><strong>Draft.</strong> Plain-language starting point; have it reviewed before launch and add the operator's name and contact address.</p>
     <h2>What we collect</h2>
@@ -35,5 +78,6 @@
     <h2>Contact</h2>
     <p>Questions about privacy: add the contact email here before launch.</p>
   </main>
+  <footer>© 2026 Airplanes Around the World.</footer>
 </body>
 </html>
