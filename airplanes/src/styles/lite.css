@@ -10,7 +10,7 @@ html[data-mode='lite'] .globe__frame {
     'rail rail';
   align-items: start;
   gap: 24px 28px;
-  padding: var(--frame-top) var(--edge) clamp(40px, 6vw, 72px);
+  padding: var(--frame-top) var(--edge) clamp(96px, 10vw, 120px);
 }
 html[data-mode='lite'] .globe__head {
   grid-area: head;
@@ -143,7 +143,7 @@ html[data-mode='lite'] .hangar__frame {
     'art panel';
   align-items: center;
   gap: 24px 32px;
-  padding: var(--frame-top) var(--edge) clamp(48px, 7vw, 88px);
+  padding: var(--frame-top) var(--edge) clamp(96px, 10vw, 120px);
 }
 html[data-mode='lite'] .hangar__head {
   grid-area: head;

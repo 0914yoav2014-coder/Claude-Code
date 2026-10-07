@@ -528,7 +528,7 @@ html[data-tier='high'] .route-chip {
   z-index: 3;
   right: var(--edge);
   top: 50%;
-  width: min(400px, calc(100% - 2 * var(--gutter)));
+  width: min(424px, calc(100% - 2 * var(--gutter)));
   padding: 26px 26px 22px;
   transform: translateY(-42%);
   touch-action: pan-y;
@@ -1050,7 +1050,7 @@ html[data-mode='boot'] .fact__trail {
   stroke-linejoin: round;
 }
 .paper-plane[data-flight='idle'] {
-  opacity: 0.85;
+  opacity: 0.9;
   transform: rotate(-8deg);
 }
 .paper-plane[data-flight='fold'] {

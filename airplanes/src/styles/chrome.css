@@ -375,10 +375,31 @@ html[data-loader='done'] .loader {
   align-items: center;
   gap: 2px 12px;
   max-width: min(480px, calc(100% - 2 * var(--gutter) - 56px));
-  padding: 10px 16px;
+  padding: 10px 52px 10px 16px;
   border-radius: var(--radius);
   font-size: 0.875rem;
   line-height: 1.45;
+}
+.lite-notice__close {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  translate: 0 -50%;
+}
+.lite-notice__close:hover,
+.lite-notice__close:focus-visible {
+  transform: none;
+}
+@media (max-width: 600px) {
+  .lite-notice {
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    padding-block: 8px;
+  }
+  .lite-notice .link-btn {
+    min-height: 32px;
+    font-size: 0.8125rem;
+  }
 }
 .lite-notice .link-btn {
   min-height: 36px;

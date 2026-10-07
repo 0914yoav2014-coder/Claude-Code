@@ -1,6 +1,10 @@
+import { useState } from 'react'
 import { COPY } from '../data/copy'
 import { ARTIFACT } from '../lib/env'
 import { clearLiteFlag, useApp, type LiteReason } from '../state/store'
+
+/** Close button name (TODO Content: move to COPY.lite.dismiss). */
+const DISMISS = 'Hide this message'
 
 /** Lite reasons a reload can fix (the device itself is not the problem). */
 const RETRYABLE: LiteReason[] = ['session', 'context-failed', 'context-lost', 'slow-fps']
@@ -21,7 +25,8 @@ function tryFull(reason: LiteReason | undefined) {
 export default function LiteNotice() {
   const mode = useApp((s) => s.mode)
   const reason = useApp((s) => s.quality.lite)
-  if (mode !== 'lite' || reason === 'forced') return null
+  const [dismissed, setDismissed] = useState(false)
+  if (mode !== 'lite' || reason === 'forced' || dismissed) return null
   const canRetry = !!reason && (RETRYABLE.includes(reason) || (reason === 'perf-caveat' && !ARTIFACT))
   return (
     <div className="lite-notice glass" data-testid="lite-notice" role="status">
@@ -31,6 +36,11 @@ export default function LiteNotice() {
           {COPY.lite.tryFull}
         </button>
       )}
+      <button type="button" className="icon-btn icon-btn--quiet lite-notice__close" aria-label={DISMISS} onClick={() => setDismissed(true)}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M6 6l12 12M18 6 6 18" />
+        </svg>
+      </button>
     </div>
   )
 }

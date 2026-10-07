@@ -172,7 +172,10 @@ function points(k: number, i: number): string {
   return SHEET[i].map(([x, y], j) => `${(x + (FOLDED[i][j][0] - x) * k).toFixed(1)},${(y + (FOLDED[i][j][1] - y) * k).toFixed(1)}`).join(' ')
 }
 
-/** svg[data-testid=paper-plane]: folds (0.42 s) and flies away (0.78 s) on each successful send. */
+/**
+ * svg[data-testid=paper-plane]: rests folded; on each successful send it opens to a sheet, folds
+ * (0.42 s) and flies away (0.78 s), then a new one glides back in.
+ */
 function PaperPlane({ flight }: { flight: number }) {
   const svgRef = useRef<SVGSVGElement>(null)
   const polys = useRef<(SVGPolygonElement | null)[]>([])
@@ -200,9 +203,9 @@ function PaperPlane({ flight }: { flight: number }) {
 
   return (
     <svg ref={svgRef} className="paper-plane" data-testid="paper-plane" data-flight="idle" viewBox="0 0 120 90" aria-hidden="true" focusable="false">
-      <polygon ref={(el) => void (polys.current[1] = el)} className="paper-plane__under" points={points(0, 1)} />
-      <polygon ref={(el) => void (polys.current[2] = el)} className="paper-plane__keel" points={points(0, 2)} />
-      <polygon ref={(el) => void (polys.current[0] = el)} className="paper-plane__top" points={points(0, 0)} />
+      <polygon ref={(el) => void (polys.current[1] = el)} className="paper-plane__under" points={points(1, 1)} />
+      <polygon ref={(el) => void (polys.current[2] = el)} className="paper-plane__keel" points={points(1, 2)} />
+      <polygon ref={(el) => void (polys.current[0] = el)} className="paper-plane__top" points={points(1, 0)} />
     </svg>
   )
 }

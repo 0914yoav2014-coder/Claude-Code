@@ -71,8 +71,8 @@ function FactCard({ fact, order }: { fact: Fact; order: number }) {
       </span>
       <span className="fact__unit">{fact.unit}</span>
       <svg className="fact__contrail" viewBox="0 0 240 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-        <path className="fact__trail" d="M2 18 C 60 18, 120 14, 186 8" pathLength={1} />
-        <path className="fact__jet" d="M186 8 l9 -3.2 -2.4 3.6 2.4 3.2 z" />
+        <path className="fact__trail" d="M2 18 C 60 18, 120 14, 189 7.6" pathLength={1} />
+        <path className="fact__jet" d="M200 7.2 l-11 -3.8 2.8 3.9 -2.8 3.9 z" />
       </svg>
       <p className="fact__text">{fact.text}</p>
       <a className="fact__source" data-testid="fact-source" href={fact.source.url} target="_blank" rel="noopener" onClick={() => track('fact_source', { fact: fact.id })}>
