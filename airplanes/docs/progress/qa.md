@@ -16,7 +16,11 @@
 - Build specs (tests/build): typecheck, fresh build, oxlint, budgets, lazy 3D chunk, SEO/no-JS.
 - Artifact CSP harness (tests/artifact/csp.spec.ts), Lighthouse (tests/speed + qa/lighthouse.mjs).
 - `qa/summarize.mjs`: results.json → Markdown tables for qa/REPORT.md. `qa/probe*.mjs`: quick boot/marker probes.
-- `qa/REPORT.md`: first board run, bugs grouped by owner.
+- First full board runs (static, build, 6 browser projects, artifact-csp, speed); bugs triaged by owner and
+  sent to the Lead in the final message. `qa/REPORT.md` could not be written: the harness refuses report files
+  from this (sub)agent; the Lead holds the report text.
+- Test fixes after triage: real CDP touch scrolling, contrast waits for animations, isolated route tap target,
+  per-fact scroll, lite notice may carry controls, paper plane checked via data-flight, modal Tab may leave to browser UI.
 
 ## Next
 - Re-run when the Lead asks; artifact-csp and speed projects once build:artifact and the 3D work land.
