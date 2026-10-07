@@ -1,0 +1,76 @@
+/*
+ * Motion rules. Loops (scroll cue, twinkling stars, the footer plane and its lights, map pulses,
+ * propellers) stop under html[data-paused=true] (the Pause animation button) and are removed under
+ * html[data-motion=reduced]: final states at once, no flights.
+ */
+html[data-paused='true'] :is(.hero__cue span, .footer__flight, .nav-light, .flat-map__pulse, .art__prop),
+html[data-paused='true'] .night__sky::after {
+  animation-play-state: paused;
+}
+
+html[data-motion='reduced'] :is(.hero__cue span, .footer__flight, .nav-light, .flat-map__pulse, .art__prop),
+html[data-motion='reduced'] .night__sky::after {
+  animation: none;
+}
+html[data-motion='reduced'] .footer__flight {
+  transform: translate(62vw, 8px);
+}
+html[data-motion='reduced'] .flat-map__pulse {
+  opacity: 0;
+}
+
+/* reduced motion: no rises, roll-ins or flights; everything is already in place */
+html[data-motion='reduced'] .hero__title .w__in,
+html[data-motion='reduced'] :is(.hero__sub, .hero__actions, .hero__cue) {
+  animation: none !important;
+  transform: none !important;
+}
+html[data-motion='reduced'][data-loader='show'] :is(.hero__sub, .hero__actions) {
+  opacity: 1;
+}
+html[data-motion='reduced'] :is(.route-panel, .route-panel__body, .hangar-panel__head, .hangar-panel__fact, .hangar-lite__plane, .closeup[open]) {
+  animation: none;
+}
+html[data-motion='reduced'] .fact {
+  opacity: 1;
+  translate: none;
+  transition: none;
+}
+html[data-motion='reduced'] .fact__trail {
+  stroke-dashoffset: 0;
+  transition: none;
+}
+html[data-motion='reduced'] .fact__jet {
+  opacity: 1;
+  transition: none;
+}
+html[data-motion='reduced'] .climb__line {
+  opacity: 1;
+  transform: none;
+}
+html[data-motion='reduced'] .climb__line .cw {
+  opacity: 1;
+}
+html[data-motion='reduced'] .paper-plane {
+  animation: none !important;
+  transition: none !important;
+  transform: rotate(-8deg);
+  opacity: 0.9;
+}
+html[data-motion='reduced'] .tilt {
+  transform: none;
+}
+html[data-motion='reduced'] .tilt::after {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

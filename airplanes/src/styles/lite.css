@@ -1,0 +1,242 @@
+/* The lighter version (PRD F7): flat map, 2D hangar. The hero video lives in sections.css. */
+
+/* ---------------------------------------------------------------- globe: flow layout around the flat map */
+html[data-mode='lite'] .globe__frame {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(380px, 34%);
+  grid-template-areas:
+    'head head'
+    'map panel'
+    'rail rail';
+  align-items: start;
+  gap: 24px 28px;
+  padding: var(--frame-top) var(--edge) clamp(96px, 10vw, 120px);
+}
+html[data-mode='lite'] .globe__head {
+  grid-area: head;
+  position: static;
+}
+html[data-mode='lite'] .globe__map {
+  grid-area: map;
+  min-width: 0;
+}
+html[data-mode='lite'] .route-panel {
+  grid-area: panel;
+  position: relative;
+  inset: auto;
+  width: auto;
+  max-height: none;
+}
+html[data-mode='lite'] .route-rail {
+  grid-area: rail;
+  position: static;
+  margin-inline: calc(-1 * var(--edge));
+}
+@media (max-width: 860px) {
+  html[data-mode='lite'] .globe__frame {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'head' 'map' 'panel' 'rail';
+    gap: 18px;
+  }
+}
+
+.flat-map {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 30px 80px -40px rgba(77, 163, 255, 0.45);
+  -webkit-tap-highlight-color: transparent;
+}
+.flat-map__sea {
+  stroke: var(--glass-line);
+}
+.flat-map__land {
+  fill: none;
+  stroke: rgba(169, 184, 207, 0.42);
+  stroke-width: 2.3;
+  stroke-linecap: round;
+}
+.flat-map__route {
+  cursor: pointer;
+}
+.flat-map__hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 16;
+  stroke-linecap: round;
+  pointer-events: stroke;
+}
+circle.flat-map__hit {
+  fill: transparent;
+  stroke: none;
+  pointer-events: all;
+}
+.flat-map__line {
+  fill: none;
+  stroke: var(--sky);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.55;
+  transition:
+    opacity 0.25s,
+    stroke-width 0.25s;
+}
+.flat-map__end {
+  fill: var(--sky);
+  opacity: 0.8;
+}
+.flat-map__pin {
+  fill: var(--sky);
+  stroke: var(--navy);
+  stroke-width: 1.5;
+}
+.flat-map__pulse {
+  fill: none;
+  stroke: var(--sky);
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: map-pulse 2.4s var(--ease-out) infinite;
+}
+@keyframes map-pulse {
+  from {
+    transform: scale(0.8);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+.flat-map__route:hover .flat-map__line {
+  opacity: 0.95;
+  stroke-width: 2.2;
+}
+.flat-map__route.is-selected .flat-map__line {
+  stroke: var(--cloud);
+  stroke-width: 2.8;
+  opacity: 1;
+  filter: drop-shadow(0 0 4px rgba(77, 163, 255, 0.9));
+}
+.flat-map__route.is-selected :is(.flat-map__end, .flat-map__pin) {
+  fill: var(--cloud);
+  opacity: 1;
+}
+.flat-map__label rect {
+  fill: rgba(11, 20, 38, 0.9);
+  stroke: rgba(245, 248, 252, 0.3);
+}
+.flat-map__label text {
+  fill: var(--cloud);
+  font: 600 12px/1 var(--font-body);
+  letter-spacing: 0.04em;
+}
+
+/* ---------------------------------------------------------------- hangar: 2D illustrations */
+html[data-mode='lite'] .hangar__frame {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(400px, 36%);
+  grid-template-areas:
+    'head head'
+    'art panel';
+  align-items: center;
+  gap: 24px 32px;
+  padding: var(--frame-top) var(--edge) clamp(96px, 10vw, 120px);
+}
+html[data-mode='lite'] .hangar__head {
+  grid-area: head;
+  position: static;
+}
+html[data-mode='lite'] .hangar-panel {
+  grid-area: panel;
+  position: relative;
+  inset: auto;
+  width: auto;
+  transform: none;
+}
+@media (max-width: 860px) {
+  html[data-mode='lite'] .hangar__frame {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'head' 'art' 'panel';
+    gap: 16px;
+  }
+}
+.hangar-lite {
+  grid-area: art;
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(220px, 34vw, 440px);
+  overflow: clip;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(70% 60% at 50% 18%, rgba(169, 200, 255, 0.22), transparent 70%),
+    linear-gradient(180deg, #1a2c4d 0%, #101d36 62%, #0c1730 100%);
+  border: 1px solid var(--glass-line);
+}
+.hangar-lite__light {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  width: 70%;
+  height: 90%;
+  translate: -50% 0;
+  background: radial-gradient(50% 60% at 50% 0%, rgba(255, 245, 225, 0.28), transparent 70%);
+  pointer-events: none;
+}
+.hangar-lite__floor {
+  position: absolute;
+  inset: 62% 0 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(245, 248, 252, 0.05) 0 2px, transparent 2px 80px),
+    linear-gradient(180deg, rgba(77, 163, 255, 0.08), rgba(5, 10, 22, 0.5));
+}
+.hangar-lite__plane {
+  position: relative;
+  width: min(86%, 760px);
+}
+.hangar-lite__plane[data-dir='1'] {
+  animation: plane-roll-r 0.8s var(--ease-out) both;
+}
+.hangar-lite__plane[data-dir='-1'] {
+  animation: plane-roll-l 0.8s var(--ease-out) both;
+}
+@keyframes plane-roll-r {
+  from {
+    opacity: 0;
+    transform: translateX(-40%);
+  }
+}
+@keyframes plane-roll-l {
+  from {
+    opacity: 0;
+    transform: translateX(40%);
+  }
+}
+.hangar-lite__art {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+}
+.hangar-lite__shadow {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 4%;
+  height: 10%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.5), transparent);
+}
+.art__prop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: prop-blur 0.18s linear infinite;
+}
+@keyframes prop-blur {
+  50% {
+    transform: scaleY(0.35);
+  }
+}

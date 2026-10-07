@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en" data-layout="cinematic" data-loader="skip">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>3D harness</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #0b1426; color: #f5f8fc; font: 13px/1.4 system-ui, sans-serif; overflow: hidden; }
+      .stage-layer { position: fixed; inset: 0; height: 100lvh; z-index: 0; pointer-events: none; }
+      .surface { position: fixed; inset: 0; z-index: 1; touch-action: pan-y; pointer-events: none; }
+      .surface.live { pointer-events: auto; }
+      .surface:focus-visible { outline: 2px solid #4da3ff; outline-offset: -4px; }
+      .panel { position: fixed; left: 12px; bottom: 12px; z-index: 3; width: min(560px, calc(100vw - 24px)); padding: 10px 12px; border-radius: 12px;
+        background: rgba(11, 20, 38, 0.82); border: 1px solid rgba(245, 248, 252, 0.15); display: grid; gap: 6px; }
+      .panel input[type=range] { width: 100%; }
+      .row { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+      .row button, .row select { font: inherit; color: inherit; background: #16233d; border: 1px solid #2c3d5e; border-radius: 6px; padding: 3px 7px; cursor: pointer; }
+      .row button[aria-pressed=true] { background: #4da3ff; color: #0b1426; }
+      .info { opacity: 0.8; font-variant-numeric: tabular-nums; }
+      html[data-ui=off] .panel { display: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./harness.tsx"></script>
+  </body>
+</html>

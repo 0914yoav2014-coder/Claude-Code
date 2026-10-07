@@ -1,0 +1,66 @@
+.layout { min-height: 100vh; display: flex; flex-direction: column; }
+.layout__main { flex: 1; outline: none; }
+
+.skip-link {
+  position: absolute; left: var(--space-4); top: -100px; z-index: 100;
+  background: var(--black); color: var(--white); padding: var(--space-2) var(--space-4); border-radius: var(--radius-sm);
+}
+.skip-link:focus { top: var(--space-2); }
+
+/* ---------- Nav ---------- */
+.nav { position: sticky; top: 0; z-index: 50; background: var(--red); color: var(--white); box-shadow: 0 2px 12px rgb(0 0 0 / 0.15); }
+.nav__inner { height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); }
+.nav__logo { font-size: 2rem; text-decoration: none; line-height: 1; padding-top: 4px; }
+.nav__toggle { display: none; background: none; border: 0; width: 44px; height: 44px; cursor: pointer; }
+.nav__bars, .nav__bars::before, .nav__bars::after {
+  display: block; width: 24px; height: 2px; background: currentColor; border-radius: 2px; position: relative; margin-inline: auto;
+  transition: transform 0.2s;
+}
+.nav__bars::before, .nav__bars::after { content: ''; position: absolute; left: 0; }
+.nav__bars::before { top: -7px; }
+.nav__bars::after { top: 7px; }
+.nav__list { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: var(--space-2); }
+.nav__link, .nav__label {
+  display: block; padding: var(--space-2) var(--space-3); border-radius: var(--radius-pill);
+  font-weight: 600; font-size: 0.95rem; text-decoration: none; white-space: nowrap;
+}
+.nav__link:hover { background: rgb(255 255 255 / 0.15); }
+.nav__link.active { background: var(--white); color: var(--red); }
+
+.nav__flavors { position: relative; }
+.nav__label { cursor: default; }
+.nav__label::after { content: ' ▾'; font-size: 0.75em; }
+.nav__flavors > ul {
+  list-style: none; margin: 0; padding: var(--space-2); position: absolute; right: 0; top: 100%; min-width: 200px;
+  background: var(--white); color: var(--black); border-radius: var(--radius); box-shadow: var(--shadow-lg);
+  opacity: 0; visibility: hidden; transform: translateY(6px); transition: opacity 0.15s, transform 0.15s, visibility 0.15s;
+}
+.nav__flavors:hover > ul, .nav__flavors:focus-within > ul { opacity: 1; visibility: visible; transform: none; }
+.nav__sublink { display: block; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); text-decoration: none; font-weight: 500; }
+.nav__sublink:hover, .nav__sublink.active { background: var(--cream); color: var(--red); }
+
+@media (max-width: 860px) {
+  .nav__toggle { display: block; color: var(--white); }
+  .nav__menu {
+    position: absolute; left: 0; right: 0; top: var(--nav-h); background: var(--red-deep);
+    padding: var(--space-4) var(--gutter) var(--space-5); display: none; max-height: calc(100vh - var(--nav-h)); overflow-y: auto;
+  }
+  .nav__menu.is-open { display: block; }
+  .nav__list { flex-direction: column; align-items: stretch; }
+  .nav__flavors > ul { position: static; opacity: 1; visibility: visible; transform: none; background: transparent; color: inherit; box-shadow: none; padding: 0 0 0 var(--space-4); }
+  .nav__label::after { content: ''; }
+  .nav__sublink:hover, .nav__sublink.active { background: rgb(255 255 255 / 0.15); color: inherit; }
+}
+
+/* ---------- Footer ---------- */
+.footer { background: var(--black); color: #ddd; padding-top: var(--space-7); margin-top: auto; }
+.footer__inner { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: var(--space-6); }
+.footer__logo { font-size: 2.4rem; color: var(--red); margin: 0; line-height: 1; }
+.footer__tag { color: #999; }
+.footer__heading { font-weight: 700; color: var(--white); margin-bottom: var(--space-2); }
+.footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-1); }
+.footer a { text-decoration: none; color: #ccc; }
+.footer a:hover { color: var(--white); text-decoration: underline; }
+.footer__legal { border-top: 1px solid #333; margin-top: var(--space-6); padding-block: var(--space-5); font-size: 0.8rem; color: #888; }
+.footer__legal p { margin: 0; max-width: 90ch; }
+@media (max-width: 640px) { .footer__inner { grid-template-columns: 1fr 1fr; } .footer__inner > :first-child { grid-column: 1 / -1; } }
