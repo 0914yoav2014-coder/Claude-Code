@@ -87,7 +87,9 @@ test.describe('sign-up', () => {
     await expect(status(page)).toHaveAttribute('data-state', 'disabled')
     await expect(status(page)).toHaveText(COPY.signup.disabled)
     expect(posts, 'no request leaves the page').toEqual([])
-    await expect(page.getByTestId('paper-plane')).toBeHidden()
+    // The folded paper plane may rest on the page; it must not take off without a real sign-up.
+    await page.waitForTimeout(500)
+    await expect(page.getByTestId('paper-plane'), 'paper plane stays put').not.toHaveAttribute('data-flight', /fold|fly|gone/)
   })
 
   test('mock endpoint: success message and the paper plane @desktop', async ({ app, page }) => {
@@ -103,6 +105,7 @@ test.describe('sign-up', () => {
     await expect(status(page)).toHaveAttribute('data-state', 'success')
     await expect(status(page)).toHaveText(PRD_COPY.success)
     await expect(page.getByTestId('paper-plane')).toBeVisible()
+    await expect(page.getByTestId('paper-plane'), 'paper plane takes off').toHaveAttribute('data-flight', /fold|fly|gone/)
     expect(body).toMatchObject({ email: 'pilot@example.com' })
     const tracks = (await app.tracks()).map((t) => t.event)
     expect(tracks).toContain('signup_submit')

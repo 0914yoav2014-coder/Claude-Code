@@ -6,7 +6,7 @@ import { dirname, join } from 'node:path'
  * Shared fixtures for the browser projects (QA-owned).
  *   app          open the page with the project's query, read window.__aatw, scroll to camera keys, screenshots
  *   consoleWatch zero console errors per test (auto); warnings outside the contract's allow-list are annotated
- *                (tests/e2e/console.spec.ts fails on them)
+ *                (the full scroll-through test in tests/e2e/boot.spec.ts fails on them)
  * Every page also gets an init script (window.__qa) that records aatw:track events, CSP violations and
  * the canvases that got a WebGL context, and can fake a hidden tab.
  */
