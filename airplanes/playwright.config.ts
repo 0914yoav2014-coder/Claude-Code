@@ -41,7 +41,8 @@ export default defineConfig<QAOptions>({
   timeout: 60_000,
   expect: { timeout: 10_000 },
   fullyParallel: false,
-  workers: Number(process.env.QA_WORKERS ?? 2),
+  // One worker by default: two SwiftShader 3D pages starve each other and time out (QA_WORKERS=2 to override).
+  workers: Number(process.env.QA_WORKERS ?? 1),
   retries: 0,
   reporter: [['list'], ['json', { outputFile: 'test-results/results.json' }]],
   use: {

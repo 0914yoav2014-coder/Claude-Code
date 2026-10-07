@@ -204,7 +204,7 @@ export class App {
     return (await this.state()).markers!
   }
 
-  /** Instant scroll to a document y; waits for the page (and Lenis / frame.y) to get there. */
+  /** Instant scroll to a document y; waits for the page (and Lenis / frame.y) to get there (generous: SwiftShader frames can take seconds). */
   async scrollTo(y: number): Promise<void> {
     await this.page.evaluate((top) => window.scrollTo({ top, behavior: 'instant' as ScrollBehavior }), y)
     await this.page.waitForFunction(
@@ -215,7 +215,7 @@ export class App {
         return Math.abs(window.scrollY - want) < 2 && (!a || Math.abs(a.frame.y - window.scrollY) < 2)
       },
       y,
-      { timeout: 5_000 },
+      { timeout: 15_000 },
     )
   }
 
