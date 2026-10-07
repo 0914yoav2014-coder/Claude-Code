@@ -88,6 +88,7 @@ export const COPY = {
   lite: {
     notice: 'Showing the lighter version so everything runs smoothly on this device.', // PRD
     tryFull: 'Try the full 3D version',
+    dismiss: 'Hide this message',
   },
   search: {
     noResults: 'No airplanes or cities match "{q}". Try a city like Tokyo.', // PRD (F13, not built)

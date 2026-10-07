@@ -3,8 +3,7 @@ import { COPY } from '../data/copy'
 import { ARTIFACT } from '../lib/env'
 import { clearLiteFlag, useApp, type LiteReason } from '../state/store'
 
-/** Close button name (TODO Content: move to COPY.lite.dismiss). */
-const DISMISS = 'Hide this message'
+const DISMISS = COPY.lite.dismiss
 
 /** Lite reasons a reload can fix (the device itself is not the problem). */
 const RETRYABLE: LiteReason[] = ['session', 'context-failed', 'context-lost', 'slow-fps']
