@@ -229,7 +229,7 @@ html[data-mode='lite'] .section--climb {
 
 /* ================================================================= globe window (F3) */
 .globe__frame {
-  --rail-h: 92px;
+  --rail-h: 100px;
 }
 .globe__head {
   position: absolute;
@@ -446,7 +446,10 @@ html[data-tier='high'] .route-chip {
 
 @media (max-width: 760px) {
   .globe__frame {
-    --rail-h: 84px;
+    --rail-h: 96px;
+  }
+  .globe__head {
+    max-width: calc(100% - 2 * var(--gutter) - 56px);
   }
   .globe__head h2 {
     font-size: 1.875rem;
@@ -509,6 +512,18 @@ html[data-tier='high'] .route-chip {
   .route-chip {
     min-height: 48px;
     padding: 6px 14px;
+  }
+}
+@media (min-width: 761px) and (max-width: 1100px) {
+  .route-panel {
+    top: auto;
+    bottom: calc(var(--frame-bottom) + var(--rail-h) + 8px);
+    max-height: 52%;
+  }
+}
+@media (max-width: 600px) {
+  .route-list {
+    padding-right: calc(var(--edge) + 56px);
   }
 }
 @media (max-width: 760px) and (max-height: 700px) {
@@ -850,7 +865,6 @@ html[data-mode='boot'] .fact {
   stroke-linecap: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  vector-effect: non-scaling-stroke;
   transition: stroke-dashoffset 1.5s var(--ease-out) calc(var(--order) * 0.1s);
 }
 .fact__jet {
