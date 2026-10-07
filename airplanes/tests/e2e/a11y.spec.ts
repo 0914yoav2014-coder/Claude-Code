@@ -125,7 +125,12 @@ test('keyboard: skip link, routes, planes, close-up and the motion toggle work w
   await expect(dialog).toBeVisible()
   for (let i = 0; i < 4; i++) {
     await page.keyboard.press('Tab')
-    expect(await page.evaluate(() => !!document.activeElement?.closest('[data-testid=closeup]')), 'focus stays inside the close-up').toBe(true)
+    // A modal <dialog> lets Tab leave to the browser's own UI (activeElement = body), never to the page behind it.
+    const where = await page.evaluate(() => {
+      const a = document.activeElement
+      return !a || a === document.body ? 'browser' : a.closest('[data-testid=closeup]') ? 'dialog' : (a as HTMLElement).dataset.testid ?? a.tagName
+    })
+    expect(['dialog', 'browser'], `focus stays inside the close-up (went to ${where})`).toContain(where)
   }
   await page.keyboard.press('Escape')
   await expect(dialog).toBeHidden()
