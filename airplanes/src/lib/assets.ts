@@ -32,5 +32,6 @@ export const ASSETS = {
 
 /** URL for a public asset, relative to the page (works from any host path and in the Artifact). */
 export function assetUrl(path: string): string {
-  return import.meta.env.BASE_URL + path
+  // The SSR build resolves the relative base to '/', so the prerender uses './' like the client does.
+  return (import.meta.env.SSR ? './' : import.meta.env.BASE_URL) + path
 }
