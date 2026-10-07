@@ -48,15 +48,16 @@ const HERO: Record<'intro' | 'hero' | 'climb' | 'clouds' | 'heroTop', { wide: Po
 const HANGAR: Record<'hangarIn' | 'hangar' | 'night', { wide: Pose; tall: Pose }> = {
   hangarIn: {
     wide: { pos: [3.5, 6.2, 37], target: [0, 2.6, 0], fov: 26 },
-    tall: { pos: [3.5, 7.5, 56], target: [0, 2.8, 0], fov: 34 },
+    tall: { pos: [3.5, 7.5, 56], target: [0, -4.2, 0], fov: 34 },
   },
   hangar: {
     wide: { pos: [10.5, 4.6, 32], target: [0.6, 1.9, 0], fov: 26 },
-    tall: { pos: [11, 6.2, 52], target: [0, 2.3, 0], fov: 34 },
+    // phones: the plane panel covers the lower ~45 %, so the plane sits in the upper half
+    tall: { pos: [11, 6.2, 52], target: [0, -4.6, 0], fov: 34 },
   },
   night: {
     wide: { pos: [10.5, 9.5, 34], target: [0.6, 4.5, 0], fov: 26 },
-    tall: { pos: [11, 11, 54], target: [0, 5, 0], fov: 34 },
+    tall: { pos: [11, 11, 54], target: [0, -1.5, 0], fov: 34 },
   },
 }
 

@@ -382,10 +382,10 @@ export function buildPlane(plane: Plane, lod: Lod, envMap: Texture | null, gearD
   const liv = makeLivery(spec, rich)
   const env = { envMap, envMapIntensity: 1 }
   const mats: Record<string, Material> = {
-    paint: new MeshPhysicalMaterial({ map: liv.map, roughnessMap: liv.orm, metalnessMap: liv.orm, normalMap: liv.normal, roughness: 1, metalness: 1, clearcoat: 0.8, clearcoatRoughness: 0.12, ...env }),
+    paint: new MeshPhysicalMaterial({ map: liv.map, roughnessMap: liv.orm, metalnessMap: liv.orm, normalMap: liv.normal, roughness: 1, metalness: 1, clearcoat: 0.5, clearcoatRoughness: 0.24, ...env }),
     wing: new MeshPhysicalMaterial({ map: liv.wing, metalness: 0.35, roughness: 0.42, clearcoat: 0.35, clearcoatRoughness: 0.3, ...env }),
-    fin: new MeshPhysicalMaterial({ map: liv.fin, metalness: 0.2, roughness: 0.35, clearcoat: 0.8, clearcoatRoughness: 0.12, ...env }),
-    white: new MeshPhysicalMaterial({ color: '#eef1f5', metalness: 0.2, roughness: 0.35, clearcoat: 0.8, clearcoatRoughness: 0.15, ...env }),
+    fin: new MeshPhysicalMaterial({ map: liv.fin, metalness: 0.2, roughness: 0.35, clearcoat: 0.5, clearcoatRoughness: 0.24, ...env }),
+    white: new MeshPhysicalMaterial({ color: '#eef1f5', metalness: 0.2, roughness: 0.35, clearcoat: 0.5, clearcoatRoughness: 0.24, ...env }),
     metal: new MeshStandardMaterial({ color: '#c9cdd4', metalness: 1, roughness: 0.24, ...env }),
     dark: new MeshStandardMaterial({ color: '#23272e', metalness: 0.75, roughness: 0.42, ...env }),
     rubber: new MeshStandardMaterial({ color: '#141518', metalness: 0, roughness: 0.88, ...env }),

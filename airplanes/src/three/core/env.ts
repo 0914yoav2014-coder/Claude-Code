@@ -76,10 +76,10 @@ export function sunsetEnv(gl: WebGLRenderer): WebGLRenderTarget {
 export function hangarEnv(gl: WebGLRenderer): WebGLRenderTarget {
   const s = new Scene()
   s.add(gradientSphere('#0d1422', '#0a0f19', '#121a28', '#05080d', 3))
-  s.add(panel(30, 12, '#dfeaff', 3.2, [0, 30, 4]))
-  s.add(panel(4, 34, '#cfe0ff', 2.4, [-36, 8, -6], [0, 8, 0]))
-  s.add(panel(4, 34, '#cfe0ff', 1.6, [36, 8, -10], [0, 8, 0]))
-  s.add(panel(48, 3, '#9fc4ff', 1.8, [0, 10, -40], [0, 10, 0]))
+  s.add(panel(30, 12, '#dfeaff', 1.5, [0, 30, 4]))
+  s.add(panel(4, 34, '#cfe0ff', 1.4, [-36, 8, -6], [0, 8, 0]))
+  s.add(panel(4, 34, '#cfe0ff', 1.0, [36, 8, -10], [0, 8, 0]))
+  s.add(panel(48, 3, '#9fc4ff', 1.2, [0, 10, -40], [0, 10, 0]))
   s.add(panel(40, 40, '#1a2232', 1, [0, -6, 0], [0, 0, 0]))
   return bake(gl, s)
 }
