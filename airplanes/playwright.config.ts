@@ -85,7 +85,7 @@ export default defineConfig<QAOptions>({
       name: 'reduced',
       testDir: 'tests/e2e',
       grep: /@common|@reduced/,
-      use: { ...desktop, reducedMotion: 'reduce', launchOptions: { args: GPU_ARGS }, query: Q3D },
+      use: { ...desktop, contextOptions: { reducedMotion: 'reduce' }, launchOptions: { args: GPU_ARGS }, query: Q3D },
     },
     {
       name: 'no-webgl',

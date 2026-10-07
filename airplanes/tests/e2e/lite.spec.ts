@@ -99,7 +99,7 @@ test.describe('no WebGL', () => {
     await app.shot('lite-hangar')
   })
 
-  test('hero poster (and the video loop, if present) @lite', async ({ app, page }) => {
+  test('hero poster (and the video loop, if present) @lite', async ({ page }) => {
     const poster = page.getByTestId('hero-poster')
     await expect(poster).toBeVisible()
     const img = poster.locator('img')

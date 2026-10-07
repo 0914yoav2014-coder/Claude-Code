@@ -6,7 +6,7 @@ import { expect, test, type App } from '../fixtures'
 
 /** Accessibility (PRD, WCAG 2.1 AA; CONTRACTS §3.7): axe in each state and a keyboard walkthrough. */
 async function axe(app: App, state: string) {
-  const r = await new AxeBuilder({ page: app.page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
+  const r = await new AxeBuilder({ page: app.page as any }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze()
   const out = join(dirname(app.info.config.configFile ?? process.cwd() + '/x'), 'test-results', 'axe', app.info.project.name, `${state}.json`)
   mkdirSync(dirname(out), { recursive: true })
   writeFileSync(out, JSON.stringify({ violations: r.violations, incomplete: r.incomplete.map((i) => ({ id: i.id, impact: i.impact, nodes: i.nodes.length })) }, null, 2))

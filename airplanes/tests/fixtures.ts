@@ -277,7 +277,7 @@ export class App {
     try {
       return await this.page.locator('[data-testid=stage]').screenshot()
     } finally {
-      await style.evaluate((el) => el.remove())
+      await style.evaluate((el) => (el as Element).remove())
     }
   }
 
