@@ -132,6 +132,11 @@ export default function SpaceScene() {
     const shift = (frame.loopT * 0.0018) % 1
     earthMat.uniforms.uCloudShift.value = shift
     cloudMat.uniforms.uShift.value = shift
+    if (stage.bloom) {
+      stage.bloom.threshold = 0.85
+      stage.bloom.strength = 0.4
+      stage.bloom.radius = 0.5
+    }
     if (stage.lights) {
       const L = stage.lights
       L.sun.color.set('#fff3e2')
