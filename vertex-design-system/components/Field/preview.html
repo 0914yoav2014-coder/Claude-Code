@@ -1,0 +1,20 @@
+<!-- @dsCard group="Forms" height=250 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Field — preview</title></head>
+<body>
+<form class="vx-stack" style="max-width:420px" onsubmit="event.preventDefault()">
+  <div class="vx-field">
+    <label class="vx-field__label" for="vx-email">Work email</label>
+    <input class="vx-input" id="vx-email" type="email" placeholder="you@company.dev">
+    <span class="vx-field__hint">We send one email per release. No tracking pixels.</span>
+  </div>
+  <div class="vx-field vx-field--invalid">
+    <label class="vx-field__label" for="vx-sub">Subdomain</label>
+    <input class="vx-input" id="vx-sub" type="text" value="my app" aria-invalid="true" aria-describedby="vx-sub-err">
+    <span class="vx-field__hint" id="vx-sub-err">Use lowercase letters, numbers and hyphens only.</span>
+  </div>
+  <label class="vx-check"><input type="checkbox" id="vx-agree" checked> Send me the monthly changelog</label>
+</form>
+</body>
+</html>
