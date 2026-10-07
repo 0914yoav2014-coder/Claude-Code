@@ -102,12 +102,12 @@ def make_day(src: str, out: str) -> None:
 
 
 NIGHT_FLOOR = 20.0  # red level treated as black (deserts and ice sheets reach ~16)
-NIGHT_WHITE = 105.0  # red level where city cores reach full brightness
+NIGHT_WHITE = 80.0  # red level where city cores reach full brightness
 
 
 def night_rgb(red: np.ndarray) -> np.ndarray:
     v = np.clip((red - NIGHT_FLOOR) / (NIGHT_WHITE - NIGHT_FLOOR), 0.0, 1.0)
-    v = v ** 1.5  # dim the halos around cities so the cores stay crisp
+    v = v ** 1.3  # dim the halos around cities so the cores stay crisp
     # Sodium-light palette: deep amber at the dim fringe, pale warm white in the cores.
     lo = np.array([255, 150, 60], np.float32) / 255
     hi = np.array([255, 238, 205], np.float32) / 255
@@ -291,15 +291,15 @@ def make_clouds(out: str, preview: str | None, w: int = 2048, h: int = 1024) -> 
     for cl, co, hemi in centres:
         axis = unit(cl, co).astype(np.float32)
         d = np.arccos(np.clip(p @ axis, -1, 1))  # angular distance, radians
-        radius = math.radians(rng.uniform(7, 12))
-        twist = rng.uniform(2.2, 3.6) * np.exp(-((d / radius) ** 2))
+        radius = math.radians(rng.uniform(8, 13))
+        twist = rng.uniform(1.3, 2.3) * np.exp(-((d / radius) ** 2))
         q = rotate(q, axis, (-hemi * twist).astype(np.float32))
     # A few tropical storms and weaker eddies at lower latitudes.
     for _ in range(4):
         hemi = rng.choice([1, -1])
         axis = unit(hemi * rng.uniform(12, 24), rng.uniform(-180, 180)).astype(np.float32)
         d = np.arccos(np.clip(p @ axis, -1, 1))
-        twist = rng.uniform(2.5, 3.5) * np.exp(-((d / math.radians(rng.uniform(3, 5))) ** 2))
+        twist = rng.uniform(1.8, 2.6) * np.exp(-((d / math.radians(rng.uniform(3, 5))) ** 2))
         q = rotate(q, axis, (-hemi * twist).astype(np.float32))
     print(f'  clouds: swirls {time.time() - t0:.1f}s')
 
@@ -310,19 +310,20 @@ def make_clouds(out: str, preview: str | None, w: int = 2048, h: int = 1024) -> 
     wv = np.stack([fbm(n_warp, qs + o, 1.6, 4) for o in (0.0, 5.2, 9.7)], axis=-1)
     qw = qs + 0.55 * wv
     base = fbm(n_base, qw, 2.2, 8, gain=0.52)
-    detail = fbm(n_detail, qw * np.array([1.0, 1.0, 1.4], np.float32), 14.0, 4, gain=0.55)
+    # Detail follows the warp only half-way, so swirls don't smear it into marble-like streaks.
+    detail = fbm(n_detail, (0.5 * qw + 0.5 * p) * np.array([1.0, 1.0, 1.4], np.float32), 12.0, 4, gain=0.55)
     low = fbm(n_low, p, 1.3, 3)  # large-scale longitude variation of cloudiness
     print(f'  clouds: noise {time.time() - t0:.1f}s')
 
     # 4. Coverage profile by latitude (fraction of sky with cloud), with an ITCZ that wanders.
     itcz = 6.0 + 3.0 * np.sin(LON * 2 + 0.6).astype(np.float32) + 4.0 * low
-    cov = (0.30
+    cov = (0.52
            + 0.48 * gauss(latd, itcz, 4.5)            # ITCZ: a narrow band of tall convection
-           - 0.14 * gauss(np.abs(latd), 24.0, 7.0)    # subtropical highs: mostly clear
-           + 0.42 * gauss(latd, 54.0, 11.0)           # northern storm track
-           + 0.52 * gauss(latd, -56.0, 10.0)          # Southern Ocean: the cloudiest place on Earth
+           - 0.20 * gauss(np.abs(latd), 24.0, 7.0)    # subtropical highs: mostly clear
+           + 0.34 * gauss(latd, 54.0, 11.0)           # northern storm track
+           + 0.40 * gauss(latd, -56.0, 10.0)          # Southern Ocean: the cloudiest place on Earth
            + 0.14 * gauss(np.abs(latd), 86.0, 10.0))  # polar caps
-    cov = np.clip(cov * (1.0 + 0.55 * low), 0.08, 0.92)
+    cov = np.clip(cov * (1.0 + 0.45 * low), 0.12, 0.92)
 
     # 5. Threshold the field at the quantile that gives that coverage, with soft edges.
     nb = (base - base.mean()) / base.std()
@@ -330,12 +331,15 @@ def make_clouds(out: str, preview: str | None, w: int = 2048, h: int = 1024) -> 
     table = np.quantile(nb[::4, ::4], qs_)
     thr = np.interp(1.0 - cov, qs_, table)
     dd = nb - thr
-    alpha = smoothstep(-0.18, 1.05, dd) ** 1.1
-    # Texture inside the clouds and wispy fringes.
-    alpha = alpha * (0.78 + 0.22 * np.clip(detail * 2.2 + 0.5, 0, 1))
-    alpha += 0.10 * smoothstep(-0.55, 0.0, dd) * np.clip(detail * 3 + 0.4, 0, 1)
+    # Wide, soft transition: thin veils at the edges, bright opaque cores only deep inside.
+    alpha = smoothstep(-0.45, 1.5, dd + 0.25 * detail) ** 1.25
+    # Gentle texture inside the clouds and wispy fringes outside them.
+    alpha = alpha * (0.86 + 0.14 * np.clip(detail * 2.0 + 0.5, 0, 1))
+    alpha += 0.12 * smoothstep(-0.9, -0.2, dd) * np.clip(detail * 2.5 + 0.3, 0, 1)
     alpha = np.clip(alpha, 0, 1)
-    img = Image.fromarray(np.clip(alpha * 255 + 0.5, 0, 255).astype(np.uint8), 'L').filter(ImageFilter.GaussianBlur(0.5))
+    # Soften with a blur that wraps east-west, so the date line stays seamless.
+    alpha = wrap_blur(alpha.astype(np.float32), 0.8)
+    img = Image.fromarray(np.clip(alpha * 255 + 0.5, 0, 255).astype(np.uint8), 'L')
     a = np.asarray(img, np.float32) / 255
     wgt = np.cos(LAT)
     print(f'  clouds: mean alpha {(a * wgt).sum() / wgt.sum():.2f}, area with alpha > 0.2: {100 * (wgt * (a > 0.2)).sum() / wgt.sum():.0f} %, '
