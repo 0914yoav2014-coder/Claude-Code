@@ -8,7 +8,36 @@ Each agent:
 - never starts other agents;
 - commits only its own paths.
 
-Only the Lead merges.
+Only the Lead pushes and approves the launch.
+
+## 0. Working in one shared checkout (read first)
+
+All agents work in the same checkout, `/home/user/Claude-Code` (app in `airplanes/`), on the branch `claude/busy-dijkstra-u0cs7r`. Several agents edit at the same time, so files are disjoint by ownership (§2). The first team ran in separate worktrees, hit the account's usage limit after 10 minutes, and lost everything uncommitted. So:
+
+- **Commit your own paths often:** at least every ~20 minutes of work, and after every meaningful step. Work that isn't committed can be lost at any moment (usage limits, restarts).
+  ```
+  git add -- <your paths>
+  git commit -m "<what changed>" -- <your paths>
+  ```
+  - If it fails with `index.lock`, wait 2 s and retry.
+  - End every message with the two trailer lines given in your brief.
+- **Never** touch the index or working tree beyond your own paths. Never run any of these, because they would destroy other agents' work:
+  - `git add -A`, `git add .`, `git commit -a`
+  - `git stash`, `git checkout -- .`, `git restore .`
+  - `git reset --hard`, `git clean`
+  - rebase, `git pull`, or switching branches
+- **Never push.** The Lead pushes.
+- **Keep a progress note** at `docs/progress/<role>.md` (you own it). Update it with each commit, in three parts:
+  - **Done:** what is finished.
+  - **Next:** what you are doing next.
+  - **Notes and questions:** anything a successor needs.
+
+  If you stop for any reason, a replacement agent continues from it.
+- **Checks while others are editing:**
+  - Lint your own paths: `npx oxlint <your dirs>`.
+  - Typecheck with `npx tsc -b`, and fix errors in **your** files only. An error in another agent's file means they are mid-edit: ignore it and don't touch it.
+  - Bundle-check with `npx vite build --outDir /tmp/<role>-dist`. Never write to `dist/`, `dist-ssr/` or `dist-artifact/`; QA and the Lead own those.
+- **Ports:** dev servers on your own port (§1); never kill processes you didn't start.
 
 PRD: "PRD: Airplanes Around the World Landing Page" (Claude Docs, rev 25). The **exact copy** lives in `src/data/copy.ts`, and the lines marked `// PRD` must match the PRD.
 
@@ -20,11 +49,10 @@ PRD: "PRD: Airplanes Around the World Landing Page" (Claude Docs, rev 25). The *
   - gsap 3.15 (core ticker; ScrollTrigger optional), lenis 1.3.26, zustand 5.
   - Tests: Playwright 1.56.1, with Chromium 1194 preinstalled at `/opt/pw-browsers`. Do **not** run `playwright install`.
 - **Not installed on purpose:** `postprocessing`, `@react-three/postprocessing`, glTF/Draco/KTX2 loaders. For bloom and depth of field on the high tier, use `three/addons` (`EffectComposer`, `UnrealBloomPass`, `BokehPass`, `OutputPass`).
-- **Commands** (run them in `airplanes/`):
-  - `npm ci` first in a fresh worktree.
-  - Every agent, before every commit: `npm run typecheck`, `npm run lint`, `npm run build`.
+- **Commands** (run them in `airplanes/`; `node_modules` is already installed, never reinstall or change it):
+  - Checks before each commit: see §0.
   - `npm run dev -- --port <your port>`. Ports: 3D 5174, Frontend 5175, Content 5177, QA 5176. QA uses preview port 4176.
-  - `npx vite preview --port <port>` serves `dist/`.
+  - QA (and the Lead) run the full `npm run build` (writes `dist/` + `dist-ssr/`). `npx vite preview --port <port>` serves `dist/`.
 - **Browser flags:**
   - Headless Chromium has WebGL2 through SwiftShader (software). Launch with `--enable-unsafe-swiftshader --ignore-gpu-blocklist`. Frame rates under SwiftShader mean nothing.
   - Software GPUs fall back to Lite by default. Add `?perfcaveat=0` to test 3D.
@@ -42,7 +70,9 @@ PRD: "PRD: Airplanes Around the World Landing Page" (Claude Docs, rev 25). The *
 | **Frontend** | `src/ui/**`, `src/scroll/**`, `src/lite/**`, `src/styles/**`, `public/privacy.html` |
 | **QA** | `tests/**`, `playwright.config.ts`, `qa/**` |
 
-`node scripts/check-ownership.mjs <owner> scaffold HEAD` lists any file a branch changed outside its owner's paths. The tag `scaffold` marks the starting commit.
+Each role also owns its own progress note, `docs/progress/<role>.md` (content, 3d, frontend, qa).
+
+The tag `scaffold` marks the starting commit. The Lead reviews each commit's paths against this table.
 
 - **Need a contract change?** Stop and report it in your final message (or send it to the Lead). Do not edit Lead files.
 - **Need data that doesn't exist yet?** Read it through the types in `src/data/types.ts` and use the seeded values.
@@ -358,14 +388,13 @@ All are equirectangular, longitude −180 → 180 left to right, north up. The p
 - **3D** builds against `src/three/dev/harness.html`, a scroll slider driving `frame.y` over `defaultMarkers`, so it never waits for Frontend.
 - **Frontend** builds against the Lead stub stage.
 - **QA** writes tests against this contract from day one. They stay red until features land and serve as the progress board.
-- **The Lead** merges branches (files are disjoint, so there are no conflicts), then asks QA for a full run. Bugs go back to the owning agent.
+- **Content's data appears in everyone's checkout as soon as it is saved**, because everyone shares one checkout.
+- **The Lead** reviews commits, integrates, pushes, and asks QA for full runs. Bugs go back to the owning agent.
 
-### Messages and merges
+### Messages
 
 - **Messaging the Lead:** agents use `SendMessage` with `to: "main"`. Send a message only for:
   - a hand-off (with the commit hash);
   - a contract question that blocks you.
 
-  Otherwise keep going and list questions in your final report.
-- **"Merge `<hash>`" from the Lead:** run `git merge --no-edit <hash>` in your worktree. Files are disjoint, so it merges cleanly. Then run `npm ci` if `package-lock.json` changed.
-- **Never rebase or force anything.** Commit on your own branch only.
+  Otherwise keep going and list questions in your final report and progress note.
