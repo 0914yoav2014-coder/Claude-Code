@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { COPY, fill } from '../../data/copy'
 import { SITE } from '../../data/site'
 import BrandMark from '../BrandMark'
@@ -12,8 +12,11 @@ const BUILD_YEAR = 2026
  * Contact is hidden while no address is configured.
  */
 export default function Footer() {
-  const [year, setYear] = useState(BUILD_YEAR)
-  useEffect(() => setYear(Math.max(BUILD_YEAR, new Date().getFullYear())), [])
+  const yearRef = useRef<HTMLParagraphElement>(null)
+  useEffect(() => {
+    const year = Math.max(BUILD_YEAR, new Date().getFullYear())
+    if (year !== BUILD_YEAR && yearRef.current) yearRef.current.textContent = fill(COPY.footer.copyright, { year })
+  }, [])
 
   return (
     <footer id="footer" className="footer night" data-section="footer">
@@ -72,8 +75,8 @@ export default function Footer() {
               </span>
             ))}
           </p>
-          <p className="footer__legal" data-testid="copyright">
-            {fill(COPY.footer.copyright, { year })}
+          <p ref={yearRef} className="footer__legal" data-testid="copyright">
+            {fill(COPY.footer.copyright, { year: BUILD_YEAR })}
           </p>
         </div>
       </div>

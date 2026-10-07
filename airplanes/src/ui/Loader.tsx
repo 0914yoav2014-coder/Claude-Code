@@ -15,7 +15,7 @@ import { whenBooted } from './boot-ready'
  */
 
 /** Time floor (0..1) at ms since navigation start: a steady taxi, then a sprint to 100 %. */
-export function loaderFloor(t: number): number {
+function loaderFloor(t: number): number {
   const TAXI_END = 2500
   const FULL = MOTION.loaderMax - 300 // 2.7 s: 100 %, lift-off; the page is revealed by 3 s
   if (t <= TAXI_END) return 0.86 * Math.max(0, t) / TAXI_END

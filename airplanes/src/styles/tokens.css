@@ -13,6 +13,8 @@
   --cloud: #f5f8fc;
   --mist: #a9b8cf;
   --city-light: #ffb36b;
+  /* form warnings (orange is for buttons only) */
+  --warn: #ffa3a3;
 
   /* glass: see-through + blurred on the high tier, solid on medium/low (keyed on html[data-tier]) */
   --glass-bg: rgba(14, 26, 48, 0.46);

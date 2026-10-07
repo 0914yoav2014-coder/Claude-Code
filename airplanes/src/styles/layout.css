@@ -1,0 +1,160 @@
+/* Layers, sections, sticky frames, camera markers (docs/CONTRACTS.md §5, §7). */
+
+/* ---------------------------------------------------------------- layers (back to front) */
+/* 1 canvas (fixed, no input) · 2 hero poster · 3 section content · 4 glass · 5 nav + toggle · 6 dialogs · 7 loader */
+.stage-layer {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 100lvh;
+  z-index: 0;
+  pointer-events: none;
+}
+main,
+.footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* camera markers: zero-size, measured by the scroll controller (strictly increasing) */
+.cam {
+  position: absolute;
+  left: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+.cam--hero,
+.cam--globe,
+.cam--hangar,
+.cam--night {
+  top: 0;
+}
+.cam--climb {
+  top: 30svh;
+}
+.cam--clouds {
+  top: 80svh;
+}
+.cam--earth {
+  bottom: 40svh;
+}
+.cam--globeOut,
+.cam--hangarOut {
+  bottom: 100svh;
+}
+
+/* the content column inside full-bleed frames */
+:root {
+  --wrap: 1320px;
+  --edge: max(var(--gutter), (100% - var(--wrap)) / 2);
+}
+
+/* ---------------------------------------------------------------- sections (cinematic layout) */
+.section {
+  position: relative;
+}
+.section--hero {
+  height: 100svh;
+  min-height: 520px;
+}
+.section--climb {
+  height: 200svh;
+}
+.section--globe {
+  height: 220svh;
+  overflow: clip;
+}
+.section--hangar {
+  height: 240svh;
+  overflow: clip;
+}
+.section--facts,
+.section--signup {
+  padding: clamp(88px, 12vw, 168px) var(--gutter);
+}
+.section--signup {
+  padding-top: clamp(24px, 4vw, 56px);
+}
+
+.sticky-frame {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 520px;
+}
+
+/* the HTML surfaces that receive 3D input: live only inside their interactive window */
+.stage-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+.stage-surface:focus-visible {
+  outline-offset: -6px;
+  border-radius: var(--radius-lg);
+}
+html[data-hold='globe'] [data-stage='globe'],
+html[data-hold='hangar'] [data-stage='hangar'] {
+  pointer-events: auto;
+  cursor: grab;
+}
+html[data-hold='globe'] [data-stage='globe']:active,
+html[data-hold='hangar'] [data-stage='hangar']:active {
+  cursor: grabbing;
+}
+
+/* section headings */
+.section-head {
+  position: relative;
+  z-index: 2;
+  max-width: 34rem;
+}
+.section-head h2 {
+  text-shadow: var(--text-shadow);
+}
+.section-head--center {
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------- compact layout */
+/* Reduced motion or the lighter version known before paint: every section about one screen,
+   no scroll-scrubbed tracks; markers still measured (repositioned so they keep increasing). */
+html[data-layout='compact'] :is(.section--climb, .section--globe, .section--hangar) {
+  height: auto;
+}
+html[data-layout='compact'] .sticky-frame {
+  position: relative;
+  height: auto;
+  min-height: 100svh;
+}
+html[data-layout='compact'] .cam--clouds {
+  top: 30%;
+}
+html[data-layout='compact'] .cam--earth {
+  top: 70%;
+  bottom: auto;
+}
+html[data-layout='compact'] :is(.cam--globeOut, .cam--hangarOut) {
+  top: 50%;
+  bottom: auto;
+}
+
+/* the lighter version entered at start-up keeps the cinematic layout, but its globe and hangar
+   are flat content in normal flow (no camera to hold for) */
+html[data-mode='lite'] :is(.section--globe, .section--hangar) {
+  height: auto;
+}
+html[data-mode='lite'] :is(.globe__frame, .hangar__frame) {
+  position: relative;
+  height: auto;
+  min-height: 100svh;
+}
+html[data-mode='lite'] :is(.cam--globeOut, .cam--hangarOut) {
+  top: 50%;
+  bottom: auto;
+}
