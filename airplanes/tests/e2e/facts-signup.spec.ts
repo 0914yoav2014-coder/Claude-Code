@@ -18,6 +18,12 @@ test.describe('facts', () => {
     for (const [i, f] of FACTS.entries()) {
       const n = items.nth(i).getByTestId('fact-number')
       await expect(n, `fact ${f.id} data-value`).toHaveAttribute('data-value', String(f.value))
+      // Counting may start when each number comes into view (phones stack the facts below the fold).
+      const y = await items.nth(i).evaluate((el) => {
+        const r = el.getBoundingClientRect()
+        return Math.round(r.top + window.scrollY + r.height / 2 - window.innerHeight / 2)
+      })
+      await app.scrollTo(y)
       await expect(n, `fact ${f.id} ends at ${formatFact(f.value, f.format)}`).toHaveText(formatFact(f.value, f.format), { timeout: 6_000 })
       const a = items.nth(i).getByTestId('fact-source')
       await expect(a).toHaveAttribute('href', f.source.url)

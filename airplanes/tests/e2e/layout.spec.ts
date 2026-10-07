@@ -79,7 +79,8 @@ test('tap targets are at least 44 px on phones @narrow @touch', async ({ app, pa
       if (el instanceof HTMLInputElement && el.type === 'checkbox') {
         const label = el.closest('label') ?? document.querySelector(`label[for="${el.id}"]`)
         const lr = label?.getBoundingClientRect()
-        if (lr && lr.height >= 44) continue
+        // A checkbox wrapped in its label is tapped through the label: require the WCAG 2.5.8 minimum (24 px) there.
+        if (lr && Math.min(lr.width, lr.height) >= 24) continue
       }
       if (Math.min(r.width, r.height) < 44) out.push(`${el.getAttribute('data-testid') ?? el.tagName.toLowerCase()} "${(el.getAttribute('aria-label') ?? el.textContent ?? '').trim().slice(0, 30)}" ${Math.round(r.width)}×${Math.round(r.height)}`)
     }

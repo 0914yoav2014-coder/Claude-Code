@@ -10,6 +10,7 @@ const data = JSON.parse(readFileSync(file, 'utf8'))
 
 const rows = new Map()
 const failures = []
+// eslint-disable-next-line no-control-regex
 const strip = (s) => String(s ?? '').replace(/\u001b\[[0-9;]*m/g, '')
 
 function walk(suite, path) {

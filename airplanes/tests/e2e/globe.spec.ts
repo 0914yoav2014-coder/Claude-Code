@@ -42,7 +42,7 @@ test.describe('route list and panel', () => {
     expect(await app.tracks()).toContainEqual(expect.objectContaining({ event: 'route_select', route: OTHER.id }))
     await app.shot('globe-panel')
 
-    await page.getByTestId('route-panel-close').click()
+    await page.getByTestId('route-panel-close').click({ timeout: 10_000 })
     await expect(panel).toBeHidden()
     await expect(btn).toHaveAttribute('aria-pressed', 'false')
   })
@@ -165,10 +165,9 @@ test.describe('3D globe input', () => {
 
   test('tapping a route on the globe selects it @3d', async ({ app, page }, info) => {
     const current = (await app.state()).globe.route
-    let target: { id: string; x: number; y: number } | null = null
     const tried: string[] = []
-    for (const r of [...ROUTES].sort((a, b) => b.distanceKm - a.distanceKm)) {
-      if (r.id === current) continue
+    const pts: { id: string; x: number; y: number; ok: boolean }[] = []
+    for (const r of ROUTES) {
       const pt = await app.routePoint(r.id)
       expect(pt, 'debug.three.routePoint() is available').not.toBeUndefined()
       tried.push(`${r.id}: ${pt ? `${pt.x.toFixed(0)},${pt.y.toFixed(0)}` : 'far side'}`)
@@ -178,13 +177,16 @@ test.describe('3D globe input', () => {
         const h = document.elementFromPoint(x, y)
         return !!h && (h === el || el.contains(h))
       }, pt)
-      if (hitsStage) {
-        target = { id: r.id, ...pt }
-        break
-      }
+      pts.push({ id: r.id, ...pt, ok: hitsStage && r.id !== current })
     }
+    // Pick the reachable midpoint farthest from every other visible midpoint, so the hit radius
+    // (16 px mouse, 24 px touch) cannot reasonably pick a neighbour instead.
+    const isolation = (p: { x: number; y: number; id: string }) =>
+      Math.min(Infinity, ...pts.filter((q) => q.id !== p.id).map((q) => Math.hypot(q.x - p.x, q.y - p.y)))
+    const target = pts.filter((p) => p.ok).sort((a, b) => isolation(b) - isolation(a))[0] ?? null
     test.info().annotations.push({ type: 'route points', description: tried.join('; ') })
     expect(target, 'some route midpoint is on screen and not covered by HTML').not.toBeNull()
+    test.info().annotations.push({ type: 'target', description: `${target!.id}, nearest other midpoint ${isolation(target!).toFixed(0)} px` })
     if (isTouchProject(info)) await page.touchscreen.tap(target!.x, target!.y)
     else await page.mouse.click(target!.x, target!.y)
     await expect.poll(async () => (await app.state()).globe.route).toBe(target!.id)

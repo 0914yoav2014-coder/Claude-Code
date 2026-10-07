@@ -40,20 +40,21 @@ export async function touchDrag(page: Page, from: Pt, to: Pt, { steps = 12, ms =
   }
 }
 
-/** A native touch scroll gesture (synthesized by the browser; respects touch-action). dy > 0 scrolls the page down. */
+/**
+ * A native one-finger touch scroll: real touch events through CDP (Input.synthesizeScrollGesture does not
+ * scroll in headless Chromium), so touch-action and passive listeners apply. dy > 0 scrolls the page down.
+ * Long distances are split into strokes of at most 400 px around `at` (kept inside the viewport).
+ */
 export async function touchScroll(page: Page, at: Pt, dy: number, dx = 0): Promise<void> {
-  const cdp = await page.context().newCDPSession(page)
-  try {
-    await cdp.send('Input.synthesizeScrollGesture', {
-      x: Math.round(at.x),
-      y: Math.round(at.y),
-      xDistance: -dx,
-      yDistance: -dy,
-      gestureSourceType: 'touch',
-      speed: 1200,
-      preventFling: true,
-    })
-  } finally {
-    await cdp.detach()
+  const vh = page.viewportSize()?.height ?? 800
+  const vw = page.viewportSize()?.width ?? 400
+  const strokes = Math.max(1, Math.ceil(Math.max(Math.abs(dy), Math.abs(dx)) / 400))
+  const sy = dy / strokes
+  const sx = dx / strokes
+  const cy = Math.min(Math.max(at.y, Math.abs(sy) / 2 + 10), vh - Math.abs(sy) / 2 - 10)
+  const cx = Math.min(Math.max(at.x, Math.abs(sx) / 2 + 10), vw - Math.abs(sx) / 2 - 10)
+  for (let i = 0; i < strokes; i++) {
+    await touchDrag(page, { x: cx + sx / 2, y: cy + sy / 2 }, { x: cx - sx / 2, y: cy - sy / 2 }, { steps: 10, ms: 200 })
+    await page.waitForTimeout(80)
   }
 }

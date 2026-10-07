@@ -47,6 +47,10 @@ test('text over the scene meets WCAG AA contrast @common', async ({ app, page })
       await app.scrollTo(Math.round(y))
       await page.waitForTimeout(mode === '3d' ? 700 : 200)
       await app.settle()
+      // Let entrance animations (word reveals, fades) finish: measure the resting state, not a frame mid-fade.
+      await page
+        .waitForFunction(() => document.getAnimations().every((a) => a.playState !== 'running' || a.effect?.getComputedTiming().iterations === Infinity), null, { timeout: 5_000 })
+        .catch(() => test.info().annotations.push({ type: 'warning', description: 'animations still running at the contrast screenshot' }))
       const boxes: TextBox[] = await page.evaluate((i) => {
         const block = document.querySelector(`[data-qa-block="${i}"]`)!
         const out: TextBox[] = []

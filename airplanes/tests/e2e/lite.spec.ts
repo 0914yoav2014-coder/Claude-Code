@@ -12,7 +12,8 @@ async function expectLite(app: App, reason: string, notice: boolean) {
   const n = page.getByTestId('lite-notice')
   if (notice) {
     await expect(n).toBeVisible()
-    await expect(n).toHaveText(PRD_COPY.lite)
+    // The exact PRD line, as its own text; links or a close button may sit beside it.
+    await expect(n.getByText(PRD_COPY.lite, { exact: true }), 'notice carries the exact PRD line').toHaveCount(1)
     await expect(n).toHaveAttribute('role', 'status')
   } else await expect(n).toHaveCount(0)
   await page.waitForTimeout(800)
