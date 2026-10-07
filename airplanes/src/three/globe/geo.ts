@@ -55,7 +55,7 @@ export function pathPoint(a: Vec, b: Vec, angle: number, t: number): Vec {
   // sideways: perpendicular to the great circle's plane
   const side = norm(cross(a, b))
   const drift = 0.055 * angle * Math.sin(2 * Math.PI * t) * Math.sin(Math.PI * t)
-  const lift = (0.025 + 0.062 * angle) * Math.sin(Math.PI * t)
+  const lift = (0.018 + 0.034 * angle) * Math.sin(Math.PI * t)
   const q = norm([p[0] + side[0] * drift, p[1] + side[1] * drift, p[2] + side[2] * drift])
   const h = 1.004 + lift
   return [q[0] * h, q[1] * h, q[2] * h]
