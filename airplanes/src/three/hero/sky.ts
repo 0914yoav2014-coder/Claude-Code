@@ -79,15 +79,25 @@ export function cloudDeck(y: number): Mesh<PlaneGeometry, ShaderMaterial> {
       varying vec3 vWP;
       // periodic value noise (period per in lattice cells)
       float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
-      float vnoise(vec2 p, float per){
-        vec2 i = floor(p); vec2 f = fract(p); f = f * f * (3.0 - 2.0 * f);
-        float a = hash(mod(i, per)); float b = hash(mod(i + vec2(1.0, 0.0), per));
-        float c = hash(mod(i + vec2(0.0, 1.0), per)); float d = hash(mod(i + vec2(1.0, 1.0), per));
-        return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+      // periodic gradient noise (value noise shows grid creases when seen this flat).
+      // floor(mod(i + .5)) keeps lattice ids exact (mod(8., 8.) can round to 8 on some GPUs: a seam)
+      vec2 cell(vec2 i, float per){ return floor(mod(i + 0.5, per)); }
+      float grad(vec2 i, vec2 f, float per){
+        float a = hash(cell(i, per)) * 6.2831853;
+        return dot(vec2(cos(a), sin(a)), f);
+      }
+      float gnoise(vec2 p, float per){
+        vec2 i = floor(p); vec2 f = fract(p);
+        vec2 u = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);
+        float a = grad(i, f, per);
+        float b = grad(i + vec2(1.0, 0.0), f - vec2(1.0, 0.0), per);
+        float c = grad(i + vec2(0.0, 1.0), f - vec2(0.0, 1.0), per);
+        float d = grad(i + vec2(1.0, 1.0), f - vec2(1.0, 1.0), per);
+        return 0.5 + 0.7 * mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
       }
       float fbm(vec2 p){
         float s = 0.0; float a = 0.5; float per = 8.0;
-        for (int i = 0; i < 5; i++) { s += a * vnoise(p, per); p *= 2.0; per *= 2.0; a *= 0.5; }
+        for (int i = 0; i < 5; i++) { s += a * gnoise(p, per); p = p * 2.0 + vec2(0.31, 0.57) * per; per *= 2.0; a *= 0.5; }
         return s;
       }
       void main(){

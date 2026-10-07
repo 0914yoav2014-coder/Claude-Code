@@ -28,7 +28,8 @@ const HERO: Record<'intro' | 'hero' | 'climb' | 'clouds' | 'heroTop', { wide: Po
   },
   hero: {
     wide: { pos: [-5.6, 1.5, 13.5], target: [-1.9, 0.2, -2.5], fov: 32 },
-    tall: { pos: [-3.4, 2.0, 17], target: [-0.5, -0.9, -2], fov: 42 },
+    // phones: the headline sits mid-screen, so the jet flies high in the frame, just above the horizon
+    tall: { pos: [-3.2, -1.6, 17.5], target: [-0.5, -3.9, -2], fov: 42 },
   },
   climb: {
     wide: { pos: [-5.0, 3.6, 14.5], target: [-1.6, 2.3, -3.5], fov: 34 },

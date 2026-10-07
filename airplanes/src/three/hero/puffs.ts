@@ -81,7 +81,7 @@ export class CloudPuffs extends Mesh<InstancedBufferGeometry, ShaderMaterial> {
           float lit = t.g;
           vec3 c = mix(uLav * 0.55, uWarm * 0.95, smoothstep(0.2, 1.0, lit));
           // silver lining: thin edges glow when the puff is between us and the sun
-          c += uRim * t.b * pow(vSunward, 8.0) * 0.9;
+          c += uRim * t.b * pow(vSunward, 8.0) * 0.45;
           c += uWarm * pow(vSunward, 12.0) * 0.2;
           // dusk → night as we climb
           c *= mix(vec3(1.0), vec3(0.35, 0.32, 0.5), smoothstep(0.15, 0.8, uAltitude));
