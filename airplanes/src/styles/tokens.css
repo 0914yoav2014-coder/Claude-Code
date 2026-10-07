@@ -1,0 +1,45 @@
+/*
+ * Design tokens (mirror src/lib/tokens.ts). PRD colours: night navy for space and the footer,
+ * sky blue for links and highlights, sunset orange for buttons only, cloud white for text on dark.
+ */
+:root {
+  --navy: #0b1426;
+  --navy-2: #0f1c34;
+  --navy-3: #16294a;
+  --sky: #4da3ff;
+  --sky-soft: #8ec5ff;
+  --sunset: #ff8a3d;
+  --sunset-hi: #ffa060;
+  --cloud: #f5f8fc;
+  --mist: #a9b8cf;
+  --city-light: #ffb36b;
+
+  /* glass: see-through + blurred on the high tier, solid on medium/low (keyed on html[data-tier]) */
+  --glass-bg: rgba(14, 26, 48, 0.46);
+  --glass-bg-solid: rgba(14, 25, 46, 0.94);
+  --glass-line: rgba(245, 248, 252, 0.14);
+  --glass-sheen: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.015) 60%);
+  --glass-blur: blur(22px) saturate(150%);
+  --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 30px 70px -30px rgba(2, 6, 16, 0.75);
+
+  --font-display: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --gutter: clamp(16px, 4.2vw, 64px);
+  --nav-top: 12px;
+  --nav-h: 60px;
+  /* where content starts under the floating nav */
+  --frame-top: calc(env(safe-area-inset-top, 0px) + var(--nav-top) + var(--nav-h) + clamp(20px, 3.5svh, 40px));
+  --frame-bottom: calc(env(safe-area-inset-bottom, 0px) + clamp(16px, 3svh, 28px));
+  --radius-lg: 24px;
+  --radius: 18px;
+  --radius-sm: 12px;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+  --t-button: 0.2s;
+  --t-card: 0.3s;
+
+  --text-shadow: 0 1px 2px rgba(5, 10, 22, 0.55), 0 6px 30px rgba(5, 10, 22, 0.5);
+  color-scheme: dark;
+}

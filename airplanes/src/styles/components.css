@@ -1,0 +1,222 @@
+/* Shared components: glass, buttons, icon buttons, eyebrows, badges, tilt. */
+
+/* ---------------------------------------------------------------- glass (middle depth layer) */
+.glass,
+.nav__bar,
+.motion-toggle {
+  background: var(--glass-sheen), var(--glass-bg);
+  border: 1px solid var(--glass-line);
+  box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+.glass {
+  border-radius: var(--radius-lg);
+}
+html[data-tier='medium'] :is(.glass, .nav__bar, .motion-toggle),
+html[data-tier='low'] :is(.glass, .nav__bar, .motion-toggle) {
+  background: var(--glass-sheen), var(--glass-bg-solid);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass,
+  .nav__bar,
+  .motion-toggle {
+    background: var(--glass-sheen), var(--glass-bg-solid);
+  }
+}
+
+/* ---------------------------------------------------------------- buttons */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55em;
+  min-height: 48px;
+  padding: 0 1.4em;
+  border-radius: 999px;
+  border: 1.5px solid transparent;
+  font: 600 1rem/1 var(--font-body);
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    transform var(--t-button) var(--ease-out),
+    box-shadow var(--t-button) var(--ease-out),
+    background-color var(--t-button),
+    border-color var(--t-button);
+}
+.btn--primary {
+  background: var(--sunset);
+  color: var(--navy);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 6px 20px -8px rgba(255, 138, 61, 0.6);
+}
+.btn--primary:hover,
+.btn--primary:focus-visible {
+  color: var(--navy);
+  background: var(--sunset-hi);
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 12px 34px -8px rgba(255, 138, 61, 0.75),
+    0 0 0 5px rgba(255, 138, 61, 0.16);
+}
+.btn--ghost {
+  color: var(--cloud);
+  background: rgba(245, 248, 252, 0.06);
+  border-color: rgba(245, 248, 252, 0.3);
+}
+.btn--ghost:hover,
+.btn--ghost:focus-visible {
+  color: var(--cloud);
+  transform: translateY(-2px);
+  border-color: rgba(245, 248, 252, 0.6);
+  background: rgba(245, 248, 252, 0.1);
+  box-shadow: 0 12px 30px -10px rgba(77, 163, 255, 0.6);
+}
+.btn:active {
+  transform: translateY(0);
+}
+.btn[aria-disabled='true'] {
+  opacity: 0.7;
+  cursor: progress;
+}
+.btn--sm {
+  min-height: 44px;
+  padding: 0 1.15em;
+  font-size: 0.9375rem;
+}
+.btn--lg {
+  min-height: 56px;
+  padding: 0 1.6em;
+  font-size: 1.0625rem;
+}
+.btn__icon {
+  width: 1.15em;
+  height: 1.15em;
+  margin-right: -0.2em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform var(--t-button) var(--ease-out);
+}
+.btn:hover .btn__icon,
+.btn:focus-visible .btn__icon {
+  transform: translateX(3px);
+}
+
+/* a text link that looks like a quiet action (secondary CTA, "See its routes") */
+.text-link,
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  padding: 0 0.2em;
+  border: 0;
+  background: none;
+  color: var(--cloud);
+  font: 600 1rem/1.2 var(--font-body);
+  text-decoration: underline;
+  text-decoration-color: rgba(245, 248, 252, 0.45);
+  text-underline-offset: 0.3em;
+  cursor: pointer;
+  transition:
+    text-decoration-color var(--t-button),
+    color var(--t-button);
+}
+.text-link:hover,
+.text-link:focus-visible,
+.link-btn:hover,
+.link-btn:focus-visible {
+  color: var(--cloud);
+  text-decoration-color: var(--sky);
+}
+.link-btn {
+  color: var(--sky);
+  text-decoration-color: rgba(77, 163, 255, 0.5);
+}
+
+.icon-btn {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: 999px;
+  border: 1px solid var(--glass-line);
+  background: rgba(245, 248, 252, 0.07);
+  color: var(--cloud);
+  cursor: pointer;
+  transition:
+    transform var(--t-button) var(--ease-out),
+    background-color var(--t-button),
+    border-color var(--t-button),
+    box-shadow var(--t-button) var(--ease-out);
+}
+.icon-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.icon-btn:hover,
+.icon-btn:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(245, 248, 252, 0.14);
+  border-color: rgba(245, 248, 252, 0.4);
+  box-shadow: 0 10px 24px -10px rgba(77, 163, 255, 0.7);
+}
+.icon-btn[aria-disabled='true'] {
+  opacity: 0.45;
+}
+.icon-btn--quiet {
+  background: transparent;
+  border-color: transparent;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  color: var(--sky);
+  font: 600 0.8125rem/1.25 var(--font-body);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.badge {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 179, 107, 0.5);
+  color: var(--city-light);
+  font: 600 0.75rem/1.5 var(--font-body);
+  letter-spacing: 0.02em;
+  vertical-align: 0.1em;
+}
+
+/* ---------------------------------------------------------------- tilt + glare (F11) */
+.tilt {
+  position: relative;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform var(--t-card) var(--ease-out);
+}
+.tilt::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--gx, 50%) var(--gy, 0%), rgba(255, 255, 255, 0.14), transparent 45%);
+  opacity: var(--glare, 0);
+  transition: opacity var(--t-card) var(--ease-out);
+}
