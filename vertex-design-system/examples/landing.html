@@ -1,0 +1,843 @@
+<title>Vertex Edge Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400..700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --canvas: #f6f7f9;
+  --surface: #ffffff;
+  --surface-sunken: #edeff3;
+  --line: #d9dde5;
+  --line-strong: #7d8698;
+  --ink: #0d1017;
+  --ink-muted: #4f5868;
+  --ink-subtle: #646d7f;
+  --ion: #2b50f5;
+  --ion-hover: #1e3cd0;
+  --ion-soft: #e6ebff;
+  --on-ion: #ffffff;
+  --flux: #f2600c;
+  --flux-ink: #b84300;
+  --on-flux: #0d1017;
+  --success: #0e7c53;
+  --success-soft: #e2f4ec;
+  --warning: #9a5200;
+  --warning-soft: #fdf0dc;
+  --danger: #c8281c;
+  --danger-soft: #fde6e3;
+  --inverse: #0d1017;
+  --inverse-ink: #f6f7f9;
+  --inverse-muted: #a3abba;
+  --inverse-line: #2a303c;
+  --shadow-sm: 0 1px 2px rgba(13, 16, 23, 0.06);
+  --shadow-md: 0 1px 2px rgba(13, 16, 23, 0.06), 0 8px 24px -8px rgba(13, 16, 23, 0.14);
+  --shadow-lg: 0 2px 4px rgba(13, 16, 23, 0.06), 0 24px 48px -12px rgba(13, 16, 23, 0.22);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --canvas: #0a0c11;
+  --surface: #11141b;
+  --surface-sunken: #07080c;
+  --line: #232834;
+  --line-strong: #5f687b;
+  --ink: #eceff4;
+  --ink-muted: #a3abba;
+  --ink-subtle: #8a93a5;
+  --ion: #7d96ff;
+  --ion-hover: #9db0ff;
+  --ion-soft: #1a2350;
+  --on-ion: #0a0c11;
+  --flux: #ff7a2e;
+  --flux-ink: #ff9a5c;
+  --on-flux: #0a0c11;
+  --success: #3ccb8b;
+  --success-soft: #0f2a20;
+  --warning: #f2b347;
+  --warning-soft: #2e2108;
+  --danger: #ff6b5e;
+  --danger-soft: #341311;
+  --inverse: #eceff4;
+  --inverse-ink: #0a0c11;
+  --inverse-muted: #4f5868;
+  --inverse-line: #c4c9d3;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -8px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.5), 0 24px 48px -12px rgba(0, 0, 0, 0.8);
+  color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --canvas: #0a0c11;
+  --surface: #11141b;
+  --surface-sunken: #07080c;
+  --line: #232834;
+  --line-strong: #5f687b;
+  --ink: #eceff4;
+  --ink-muted: #a3abba;
+  --ink-subtle: #8a93a5;
+  --ion: #7d96ff;
+  --ion-hover: #9db0ff;
+  --ion-soft: #1a2350;
+  --on-ion: #0a0c11;
+  --flux: #ff7a2e;
+  --flux-ink: #ff9a5c;
+  --on-flux: #0a0c11;
+  --success: #3ccb8b;
+  --success-soft: #0f2a20;
+  --warning: #f2b347;
+  --warning-soft: #2e2108;
+  --danger: #ff6b5e;
+  --danger-soft: #341311;
+  --inverse: #eceff4;
+  --inverse-ink: #0a0c11;
+  --inverse-muted: #4f5868;
+  --inverse-line: #c4c9d3;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.5), 0 8px 24px -8px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 2px 4px rgba(0, 0, 0, 0.5), 0 24px 48px -12px rgba(0, 0, 0, 0.8);
+  color-scheme: dark; }
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 72px;
+  --space-9: 96px;
+  --container: 1200px;
+  --gutter-min: 16px;
+  --gutter-max: 40px;
+  --nav-h: 64px;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --font-display: "Bricolage Grotesque", "Instrument Sans", system-ui, sans-serif;
+  --font-sans: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+.display-xl { font-family: var(--font-display); font-size: 72px; line-height: 72px; font-weight: 700; letter-spacing: -0.035em; }
+.display-l { font-family: var(--font-display); font-size: 56px; line-height: 60px; font-weight: 700; letter-spacing: -0.03em; }
+.heading-1 { font-family: var(--font-display); font-size: 40px; line-height: 44px; font-weight: 650; letter-spacing: -0.025em; }
+.heading-2 { font-family: var(--font-display); font-size: 30px; line-height: 36px; font-weight: 650; letter-spacing: -0.02em; }
+.heading-3 { font-family: var(--font-sans); font-size: 22px; line-height: 28px; font-weight: 600; letter-spacing: -0.01em; }
+.body-l { font-family: var(--font-sans); font-size: 18px; line-height: 28px; font-weight: 400; }
+.body { font-family: var(--font-sans); font-size: 16px; line-height: 26px; font-weight: 400; }
+.body-s { font-family: var(--font-sans); font-size: 14px; line-height: 22px; font-weight: 400; }
+.label { font-family: var(--font-sans); font-size: 14px; line-height: 20px; font-weight: 600; }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.08em; }
+.code { font-family: var(--font-mono); font-size: 14px; line-height: 22px; font-weight: 400; }
+.data { font-family: var(--font-mono); font-size: 13px; line-height: 20px; font-weight: 500; letter-spacing: 0.01em; }
+
+/* Vertex components — plain CSS, every value from tokens.css. Class prefix: vx- */
+
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--canvas); color: var(--ink);
+  font-family: var(--font-sans); font-size: 16px; line-height: 26px;
+  -webkit-font-smoothing: antialiased; font-feature-settings: "ss01", "cv11";
+}
+:focus-visible { outline: 2px solid var(--ion); outline-offset: 2px; border-radius: var(--radius-xs); }
+.vx-preview { padding: var(--space-5); display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+.vx-stack { display: grid; gap: var(--space-4); padding: var(--space-5); }
+
+/* ---------- Eyebrow & section head ---------- */
+.vx-eyebrow {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  font: 500 12px/16px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ion);
+}
+.vx-eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: var(--radius-pill); background: currentColor; }
+.vx-title { font-family: var(--font-display); font-weight: 650; letter-spacing: -0.025em; text-wrap: balance; margin: 0; }
+.vx-lead { font-size: 18px; line-height: 28px; color: var(--ink-muted); max-width: 60ch; margin: 0; }
+
+/* ---------- Button ---------- */
+.vx-btn {
+  --b-bg: var(--surface); --b-fg: var(--ink); --b-bd: var(--line-strong);
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  min-height: 40px; padding: 0 var(--space-4);
+  background: var(--b-bg); color: var(--b-fg); border: 1px solid var(--b-bd); border-radius: var(--radius-sm);
+  font: 600 14px/20px var(--font-sans); text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: background-color .15s ease-out, border-color .15s ease-out, color .15s ease-out, transform .15s ease-out;
+}
+.vx-btn:hover { --b-bd: var(--ink); }
+.vx-btn:active { transform: translateY(1px); }
+.vx-btn--primary { --b-bg: var(--ion); --b-fg: var(--on-ion); --b-bd: var(--ion); }
+.vx-btn--primary:hover { --b-bg: var(--ion-hover); --b-bd: var(--ion-hover); }
+.vx-btn--inverse { --b-bg: var(--ink); --b-fg: var(--canvas); --b-bd: var(--ink); }
+.vx-btn--inverse:hover { --b-bg: var(--ink-muted); --b-bd: var(--ink-muted); }
+.vx-btn--ghost { --b-bg: transparent; --b-bd: transparent; }
+.vx-btn--ghost:hover { --b-bg: var(--surface-sunken); --b-bd: transparent; }
+.vx-btn--danger { --b-bg: var(--surface); --b-fg: var(--danger); --b-bd: var(--danger); }
+.vx-btn--lg { min-height: 48px; padding: 0 var(--space-5); font-size: 16px; }
+.vx-btn--sm { min-height: 32px; padding: 0 var(--space-3); }
+.vx-btn[disabled] { opacity: .45; cursor: not-allowed; transform: none; }
+.vx-btn .vx-kbd { font: 500 12px/1 var(--font-mono); opacity: .7; }
+.vx-btn__arrow { transition: transform .15s ease-out; }
+.vx-btn:hover .vx-btn__arrow { transform: translateX(2px); }
+
+/* ---------- Badge ---------- */
+.vx-badge {
+  display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 var(--space-2);
+  border-radius: var(--radius-xs); background: var(--surface-sunken); color: var(--ink-muted);
+  font: 500 12px/16px var(--font-mono); letter-spacing: 0.02em; white-space: nowrap;
+}
+.vx-badge--info { background: var(--ion-soft); color: var(--ion); }
+.vx-badge--new { background: var(--flux); color: var(--on-flux); }
+.vx-badge--success { background: var(--success-soft); color: var(--success); }
+.vx-badge--warning { background: var(--warning-soft); color: var(--warning); }
+.vx-badge--danger { background: var(--danger-soft); color: var(--danger); }
+.vx-badge__dot { width: 6px; height: 6px; border-radius: var(--radius-pill); background: currentColor; }
+
+/* ---------- Card ---------- */
+.vx-card {
+  display: flex; flex-direction: column; gap: var(--space-3); min-width: 0;
+  padding: var(--space-5); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md);
+  color: inherit; text-decoration: none;
+  transition: border-color .15s ease-out, box-shadow .2s ease-out, transform .2s ease-out;
+}
+a.vx-card:hover { border-color: var(--line-strong); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.vx-card__icon {
+  width: 36px; height: 36px; display: grid; place-items: center; border-radius: var(--radius-sm);
+  background: var(--ion-soft); color: var(--ion);
+}
+.vx-card__title { margin: 0; font: 600 22px/28px var(--font-sans); letter-spacing: -0.01em; }
+.vx-card__text { margin: 0; color: var(--ink-muted); font-size: 14px; line-height: 22px; }
+.vx-card__meta { margin-top: auto; padding-top: var(--space-3); border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: var(--space-2); font: 500 13px/20px var(--font-mono); color: var(--ink-subtle); font-variant-numeric: tabular-nums; }
+.vx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--space-5); }
+
+/* ---------- Nav ---------- */
+.vx-nav {
+  height: var(--nav-h); display: flex; align-items: center; gap: var(--space-6); padding-inline: var(--space-5);
+  background: var(--surface); border-bottom: 1px solid var(--line);
+}
+.vx-nav__logo { display: inline-flex; align-items: center; gap: var(--space-2); font: 700 20px/1 var(--font-display); letter-spacing: -0.03em; color: var(--ink); text-decoration: none; }
+.vx-nav__mark { width: 18px; height: 18px; background: var(--ion); clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+.vx-nav__links { display: flex; gap: var(--space-1); margin: 0; padding: 0; list-style: none; flex: 1; }
+.vx-nav__links a { display: block; padding: 6px var(--space-3); border-radius: var(--radius-sm); font: 500 14px/20px var(--font-sans); color: var(--ink-muted); text-decoration: none; }
+.vx-nav__links a:hover { color: var(--ink); background: var(--surface-sunken); }
+.vx-nav__links a[aria-current="page"] { color: var(--ink); background: var(--surface-sunken); }
+.vx-nav__actions { display: flex; gap: var(--space-2); align-items: center; }
+@media (max-width: 640px) { .vx-nav__links { display: none; } .vx-nav { justify-content: space-between; } }
+
+/* ---------- Hero ---------- */
+.vx-hero {
+  position: relative; overflow: hidden; padding: var(--space-8) var(--space-5);
+  background-color: var(--canvas);
+  background-image: radial-gradient(circle, var(--line) 1px, transparent 1.5px);
+  background-size: 16px 16px; background-position: -8px -8px;
+}
+.vx-hero__inner { position: relative; max-width: 720px; display: grid; gap: var(--space-5); justify-items: start; }
+.vx-hero__title { margin: 0; font: 700 72px/72px var(--font-display); letter-spacing: -0.035em; text-wrap: balance; }
+.vx-hero__title em { font-style: normal; color: var(--ion); }
+.vx-hero__ctas { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.vx-hero__cmd { display: inline-flex; align-items: center; gap: var(--space-3); padding: 0 var(--space-3); min-height: 40px; border: 1px dashed var(--line-strong); border-radius: var(--radius-sm); font: 400 14px/22px var(--font-mono); color: var(--ink-muted); background: var(--surface); }
+.vx-hero__cmd b { color: var(--ion); font-weight: 500; }
+@media (max-width: 720px) { .vx-hero__title { font-size: 44px; line-height: 48px; } }
+
+/* ---------- Tabs (segmented) ---------- */
+.vx-tabs { display: inline-flex; gap: 2px; padding: 3px; background: var(--surface-sunken); border-radius: var(--radius-sm); border: 1px solid var(--line); }
+.vx-tab { border: 0; background: transparent; padding: 6px var(--space-3); border-radius: var(--radius-xs); font: 600 14px/20px var(--font-sans); color: var(--ink-muted); cursor: pointer; }
+.vx-tab:hover { color: var(--ink); }
+.vx-tab[aria-selected="true"] { background: var(--surface); color: var(--ink); box-shadow: var(--shadow-sm); }
+
+/* ---------- Field ---------- */
+.vx-field { display: grid; gap: 6px; min-width: 0; }
+.vx-field__label { font: 600 14px/20px var(--font-sans); color: var(--ink); }
+.vx-field__hint { font-size: 13px; line-height: 20px; color: var(--ink-subtle); }
+.vx-input {
+  width: 100%; min-height: 40px; padding: 0 var(--space-3);
+  background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong); border-radius: var(--radius-sm);
+  font: 400 15px/22px var(--font-sans); box-shadow: var(--shadow-sm);
+}
+.vx-input::placeholder { color: var(--ink-subtle); }
+.vx-input:focus { outline: 2px solid var(--ion); outline-offset: -1px; border-color: var(--ion); }
+.vx-field--invalid .vx-input { border-color: var(--danger); }
+.vx-field--invalid .vx-field__hint { color: var(--danger); }
+.vx-check { display: flex; gap: var(--space-2); align-items: flex-start; font-size: 14px; line-height: 22px; color: var(--ink-muted); }
+.vx-check input { appearance: none; flex: none; width: 18px; height: 18px; margin: 2px 0 0; border: 1px solid var(--line-strong); border-radius: var(--radius-xs); background: var(--surface); display: grid; place-items: center; cursor: pointer; }
+.vx-check input:checked { background: var(--ion); border-color: var(--ion); }
+.vx-check input:checked::after { content: ""; width: 9px; height: 5px; border: 2px solid var(--on-ion); border-top: 0; border-right: 0; transform: translateY(-1px) rotate(-45deg); }
+
+/* ---------- Timeline (changelog) ---------- */
+.vx-timeline { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-6); position: relative; }
+.vx-timeline::before { content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 1px; background: var(--line); }
+.vx-timeline__item { position: relative; padding-left: var(--space-6); display: grid; gap: var(--space-2); }
+.vx-timeline__item::before { content: ""; position: absolute; left: 0; top: 6px; width: 11px; height: 11px; border-radius: var(--radius-pill); background: var(--canvas); border: 2px solid var(--line-strong); }
+.vx-timeline__item--current::before { border-color: var(--ion); background: var(--ion); box-shadow: 0 0 0 4px var(--ion-soft); }
+.vx-timeline__when { display: flex; gap: var(--space-2); align-items: center; font: 500 12px/16px var(--font-mono); letter-spacing: 0.04em; color: var(--ink-subtle); font-variant-numeric: tabular-nums; }
+.vx-timeline__title { margin: 0; font: 600 18px/26px var(--font-sans); }
+.vx-timeline__text { margin: 0; font-size: 14px; line-height: 22px; color: var(--ink-muted); max-width: 60ch; }
+
+/* ---------- Spec table ---------- */
+.vx-spec { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); font-size: 14px; line-height: 22px; }
+.vx-spec caption { text-align: left; padding-bottom: var(--space-2); font: 500 12px/16px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-subtle); }
+.vx-spec th, .vx-spec td { padding: 10px var(--space-4); text-align: left; border-bottom: 1px solid var(--line); }
+.vx-spec thead th { background: var(--surface-sunken); font: 500 12px/16px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-muted); }
+.vx-spec tbody th { font-weight: 500; color: var(--ink); }
+.vx-spec td { font: 500 13px/20px var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink-muted); }
+.vx-spec .vx-num { text-align: right; }
+.vx-spec thead th:first-child { border-top-left-radius: var(--radius-md); } .vx-spec thead th:last-child { border-top-right-radius: var(--radius-md); }
+.vx-spec tbody tr:last-child > * { border-bottom: 0; }
+.vx-spec .vx-hl { color: var(--ion); }
+.vx-scroll { overflow-x: auto; }
+
+/* ---------- Banner ---------- */
+.vx-banner { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--ion-soft); color: var(--ink); font-size: 14px; line-height: 22px; }
+.vx-banner__icon { flex: none; width: 20px; height: 20px; color: var(--ion); }
+.vx-banner p { margin: 0; flex: 1; }
+.vx-banner strong { font-weight: 600; }
+.vx-banner--warning { background: var(--warning-soft); } .vx-banner--warning .vx-banner__icon { color: var(--warning); }
+.vx-banner--danger { background: var(--danger-soft); } .vx-banner--danger .vx-banner__icon { color: var(--danger); }
+.vx-banner--success { background: var(--success-soft); } .vx-banner--success .vx-banner__icon { color: var(--success); }
+.vx-announce { display: flex; justify-content: center; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-4); background: var(--inverse); color: var(--inverse-ink); font-size: 14px; line-height: 20px; }
+.vx-announce a { color: inherit; font-weight: 600; text-underline-offset: 3px; }
+
+/* ---------- Code block ---------- */
+.vx-code { margin: 0; background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; }
+.vx-code__bar { display: flex; justify-content: space-between; align-items: center; padding: var(--space-2) var(--space-4); border-bottom: 1px solid var(--line); font: 500 12px/16px var(--font-mono); color: var(--ink-subtle); }
+.vx-code pre { margin: 0; padding: var(--space-4); overflow-x: auto; font: 400 14px/22px var(--font-mono); color: var(--ink); }
+.vx-code .tk-c { color: var(--ink-subtle); } .vx-code .tk-k { color: var(--ion); } .vx-code .tk-s { color: var(--success); } .vx-code .tk-n { color: var(--flux-ink); }
+code.vx-inline { font: 400 0.875em/1 var(--font-mono); padding: 2px 5px; border-radius: var(--radius-xs); background: var(--surface-sunken); border: 1px solid var(--line); }
+
+/* ---------- Footer ---------- */
+.vx-footer { background: var(--inverse); color: var(--inverse-muted); padding: var(--space-7) var(--space-5) var(--space-5); font-size: 14px; line-height: 22px; }
+.vx-footer__grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: var(--space-6); }
+.vx-footer__brand { display: grid; gap: var(--space-3); align-content: start; }
+.vx-footer__logo { font: 700 20px/1 var(--font-display); letter-spacing: -0.03em; color: var(--inverse-ink); }
+.vx-footer h4 { margin: 0 0 var(--space-3); font: 500 12px/16px var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--inverse-ink); }
+.vx-footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.vx-footer a { color: inherit; text-decoration: none; }
+.vx-footer a:hover { color: var(--inverse-ink); }
+.vx-footer__legal { margin-top: var(--space-7); padding-top: var(--space-4); border-top: 1px solid var(--inverse-line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--space-3); font: 400 13px/20px var(--font-mono); }
+.vx-status { display: inline-flex; align-items: center; gap: var(--space-2); }
+.vx-status::before { content: ""; width: 8px; height: 8px; border-radius: var(--radius-pill); background: var(--success); }
+@media (max-width: 640px) { .vx-footer__grid { grid-template-columns: 1fr 1fr; } .vx-footer__brand { grid-column: 1 / -1; } }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+
+
+/* ---------- Page layout: one 1200px column, sections separated by hairlines, the deploy log is the hero image ---------- */
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); }
+body { overflow-x: hidden; }
+.wrap { width: 100%; max-width: calc(var(--container) + 2 * var(--gutter-max)); margin-inline: auto; padding-inline: clamp(var(--gutter-min), 4vw, var(--gutter-max)); }
+.section { padding-block: var(--space-9); border-top: 1px solid var(--line); }
+.section__head { display: grid; gap: var(--space-4); margin-bottom: var(--space-7); max-width: 720px; }
+.section__head--row { max-width: none; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: var(--space-5); }
+.section__head--row > div { display: grid; gap: var(--space-4); max-width: 640px; }
+.h1 { font: 650 40px/44px var(--font-display); letter-spacing: -0.025em; text-wrap: balance; margin: 0; }
+@media (max-width: 720px) { .section { padding-block: var(--space-8); } .h1 { font-size: 32px; line-height: 38px; } }
+
+/* sticky nav */
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; }
+.topbar .vx-nav { padding-inline: clamp(var(--gutter-min), 4vw, var(--gutter-max)); }
+.menu-btn { display: none; }
+.mobile-menu { background: var(--surface); border-bottom: 1px solid var(--line); padding: var(--space-3) var(--gutter-min) var(--space-4); }
+.mobile-menu ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-1); }
+.mobile-menu a { display: block; padding: var(--space-2) var(--space-3); border-radius: var(--radius-sm); color: var(--ink); text-decoration: none; font-weight: 500; }
+.mobile-menu a:hover { background: var(--surface-sunken); }
+@media (max-width: 640px) { .menu-btn { display: inline-flex; } .vx-nav__actions .hide-sm { display: none; } }
+
+/* hero */
+.hero { padding-block: var(--space-9) var(--space-8); border-top: 0; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: var(--space-7); align-items: center; }
+.hero-copy { display: grid; gap: var(--space-5); justify-items: start; min-width: 0; }
+.hero-copy .vx-hero__title { font-size: 64px; line-height: 64px; }
+.vx-hero__cmd { cursor: pointer; }
+.hero-note { font: 400 13px/20px var(--font-mono); color: var(--ink-subtle); margin: 0; }
+@media (max-width: 960px) { .hero-grid { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { .hero-copy .vx-hero__title { font-size: 44px; line-height: 48px; } .hero { padding-block: var(--space-8) var(--space-7); } }
+.hero-bg { background-image: radial-gradient(circle, var(--line) 1px, transparent 1.5px); background-size: 16px 16px; background-position: -8px -8px; }
+
+/* deploy log */
+.deploy { box-shadow: var(--shadow-lg); background: var(--surface); min-width: 0; }
+.deploy .vx-code__bar { background: var(--surface); }
+.deploy__dots { display: inline-flex; gap: 6px; }
+.deploy__dots i { width: 10px; height: 10px; border-radius: var(--radius-pill); background: var(--line); }
+.deploy__log { margin: 0; padding: var(--space-4); list-style: none; display: grid; gap: 2px; font: 400 13px/22px var(--font-mono); background: var(--surface-sunken); min-height: 264px; overflow-x: auto; }
+.deploy__log li { display: grid; grid-template-columns: 52px 1fr auto; gap: var(--space-3); white-space: nowrap; }
+.deploy__log .t { color: var(--ink-subtle); font-variant-numeric: tabular-nums; }
+.deploy__log .m { color: var(--ink); overflow: hidden; text-overflow: ellipsis; }
+.deploy__log .r { color: var(--ink-subtle); font-variant-numeric: tabular-nums; }
+.deploy__log .ok { color: var(--success); }
+.deploy__log .hl { color: var(--ion); }
+.deploy__log li.is-pending { opacity: 0; transform: translateY(4px); }
+.deploy__log li { transition: opacity .25s ease-out, transform .25s ease-out; }
+.deploy__foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); border-top: 1px solid var(--line); font: 500 13px/20px var(--font-mono); color: var(--ink-muted); }
+.deploy__url { color: var(--ion); text-decoration: none; overflow-wrap: anywhere; }
+.deploy__url:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* proof strip */
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); }
+.stat { padding: var(--space-5); display: grid; gap: var(--space-1); }
+.stat + .stat { border-left: 1px solid var(--line); }
+.stat b { font: 650 30px/36px var(--font-display); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.stat span { font: 500 12px/16px var(--font-mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-subtle); }
+@media (max-width: 720px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stat:nth-child(3) { border-left: 0; } .stat:nth-child(n+3) { border-top: 1px solid var(--line); } }
+
+/* steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-5); counter-reset: step; }
+.step { display: grid; gap: var(--space-2); align-content: start; padding-top: var(--space-4); border-top: 2px solid var(--line); counter-increment: step; }
+.step::before { content: "0" counter(step); font: 500 12px/16px var(--font-mono); color: var(--ion); letter-spacing: .06em; }
+.step:first-child { border-top-color: var(--ion); }
+.step h3 { margin: 0; font: 600 18px/26px var(--font-sans); }
+.step p { margin: 0; font-size: 14px; line-height: 22px; color: var(--ink-muted); }
+@media (max-width: 860px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+
+.install { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-5); margin-top: var(--space-7); align-items: start; }
+.install__side { display: grid; gap: var(--space-4); min-width: 0; }
+@media (max-width: 860px) { .install { grid-template-columns: 1fr; } }
+
+/* regions */
+.region-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: var(--space-7); align-items: start; }
+.region-grid .vx-spec td:nth-child(2) { color: var(--ink); }
+@media (max-width: 860px) { .region-grid { grid-template-columns: 1fr; } }
+.lat-bar { display: inline-block; height: 6px; border-radius: var(--radius-pill); background: var(--ion); vertical-align: middle; margin-right: var(--space-2); opacity: .85; }
+
+/* pricing */
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5); }
+.plan { gap: var(--space-4); }
+.plan--featured { border-color: var(--ion); box-shadow: 0 0 0 1px var(--ion); }
+.plan__head { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); }
+.plan__name { margin: 0; font: 600 18px/26px var(--font-sans); }
+.plan__price { display: flex; align-items: baseline; gap: var(--space-2); }
+.plan__price b { font: 700 44px/48px var(--font-display); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.plan__price span { font-size: 14px; color: var(--ink-subtle); }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); font-size: 14px; line-height: 22px; color: var(--ink-muted); }
+.plan li { display: flex; gap: var(--space-2); align-items: flex-start; }
+.plan li svg { flex: none; margin-top: 3px; color: var(--ion); }
+.plan .vx-btn { width: 100%; }
+@media (max-width: 900px) { .plans { grid-template-columns: 1fr; } }
+
+/* changelog + signup */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-8); align-items: start; }
+@media (max-width: 860px) { .split { grid-template-columns: 1fr; gap: var(--space-7); } }
+.signup { display: grid; gap: var(--space-4); padding: var(--space-6); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.signup__row { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.signup__row .vx-input { flex: 1 1 220px; }
+
+.cta { background: var(--inverse); color: var(--inverse-ink); border-radius: var(--radius-lg); padding: var(--space-8) var(--space-7); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-6); }
+.cta .h1 { color: var(--inverse-ink); max-width: 18ch; }
+.cta p { margin: var(--space-3) 0 0; color: var(--inverse-muted); max-width: 52ch; }
+.cta .vx-btn--primary { --b-bg: var(--ion); }
+.cta .vx-btn:not(.vx-btn--primary) { --b-bg: transparent; --b-fg: var(--inverse-ink); --b-bd: var(--inverse-muted); }
+.cta .vx-btn:not(.vx-btn--primary):hover { --b-bd: var(--inverse-ink); }
+@media (max-width: 720px) { .cta { padding: var(--space-7) var(--space-5); } }
+.cta-wrap { padding-block: 0 var(--space-9); }
+
+.vx-footer { padding-inline: 0; }
+[hidden] { display: none !important; }
+.section__head--row > .vx-tabs { display: inline-flex; }
+.feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .feature-grid { grid-template-columns: 1fr; } }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+
+<div class="topbar">
+  <div class="vx-announce"><span class="vx-badge vx-badge--new">New</span><span>Regional failover is live on every plan.</span><a href="#changelog">Read the changelog →</a></div>
+  <nav class="vx-nav" aria-label="Main">
+    <a class="vx-nav__logo" href="#top"><span class="vx-nav__mark" aria-hidden="true"></span>Vertex</a>
+    <ul class="vx-nav__links">
+      <li><a href="#platform">Platform</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#regions">Regions</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#changelog">Changelog</a></li>
+    </ul>
+    <div class="vx-nav__actions">
+      <a class="vx-btn vx-btn--ghost vx-btn--sm hide-sm" href="#signup">Log in</a>
+      <a class="vx-btn vx-btn--primary vx-btn--sm" href="#pricing">Start free</a>
+      <button class="vx-btn vx-btn--ghost vx-btn--sm menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu">Menu</button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <ul>
+      <li><a href="#platform">Platform</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#regions">Regions</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#changelog">Changelog</a></li>
+    </ul>
+  </div>
+</div>
+
+<main id="top">
+  <!-- Hero -->
+  <section class="hero hero-bg">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="vx-eyebrow">Now in 38 regions</span>
+        <h1 class="vx-hero__title">Ship the whole stack <em>from one push.</em></h1>
+        <p class="vx-lead">Vertex builds every commit, gives each pull request its own preview URL, and runs production at the edge closest to your users.</p>
+        <div class="vx-hero__ctas">
+          <a class="vx-btn vx-btn--primary vx-btn--lg" href="#pricing">Start deploying <span class="vx-btn__arrow" aria-hidden="true">→</span></a>
+          <button class="vx-hero__cmd" id="hero-cmd" type="button" aria-label="Copy install command"><b>$</b> npx vertex init <span class="vx-badge" id="hero-cmd-state">Copy</span></button>
+        </div>
+        <p class="hero-note">Free for hobby projects · No credit card</p>
+      </div>
+
+      <figure class="vx-code deploy" aria-label="Example deployment log">
+        <figcaption class="vx-code__bar">
+          <span class="deploy__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span>acme-web · main@8f3c1a2</span>
+          <button class="vx-btn vx-btn--ghost vx-btn--sm" id="replay" type="button">Redeploy</button>
+        </figcaption>
+        <ol class="deploy__log" id="log">
+          <li><span class="t">00.00</span><span class="m">Cloning <span class="hl">github.com/acme/web</span></span><span class="r">312 ms</span></li>
+          <li><span class="t">00.31</span><span class="m">Restored build cache (1.4 GB)</span><span class="r">1.1 s</span></li>
+          <li><span class="t">01.42</span><span class="m">pnpm install --frozen-lockfile</span><span class="r">4.8 s</span></li>
+          <li><span class="t">06.20</span><span class="m">next build · 214 routes</span><span class="r">18.6 s</span></li>
+          <li><span class="t">24.81</span><span class="m">Uploading 38 functions</span><span class="r">2.3 s</span></li>
+          <li><span class="t">27.10</span><span class="m">Propagating to 38 regions</span><span class="r">3.0 s</span></li>
+          <li><span class="t">30.12</span><span class="m"><span class="ok">✓ Ready</span> · health checks passed</span><span class="r">p95 42 ms</span></li>
+        </ol>
+        <div class="deploy__foot">
+          <span class="vx-badge vx-badge--success" id="deploy-state"><span class="vx-badge__dot"></span>Ready</span>
+          <a class="deploy__url" href="#how">acme-web-git-main.vertex.app</a>
+        </div>
+      </figure>
+    </div>
+
+    <div class="wrap" style="margin-top:var(--space-8)">
+      <div class="stats" role="list" aria-label="Platform figures">
+        <div class="stat" role="listitem"><b>38</b><span>Edge regions</span></div>
+        <div class="stat" role="listitem"><b>&lt;5 ms</b><span>Cold start</span></div>
+        <div class="stat" role="listitem"><b>30 s</b><span>Median deploy</span></div>
+        <div class="stat" role="listitem"><b>99.99%</b><span>Uptime SLA</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Platform -->
+  <section class="section" id="platform">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="vx-eyebrow">Platform</span>
+        <h2 class="h1">Everything between git push and a fast page load.</h2>
+        <p class="vx-lead">One project gives you builds, previews, functions, storage and analytics, wired together with zero config.</p>
+      </div>
+      <div class="vx-grid feature-grid">
+        <a class="vx-card" href="#how">
+          <span class="vx-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+          <h3 class="vx-card__title">Edge functions</h3>
+          <p class="vx-card__text">Run TypeScript, Go or Rust next to your users. Cold starts stay under 5 ms.</p>
+          <div class="vx-card__meta"><span>p95 42 ms</span><span aria-hidden="true">→</span></div>
+        </a>
+        <a class="vx-card" href="#how">
+          <span class="vx-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M6 8.5v7M8.3 7.2 15.7 11M8.3 16.8l7.4-3.8"/></svg></span>
+          <h3 class="vx-card__title">Preview per PR</h3>
+          <p class="vx-card__text">Every pull request gets a live URL with comments, so review happens on the real thing.</p>
+          <div class="vx-card__meta"><span>~30 s to URL</span><span aria-hidden="true">→</span></div>
+        </a>
+        <a class="vx-card" href="#regions">
+          <span class="vx-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span>
+          <h3 class="vx-card__title">Global CDN</h3>
+          <p class="vx-card__text">Static assets cache at the edge. Purges reach every region in under 300 ms.</p>
+          <div class="vx-card__meta"><span>38 regions</span><span aria-hidden="true">→</span></div>
+        </a>
+        <a class="vx-card" href="#changelog">
+          <span class="vx-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg></span>
+          <h3 class="vx-card__title">Instant rollback</h3>
+          <p class="vx-card__text">Every deploy is immutable. Point production back at any earlier build in one click.</p>
+          <div class="vx-card__meta"><span>&lt;1 s switch</span><span aria-hidden="true">→</span></div>
+        </a>
+        <a class="vx-card" href="#pricing">
+          <span class="vx-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+          <h3 class="vx-card__title">Edge KV and blob</h3>
+          <p class="vx-card__text">Key-value and file storage replicated to the regions your functions run in.</p>
+          <div class="vx-card__meta"><span>Reads ~2 ms</span><span aria-hidden="true">→</span></div>
+        </a>
+        <a class="vx-card" href="#pricing">
+          <span class="vx-card__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+          <h3 class="vx-card__title">Web analytics</h3>
+          <p class="vx-card__text">Real-user Core Web Vitals per route and per deploy. No cookies, no consent banner.</p>
+          <div class="vx-card__meta"><span>LCP · INP · CLS</span><span aria-hidden="true">→</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="section__head">
+        <span class="vx-eyebrow">How it works</span>
+        <h2 class="h1">From a repo to production in four steps.</h2>
+      </div>
+      <ol class="steps">
+        <li class="step"><h3>Connect a repo</h3><p>Import from GitHub, GitLab or Bitbucket. Vertex detects the framework and build command.</p></li>
+        <li class="step"><h3>Push a branch</h3><p>Each push builds in an isolated runner with your cache restored.</p></li>
+        <li class="step"><h3>Review the preview</h3><p>Teammates comment on the preview URL. Checks run against the same build.</p></li>
+        <li class="step"><h3>Merge to ship</h3><p>Merging promotes the exact build that was reviewed. No second build.</p></li>
+      </ol>
+
+      <div class="install">
+        <div class="install__side">
+          <h3 class="vx-card__title">Install the CLI</h3>
+          <p class="vx-lead" style="font-size:16px;line-height:26px">Link a local project and deploy from your terminal. The same config file drives git deploys.</p>
+          <div class="vx-tabs" role="tablist" aria-label="Package manager" id="pm-tabs">
+            <button class="vx-tab" role="tab" type="button" aria-selected="true" data-cmd="npm i -g vertex">npm</button>
+            <button class="vx-tab" role="tab" type="button" aria-selected="false" data-cmd="pnpm add -g vertex">pnpm</button>
+            <button class="vx-tab" role="tab" type="button" aria-selected="false" data-cmd="bun add -g vertex">bun</button>
+          </div>
+          <figure class="vx-code">
+            <figcaption class="vx-code__bar"><span>Terminal</span><button class="vx-btn vx-btn--ghost vx-btn--sm" type="button" data-copy="#pm-cmd">Copy</button></figcaption>
+<pre><code><span class="tk-c"># install, link and deploy</span>
+<span id="pm-cmd">npm i -g vertex</span>
+vertex link
+vertex deploy <span class="tk-k">--prod</span></code></pre>
+          </figure>
+        </div>
+        <figure class="vx-code" style="min-width:0">
+          <figcaption class="vx-code__bar"><span>vertex.config.ts</span><button class="vx-btn vx-btn--ghost vx-btn--sm" type="button" data-copy="#cfg">Copy</button></figcaption>
+<pre><code id="cfg"><span class="tk-k">import</span> { defineConfig } <span class="tk-k">from</span> <span class="tk-s">"vertex"</span>;
+
+<span class="tk-k">export default</span> defineConfig({
+  framework: <span class="tk-s">"nextjs"</span>,
+  <span class="tk-c">// pin functions near your database</span>
+  regions: [<span class="tk-s">"fra1"</span>, <span class="tk-s">"iad1"</span>, <span class="tk-s">"hnd1"</span>],
+  functions: {
+    <span class="tk-s">"api/**"</span>: { memory: <span class="tk-n">512</span>, maxDuration: <span class="tk-n">60</span> },
+  },
+  previews: { comments: <span class="tk-k">true</span>, protect: <span class="tk-k">true</span> },
+});</code></pre>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Regions -->
+  <section class="section" id="regions">
+    <div class="wrap region-grid">
+      <div class="section__head" style="margin-bottom:0">
+        <span class="vx-eyebrow">Regions</span>
+        <h2 class="h1">Close to your users on every continent.</h2>
+        <p class="vx-lead">Requests route to the nearest healthy region. If a region fails its health check, traffic moves to the next one within 3 seconds.</p>
+        <div class="vx-banner" role="note"><svg class="vx-banner__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><p><strong>Example figures.</strong> Latencies are median time-to-first-byte from the largest nearby city.</p></div>
+      </div>
+      <div class="vx-scroll">
+        <table class="vx-spec">
+          <caption>Selected regions · median TTFB</caption>
+          <thead><tr><th scope="col">Region</th><th scope="col">Code</th><th scope="col" class="vx-num">TTFB</th><th scope="col">Status</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Frankfurt</th><td>fra1</td><td class="vx-num"><span class="lat-bar" style="width:18px"></span>14 ms</td><td><span class="vx-badge vx-badge--success"><span class="vx-badge__dot"></span>Up</span></td></tr>
+            <tr><th scope="row">Washington, D.C.</th><td>iad1</td><td class="vx-num"><span class="lat-bar" style="width:22px"></span>17 ms</td><td><span class="vx-badge vx-badge--success"><span class="vx-badge__dot"></span>Up</span></td></tr>
+            <tr><th scope="row">Tokyo</th><td>hnd1</td><td class="vx-num"><span class="lat-bar" style="width:24px"></span>19 ms</td><td><span class="vx-badge vx-badge--success"><span class="vx-badge__dot"></span>Up</span></td></tr>
+            <tr><th scope="row">São Paulo</th><td>gru1</td><td class="vx-num"><span class="lat-bar" style="width:30px"></span>23 ms</td><td><span class="vx-badge vx-badge--success"><span class="vx-badge__dot"></span>Up</span></td></tr>
+            <tr><th scope="row">Mumbai</th><td>bom1</td><td class="vx-num"><span class="lat-bar" style="width:36px"></span>28 ms</td><td><span class="vx-badge vx-badge--warning"><span class="vx-badge__dot"></span>Degraded</span></td></tr>
+            <tr><th scope="row">Sydney</th><td>syd1</td><td class="vx-num"><span class="lat-bar" style="width:27px"></span>21 ms</td><td><span class="vx-badge vx-badge--success"><span class="vx-badge__dot"></span>Up</span></td></tr>
+            <tr><th scope="row">Cape Town</th><td>cpt1</td><td class="vx-num"><span class="lat-bar" style="width:40px"></span>31 ms</td><td><span class="vx-badge vx-badge--success"><span class="vx-badge__dot"></span>Up</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section" id="pricing">
+    <div class="wrap">
+      <div class="section__head section__head--row">
+        <div>
+          <span class="vx-eyebrow">Pricing</span>
+          <h2 class="h1">Start free. Pay as you grow.</h2>
+        </div>
+        <div class="vx-tabs" role="tablist" aria-label="Billing period" id="billing">
+          <button class="vx-tab" role="tab" type="button" aria-selected="true" data-period="monthly">Monthly</button>
+          <button class="vx-tab" role="tab" type="button" aria-selected="false" data-period="yearly">Yearly <span class="vx-badge vx-badge--new" style="height:18px;margin-left:4px">−20%</span></button>
+        </div>
+      </div>
+      <div class="plans">
+        <div class="vx-card plan">
+          <div class="plan__head"><h3 class="plan__name">Hobby</h3><span class="vx-badge">Personal</span></div>
+          <div class="plan__price"><b>$0</b><span>forever</span></div>
+          <p class="vx-card__text">For side projects and learning. One member.</p>
+          <ul>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>100 GB bandwidth</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Preview per PR</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>1 region for functions</li>
+          </ul>
+          <a class="vx-btn" href="#signup">Start free</a>
+        </div>
+        <div class="vx-card plan plan--featured">
+          <div class="plan__head"><h3 class="plan__name">Pro</h3><span class="vx-badge vx-badge--info">Most teams</span></div>
+          <div class="plan__price"><b data-monthly="$20" data-yearly="$16">$20</b><span>per member / month</span></div>
+          <p class="vx-card__text">For product teams shipping every day.</p>
+          <ul>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>1 TB bandwidth</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>Preview comments and protection</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>12 regions, regional failover</li>
+          </ul>
+          <a class="vx-btn vx-btn--primary" href="#signup">Start 14-day trial</a>
+        </div>
+        <div class="vx-card plan">
+          <div class="plan__head"><h3 class="plan__name">Scale</h3><span class="vx-badge">Enterprise</span></div>
+          <div class="plan__price"><b>Custom</b></div>
+          <p class="vx-card__text">For high-traffic apps with compliance needs.</p>
+          <ul>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>All 38 regions</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>99.99% uptime SLA</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg>SSO, audit logs, SOC 2 report</li>
+          </ul>
+          <a class="vx-btn vx-btn--inverse" href="#signup">Talk to sales</a>
+        </div>
+      </div>
+      <div class="vx-scroll" style="margin-top:var(--space-7)">
+        <table class="vx-spec">
+          <caption>Plan limits</caption>
+          <thead><tr><th scope="col">Resource</th><th scope="col" class="vx-num">Hobby</th><th scope="col" class="vx-num">Pro</th><th scope="col" class="vx-num">Scale</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Bandwidth / mo</th><td class="vx-num">100 GB</td><td class="vx-num">1 TB</td><td class="vx-num vx-hl">Custom</td></tr>
+            <tr><th scope="row">Build minutes / mo</th><td class="vx-num">6,000</td><td class="vx-num">24,000</td><td class="vx-num">60,000</td></tr>
+            <tr><th scope="row">Concurrent builds</th><td class="vx-num">1</td><td class="vx-num">4</td><td class="vx-num">16</td></tr>
+            <tr><th scope="row">Function timeout</th><td class="vx-num">10 s</td><td class="vx-num">60 s</td><td class="vx-num">900 s</td></tr>
+            <tr><th scope="row">Function regions</th><td class="vx-num">1</td><td class="vx-num">12</td><td class="vx-num">38</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Changelog + signup -->
+  <section class="section" id="changelog">
+    <div class="wrap split">
+      <div>
+        <div class="section__head" style="margin-bottom:var(--space-6)">
+          <span class="vx-eyebrow">Changelog</span>
+          <h2 class="h1">Shipped this quarter.</h2>
+        </div>
+        <ol class="vx-timeline">
+          <li class="vx-timeline__item vx-timeline__item--current">
+            <div class="vx-timeline__when"><time datetime="2026-10-01">Oct 1, 2026</time><span class="vx-badge vx-badge--new">New</span></div>
+            <h3 class="vx-timeline__title">v4.2 · Regional failover</h3>
+            <p class="vx-timeline__text">Traffic moves to the next-nearest region within 3 s when a health check fails. On by default.</p>
+          </li>
+          <li class="vx-timeline__item">
+            <div class="vx-timeline__when"><time datetime="2026-09-12">Sep 12, 2026</time></div>
+            <h3 class="vx-timeline__title">v4.1 · Preview comments</h3>
+            <p class="vx-timeline__text">Reviewers can pin comments to any element on a preview deployment.</p>
+          </li>
+          <li class="vx-timeline__item">
+            <div class="vx-timeline__when"><time datetime="2026-08-20">Aug 20, 2026</time></div>
+            <h3 class="vx-timeline__title">v4.0 · Edge runtime GA</h3>
+            <p class="vx-timeline__text">Edge functions leave beta with a 99.99% uptime SLA on Scale.</p>
+          </li>
+        </ol>
+      </div>
+
+      <form class="signup" id="signup" novalidate>
+        <div style="display:grid;gap:var(--space-2)">
+          <span class="vx-eyebrow">Release notes</span>
+          <h2 class="vx-card__title" style="font-family:var(--font-display);font-size:30px;line-height:36px;letter-spacing:-0.02em">Get the changelog by email.</h2>
+          <p class="vx-card__text">One email per release, about twice a month.</p>
+        </div>
+        <div class="vx-field" id="email-field">
+          <label class="vx-field__label" for="email">Work email</label>
+          <div class="signup__row">
+            <input class="vx-input" id="email" name="email" type="email" placeholder="you@company.dev" autocomplete="email" aria-describedby="email-hint">
+            <button class="vx-btn vx-btn--primary" type="submit">Subscribe</button>
+          </div>
+          <span class="vx-field__hint" id="email-hint">No tracking pixels. Unsubscribe from any email.</span>
+        </div>
+        <label class="vx-check"><input type="checkbox" id="consent"> Also send me the quarterly product roadmap</label>
+        <div class="vx-banner vx-banner--success" id="signup-ok" role="status" hidden><svg class="vx-banner__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L20 7"/></svg><p><strong>Subscribed (demo).</strong> This preview page doesn't send email, so nothing was stored.</p></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="wrap cta-wrap">
+    <section class="cta" aria-labelledby="cta-title">
+      <div>
+        <h2 class="h1" id="cta-title">Your next deploy could take 30 seconds.</h2>
+        <p>Import a repo and get a production URL before your coffee cools. Free on Hobby, no credit card.</p>
+      </div>
+      <div class="vx-hero__ctas">
+        <a class="vx-btn vx-btn--primary vx-btn--lg" href="#pricing">Start deploying <span class="vx-btn__arrow" aria-hidden="true">→</span></a>
+        <a class="vx-btn vx-btn--lg" href="#signup">Talk to sales</a>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="vx-footer">
+  <div class="wrap">
+    <div class="vx-footer__grid">
+      <div class="vx-footer__brand"><span class="vx-footer__logo">Vertex</span><span>Build, preview and run at the edge.</span><span class="vx-status">All systems normal</span></div>
+      <div><h4>Product</h4><ul><li><a href="#platform">Functions</a></li><li><a href="#platform">CDN</a></li><li><a href="#platform">Analytics</a></li><li><a href="#pricing">Pricing</a></li></ul></div>
+      <div><h4>Developers</h4><ul><li><a href="#how">Docs</a></li><li><a href="#how">CLI</a></li><li><a href="#changelog">Changelog</a></li><li><a href="#regions">Status</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#top">About</a></li><li><a href="#top">Careers</a></li><li><a href="#top">Security</a></li></ul></div>
+    </div>
+    <div class="vx-footer__legal"><span>© 2026 Vertex Labs · sample product</span><span>Privacy · Terms · SOC 2</span></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // mobile menu
+  var mb = document.getElementById('menu-btn'), mm = document.getElementById('mobile-menu');
+  mb.addEventListener('click', function () { var open = mm.hidden; mm.hidden = !open; mb.setAttribute('aria-expanded', String(open)); mb.textContent = open ? 'Close' : 'Menu'; });
+  mm.addEventListener('click', function (e) { if (e.target.closest('a')) { mm.hidden = true; mb.setAttribute('aria-expanded', 'false'); mb.textContent = 'Menu'; } });
+
+  // copy helpers
+  function copy(text, btn, done) {
+    var restore = btn.dataset.label || (btn.dataset.label = btn.textContent);
+    function ok() { done ? done('Copied') : (btn.textContent = 'Copied'); setTimeout(function () { done ? done('Copy') : (btn.textContent = restore); }, 1600); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, function () { done ? done('Select & copy') : (btn.textContent = 'Select & copy'); });
+    else ok();
+  }
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () { copy(document.querySelector(b.dataset.copy).textContent.trim(), b); });
+  });
+  var hc = document.getElementById('hero-cmd'), hs = document.getElementById('hero-cmd-state');
+  hc.addEventListener('click', function () { copy('npx vertex init', hc, function (t) { hs.textContent = t; }); });
+
+  // tabs
+  function tabs(list, onSelect) {
+    var ts = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
+    function sel(t) { ts.forEach(function (x) { x.setAttribute('aria-selected', String(x === t)); x.tabIndex = x === t ? 0 : -1; }); onSelect(t); }
+    ts.forEach(function (t, i) {
+      t.tabIndex = t.getAttribute('aria-selected') === 'true' ? 0 : -1;
+      t.addEventListener('click', function () { sel(t); });
+      t.addEventListener('keydown', function (e) {
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (d) { var n = ts[(i + d + ts.length) % ts.length]; n.focus(); sel(n); e.preventDefault(); }
+      });
+    });
+  }
+  tabs(document.getElementById('pm-tabs'), function (t) { document.getElementById('pm-cmd').textContent = t.dataset.cmd; });
+  tabs(document.getElementById('billing'), function (t) {
+    document.querySelectorAll('[data-monthly]').forEach(function (el) { el.textContent = el.dataset[t.dataset.period]; });
+  });
+
+  // redeploy replay: the log is complete at rest; Redeploy plays it again
+  var log = document.getElementById('log'), items = log.querySelectorAll('li'), state = document.getElementById('deploy-state'), rb = document.getElementById('replay'), timers = [];
+  function setState(kind, label) { state.className = 'vx-badge vx-badge--' + kind; state.innerHTML = '<span class="vx-badge__dot"></span>' + label; }
+  rb.addEventListener('click', function () {
+    timers.forEach(clearTimeout); timers = [];
+    if (reduce) { setState('success', 'Ready'); return; }
+    items.forEach(function (li) { li.classList.add('is-pending'); });
+    setState('info', 'Building'); rb.disabled = true;
+    items.forEach(function (li, i) {
+      timers.push(setTimeout(function () { li.classList.remove('is-pending'); if (i === items.length - 1) { setState('success', 'Ready'); rb.disabled = false; } }, 350 + i * 420));
+    });
+  });
+
+  // signup (demo only)
+  var form = document.getElementById('signup'), email = document.getElementById('email'), field = document.getElementById('email-field'), hint = document.getElementById('email-hint'), ok = document.getElementById('signup-ok');
+  var hintText = hint.textContent;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = email.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) {
+      field.classList.add('vx-field--invalid'); email.setAttribute('aria-invalid', 'true');
+      hint.textContent = v ? 'Check the address. It should look like name@company.dev.' : 'Enter your work email to subscribe.';
+      ok.hidden = true; email.focus(); return;
+    }
+    field.classList.remove('vx-field--invalid'); email.removeAttribute('aria-invalid'); hint.textContent = hintText; ok.hidden = false;
+  });
+  email.addEventListener('input', function () { if (field.classList.contains('vx-field--invalid')) { field.classList.remove('vx-field--invalid'); email.removeAttribute('aria-invalid'); hint.textContent = hintText; } });
+})();
+</script>
