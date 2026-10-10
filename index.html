@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0e7c86" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Trip Wallet" />
+    <title>Trip Wallet</title>
+    <script>
+      try {
+        var s = JSON.parse(localStorage.getItem('tw-ui') || '{}');
+        var dark = s.theme === 'dark' || (s.theme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('dark');
+        if (s.lang === 'en') { document.documentElement.lang = 'en'; document.documentElement.dir = 'ltr'; }
+      } catch (e) {}
+    </script>
+    <script type="module" crossorigin src="./assets/index-Phso2sNd.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Ch16gPHM.css">
+  <link rel="manifest" href="./manifest.webmanifest"></head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
