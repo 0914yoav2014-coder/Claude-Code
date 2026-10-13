@@ -565,6 +565,29 @@ mark.dif-ok{background:var(--ok-soft);color:var(--ok);border-radius:4px;padding:
 
 .diff{unicode-bidi:isolate;display:inline-block}
 .form-hint:not(:empty){font-size:15px;font-weight:600;color:var(--warn);background:var(--warn-soft);border-radius:12px;padding:10px 14px}
+/* calendar, date button, practice tools */
+.date-btn{display:flex;align-items:center;gap:10px;text-align:start;cursor:pointer;color:var(--ink)}
+.date-btn svg{color:var(--acc);flex:none}
+#examChip svg{width:15px;height:15px}
+.cal{display:grid;gap:14px}
+.cal-quick{justify-content:center}
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.cal-title{font-size:18px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center}
+.cal-wd{font-size:13px;font-weight:700;color:var(--mut);padding:4px 0}
+.cal-day{aspect-ratio:1;min-height:40px;border:0;border-radius:12px;background:none;font-size:16px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
+.cal-day:hover:not([disabled]){background:var(--soft)}
+.cal-day.today{box-shadow:inset 0 0 0 2px var(--acc)}
+.cal-day.sel{background:var(--btn);color:var(--on-btn)}
+.cal-day[disabled]{opacity:.3;cursor:default}
+dialog:has(.cal){width:min(400px,calc(100% - 24px))}
+.tool .ic{width:48px;height:48px;border-radius:14px;background:var(--soft);color:var(--acc);display:grid;place-items:center;flex:none}
+.tool h2{font-size:20px}
+.lvl-sm .lvl-btn{min-height:60px;padding:10px 12px}
+.lvl-sm .lvl-btn span{font-size:13px}
+.tool>.btn{align-self:flex-start}
+@media (max-width:560px){.tool>.btn{align-self:stretch}.lvl-row.lvl-sm{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.lvl-sm .lvl-btn{min-height:48px;align-items:center;justify-content:center;padding:8px}.lvl-sm .lvl-btn span{display:none}}
+
 /* Dialog, toast */
 dialog{border:0;border-radius:24px;padding:24px;background:var(--card);color:var(--ink);width:min(440px,calc(100% - 32px));box-shadow:0 24px 64px rgba(0,0,0,.25)}
 dialog::backdrop{background:var(--scrim)}
@@ -624,7 +647,7 @@ dialog .field{margin-bottom:16px}
 /* ---------- constants ---------- */
 const KEY = 'studystudio.v1';
 const INTERVAL = {1: 0, 2: 1, 3: 3, 4: 7};
-const MAX_MATERIAL = 40000, CHUNK = 8000, MIN_CHARS = 15, MAX_MATERIALS = 20, MAX_CARDS_PER_MATERIAL = 200, ROUND = 20, SHEET_INPUT = 60000;
+const MAX_MATERIAL = 40000, CHUNK = 8000, MIN_CHARS = 200, MIN_WORDS = 10, MAX_MATERIALS = 20, MAX_CARDS_PER_MATERIAL = 200, ROUND = 20, SHEET_INPUT = 60000;
 const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
 const OFF_CODES = new Set(['unavailable', 'not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed']);
 
@@ -731,6 +754,9 @@ he: {
   wqA: 'תרגם לעברית:', wqB: 'כתוב את המילה באנגלית:', wqC: 'השלם את המילה החסרה:', wqI1: 'ענה על כל השאלות.', wqI2: 'הקפד על כתיב נכון.',
   askTitle: 'לשאול שאלה', askLead: 'משהו בחומר לא ברור? כתוב מה לא הבנת, ותקבל הסבר לפי החומר שלך.', askExamples: 'אפשר לשאול למשל:', askEx1: 'תסביר לי במילים פשוטות את הנושא הראשון', askEx2: 'מה ההבדל בין שני המושגים שהכי מבלבלים בחומר?', askEx3: 'מה הכי חשוב לזכור למבחן?',
   askThinking: 'חושב על תשובה…', askPlaceholder: 'כתוב כאן את השאלה שלך…', askSend: 'לשאול', askClear: 'למחוק את השיחה', askClearQ: 'למחוק את כל השאלות והתשובות?', askCta: 'משהו לא ברור?', askAboutTopic: 'לא הבנתי את "{x}". תסביר לי שוב בצורה פשוטה?',
+  needWords: 'כתוב לפחות מילה אחת ותרגום.', buildWords: 'להכין את המילים', addWordsTitle: 'רשימת מילים או הכתבה', addWordsLead: 'כתוב או הדבק את המילים מהמורה, מילה ותרגום בכל שורה. אחר כך תקבל תרגול לפי רמה, הכתבה ותוכנית עד הבוחן.', wordsLbl: 'המילים', wordsPh: 'מילה – תרגום בכל שורה, למשל:\njourney – מסע\nكتاب – ספר', pickDate: 'לבחור תאריך', startWords: 'להתחיל ללמוד את המילים', addWordsBtn: 'רשימת מילים / הכתבה', wTileAdd: 'להוסיף רשימת מילים או הכתבה', wPlanNoDate2: 'אין תאריך לבוחן, אז זו תוכנית לשבוע.',
+  startQuiz: 'להתחיל בוחן', makeQuizLvl: 'לכתוב בוחן ברמה הזו', topicsReadyLvl: 'מוכן ברמה {l}', openTopics: 'לפתוח את התרגול', openExam: 'לפתוח את המבחן', topicsOtherLevel: 'התרגול הזה הוכן ברמה {a}, ובחרת עכשיו {b}.',
+  calTomorrow: 'מחר', calIn3: 'בעוד 3 ימים', calWeek: 'בעוד שבוע', calTwoWeeks: 'בעוד שבועיים', calPrev: 'החודש הקודם', calNext: 'החודש הבא', dateSaved: 'המבחן נקבע ל{d}', dateCleared: 'תאריך המבחן נמחק',
   orderHint: 'לחץ על השורות לפי הסדר הנכון.', reset: 'להתחיל מחדש', pickReason: 'בחר נימוק', criteriaLbl: 'בדוק את עצמך: מה צריך להופיע בתשובה?', doneChecking: 'סיימתי לבדוק', showModel: 'להראות תשובה לדוגמה',
   likelyMistake: 'כנראה:', lvlBasic: 'בסיסי', lvlMedium: 'בינוני', lvlExam: 'ברמת מבחן', orderScore: '{k} מתוך {n} שורות במקום הנכון.', tryHint: 'נסה שוב, או פתח רמז.', hintLbl: 'רמז:', hintBtn: 'רמז', nextStep: 'צעד {k} מתוך {n}', fullSolution: 'פתרון מלא',
   topicScore: 'בנושא הזה: {k} מתוך {n} נכון.', reviewThese: 'נוסף לרשימת „לחזור על זה”: {list}.', conclusionLbl: 'מסקנה:', practiceStatic: 'תרגול', practiceLive: 'תרגל עכשיו: בסיסי, בינוני, ברמת מבחן', moreLbl: 'הסבר מלא, דוגמה ותרגול',
@@ -841,6 +867,9 @@ en: {
   wqA: 'Translate:', wqB: 'Write the English word:', wqC: 'Fill in the missing word:', wqI1: 'Answer all the questions.', wqI2: 'Spelling counts.',
   askTitle: 'Ask a question', askLead: 'Something in the material not clear? Write what you did not understand and get an explanation based on your material.', askExamples: 'For example:', askEx1: 'Explain the first topic in simple words', askEx2: 'What is the difference between the two most confusing terms?', askEx3: 'What is most important to remember for the test?',
   askThinking: 'Thinking…', askPlaceholder: 'Type your question here…', askSend: 'Ask', askClear: 'Clear the conversation', askClearQ: 'Delete all questions and answers?', askCta: 'Something not clear?', askAboutTopic: 'I did not understand "{x}". Can you explain it again simply?',
+  needWords: 'Write at least one word and its meaning.', buildWords: 'Prepare the words', addWordsTitle: 'Word list or dictation', addWordsLead: 'Type or paste the words from your teacher, one word and its meaning per line. You then get practice by level, dictation and a plan until the test.', wordsLbl: 'Words', wordsPh: 'One word – meaning per line, for example:\njourney – מסע\nكتاب – ספר', pickDate: 'Pick a date', startWords: 'Start learning the words', addWordsBtn: 'Word list / dictation', wTileAdd: 'Add a word list or dictation', wPlanNoDate2: 'No test date, so this is a one-week plan.',
+  startQuiz: 'Start the quiz', makeQuizLvl: 'Write a quiz at this level', topicsReadyLvl: 'Ready at level {l}', openTopics: 'Open the practice', openExam: 'Open the test', topicsOtherLevel: 'This practice was prepared at {a}; you chose {b} now.',
+  calTomorrow: 'Tomorrow', calIn3: 'In 3 days', calWeek: 'In a week', calTwoWeeks: 'In two weeks', calPrev: 'Previous month', calNext: 'Next month', dateSaved: 'Test set for {d}', dateCleared: 'Test date removed',
   orderHint: 'Tap the lines in the right order.', reset: 'Start over', pickReason: 'Pick a reason', criteriaLbl: 'Check yourself: what must your answer include?', doneChecking: 'Done checking', showModel: 'Show a model answer',
   likelyMistake: 'Likely mistake:', lvlBasic: 'Basic', lvlMedium: 'Medium', lvlExam: 'Test level', orderScore: '{k} of {n} lines are in the right place.', tryHint: 'Try again, or open a hint.', hintLbl: 'Hint:', hintBtn: 'Hint', nextStep: 'Step {k} of {n}', fullSolution: 'Full solution',
   topicScore: 'This topic: {k} of {n} right.', reviewThese: 'Added to “Go over again”: {list}.', conclusionLbl: 'Conclusion:', practiceStatic: 'Practice', practiceLive: 'Practice now: basic, medium, test level', moreLbl: 'Full explanation, example and practice',
@@ -910,7 +939,7 @@ const fmtScore = n => Number.isInteger(n) ? String(n) : n.toFixed(1);
 
 /* ---------- state + saving ---------- */
 let storageOk = true, saveState = 'ok', saveTimer = null;
-function blank() { return {v: 1, subjects: [], materials: [], cards: [], quizzes: {}, summaries: {}, exams: {}, checks: {}, attempts: {}, review: {}, planDone: {}, examRuns: {}, topicSets: {}, words: {}, asks: {}, settings: {theme: 'system', lang: 'he', v: 2}}; }
+function blank() { return {v: 1, subjects: [], materials: [], cards: [], quizzes: {}, summaries: {}, exams: {}, checks: {}, attempts: {}, review: {}, planDone: {}, examRuns: {}, topicSets: {}, words: {}, asks: {}, levels: {}, settings: {theme: 'system', lang: 'he', v: 2}}; }
 function load() {
   let d = null;
   try { const raw = localStorage.getItem(KEY); if (raw) d = JSON.parse(raw); } catch (e) { storageOk = false; }
@@ -920,7 +949,7 @@ function load() {
   out.settings = Object.assign(blank().settings, d.settings || {});
   if (!(d.settings && d.settings.v >= 2)) { out.settings.lang = 'he'; out.settings.v = 2; } // Hebrew is now the default for everyone once
   ['subjects', 'materials', 'cards'].forEach(k => { if (!Array.isArray(out[k])) out[k] = []; });
-  ['quizzes', 'summaries', 'exams', 'checks', 'attempts', 'review', 'planDone', 'examRuns', 'topicSets', 'words', 'asks'].forEach(k => { if (!out[k] || typeof out[k] !== 'object') out[k] = {}; });
+  ['quizzes', 'summaries', 'exams', 'checks', 'attempts', 'review', 'planDone', 'examRuns', 'topicSets', 'words', 'asks', 'levels'].forEach(k => { if (!out[k] || typeof out[k] !== 'object') out[k] = {}; });
   // summaries from v3/v4 held topic cards with practice: that practice now lives on the practice screen
   Object.entries(out.summaries).forEach(([sid, sum]) => { if (sum && sum.sheet && (sum.sheet.v === 3 || sum.sheet.v === 4) && !out.topicSets[sid]) out.topicSets[sid] = {sheet: sum.sheet, mids: sum.mids || [], builtAt: sum.builtAt}; });
   out.materials.forEach(m => { m.cardChunks = m.cardChunks || []; });
@@ -1604,7 +1633,8 @@ async function makeQuiz(sid, preferMid, signal) {
   const asked = quiz.asked.slice(-60).map(q => '- ' + clip(q, 160)).join('\n');
   const opts = {modelTier: 'quick', cache: false};
   if (signal) opts.signal = signal;
-  const data = await askJson(quizPrompt(plan, picked.map(c => c.text).join('\n\n---\n\n'), asked), opts);
+  const level = levelOf(sid, 'quiz');
+  const data = await askJson(withLevel(quizPrompt(plan, picked.map(c => c.text).join('\n\n---\n\n'), asked), level), opts);
   let qs = cleanQuestions(data && data.questions).slice(0, 12);
   if (qs.length < 4) throw {code: 'invalid_json'};
   try {
@@ -1625,6 +1655,7 @@ async function makeQuiz(sid, preferMid, signal) {
   if (!subj(sid)) return null;
   quiz.questions = qs;
   quiz.asked = quiz.asked.concat(qs.map(q => q.q)).slice(-200);
+  quiz.level = level;
   S.quizzes[sid] = quiz;
   save();
   return quiz;
@@ -1669,9 +1700,9 @@ async function makeTopics(sid, signal) {
   const plan = subjectPlan(sid), text = subjectText(sid, SHEET_INPUT), groups = sheetGroups(plan);
   const opts = {modelTier: 'default'}; if (signal) opts.signal = signal;
   const results = await Promise.all(groups.map(g => {
-    const key = sid + '|' + g.name + '|' + g.units.map(u => u.title).join('|') + '|' + text.length;
+    const key = sid + '|' + levelOf(sid, 'topics') + '|' + g.name + '|' + g.units.map(u => u.title).join('|') + '|' + text.length;
     if (sheetPartCache[key]) return sheetPartCache[key];
-    return askJson(sheetPartPrompt(plan, g.name, g.units, text), opts).then(cleanSheetPart).then(r => (sheetPartCache[key] = r));
+    return askJson(withLevel(sheetPartPrompt(plan, g.name, g.units, text), levelOf(sid, 'topics')), opts).then(cleanSheetPart).then(r => (sheetPartCache[key] = r));
   }));
   if (!subj(sid)) return null;
   const parts = [];
@@ -1680,7 +1711,7 @@ async function makeTopics(sid, signal) {
   groups.forEach((g, i) => { const prev = parts[parts.length - 1]; if (g.cont && prev && prev.name === g.name) prev.topics.push(...results[i].topics); else parts.push({name: g.name, topics: results[i].topics.slice()}); });
   const must = [], how = [];
   results.forEach(r => { r.must.slice(0, 3).forEach(x => must.push(x)); r.howToCheck.forEach(x => { if (!how.some(h => norm(h) === norm(x))) how.push(x); }); });
-  S.topicSets[sid] = {sheet: {v: 4, title: plan.subject || subj(sid).name, must: must.slice(0, 8), order: parts.map(p => p.name), parts, howToCheck: how.slice(0, 5)}, mids: mats.map(m => m.id), builtAt: Date.now()};
+  S.topicSets[sid] = {sheet: {v: 4, title: plan.subject || subj(sid).name, must: must.slice(0, 8), order: parts.map(p => p.name), parts, howToCheck: how.slice(0, 5)}, mids: mats.map(m => m.id), level: levelOf(sid, 'topics'), builtAt: Date.now()};
   save();
   return S.topicSets[sid];
 }
@@ -1688,12 +1719,13 @@ async function makeExam(sid, minutes, signal) {
   const plan = subjectPlan(sid);
   const opts = {modelTier: 'default', cache: false};
   if (signal) opts.signal = signal;
-  const exam = cleanExam(await askJson(examPrompt(plan, subjectText(sid, 40000), minutes), opts), minutes);
+  const level = levelOf(sid, 'exam');
+  const exam = cleanExam(await askJson(withLevel(examPrompt(plan, subjectText(sid, 40000), minutes), level), opts), minutes);
   if (!subj(sid)) return null;
   S.exams = S.exams || {};
   const sample = [exam.title, ...exam.instructions, ...exam.parts.flatMap(p => [p.title, ...p.questions.map(q => q.text)])].join(' ');
   const he = (sample.match(/[\u0590-\u05FF]/g) || []).length, lat = (sample.match(/[A-Za-z]/g) || []).length;
-  S.exams[sid] = {exam, minutes, builtAt: Date.now(), dir: he > lat / 3 ? 'rtl' : 'ltr'}; // Hebrew text with Latin math is still a Hebrew test
+  S.exams[sid] = {exam, minutes, level, builtAt: Date.now(), dir: he > lat / 3 ? 'rtl' : 'ltr'}; // Hebrew text with Latin math is still a Hebrew test
   save();
   return S.exams[sid];
 }
@@ -1850,11 +1882,12 @@ VIEWS.home = () => {
       ${emptyArt()}
       <p>${t('emptyHome')}</p>
       <button type="button" class="btn pri big" data-act="add" id="addBtn">${I.plus}<span>${t('addMaterial')}</span></button>
+      <button type="button" class="btn big" data-act="add-words" id="addWordsBtn">${I.sound}<span>${t('addWordsBtn')}</span></button>
       <button type="button" class="btn link" data-act="example" id="exampleBtn">${t('tryExample')}</button>
     </div></div>`;
   return `<div class="stack">
     <div class="head-row"><h1 tabindex="-1">${t('mySubjects')}</h1>
-      <button type="button" class="btn pri big" data-act="add" id="addBtn">${I.plus}<span>${t('addMaterial')}</span></button></div>
+      <div class="row"><button type="button" class="btn big" data-act="add-words" id="addWordsBtn">${I.sound}<span>${t('addWordsBtn')}</span></button><button type="button" class="btn pri big" data-act="add" id="addBtn">${I.plus}<span>${t('addMaterial')}</span></button></div></div>
     <ul class="subjects">${list.map(subjectCard).join('')}</ul></div>`;
 };
 function emptyArt() {
@@ -1887,7 +1920,7 @@ function subjectCard(s) {
 /* ---------- add material ---------- */
 function newDraft(sid) {
   const s = sid && subj(sid);
-  return {sid: s ? s.id : 'new', name: '', exam: s ? (s.examDate || '') : '', title: '', titleTouched: false, text: '', type: 'text'};
+  return {sid: s ? s.id : 'new', name: '', exam: s ? (s.examDate || '') : '', title: '', titleTouched: false, text: '', type: 'text', mode: 'material'};
 }
 VIEWS.add = () => route.buildId ? buildView() : addForm();
 function addForm() {
@@ -1899,7 +1932,8 @@ function addForm() {
   else if (fileMsg) msg = `<p class="msg" role="alert">${esc(fileMsg)}</p>`;
   return `<div class="stack">
     <div>${backBtn(route.from && subj(route.from) ? subj(route.from).name : t('mySubjects'))}</div>
-    <h1 tabindex="-1">${t('addTitle')}</h1>
+    <h1 tabindex="-1">${d.mode === 'words' ? t('addWordsTitle') : t('addTitle')}</h1>
+    ${d.mode === 'words' ? `<p class="lead">${t('addWordsLead')}</p>` : ''}
     <form class="form panel" id="addForm" novalidate>
       <div class="two">
         <label class="field"><span>${t('subject')}</span>
@@ -1907,13 +1941,13 @@ function addForm() {
           ${isNew ? `<input class="input" id="f-name" type="text" dir="auto" maxlength="80" placeholder="${esc(t('subjectPh'))}" value="${esc(d.name)}" aria-label="${t('subjectName')}" autocomplete="off">` : ''}
         </label>
         <label class="field"><span>${t('examDate')} <small>(${t('optional')})</small></span>
-          <input class="input" id="f-exam" type="date" value="${esc(d.exam)}" min="${todayStr()}"></label>
+          <button type="button" class="input date-btn" id="f-exam" data-act="cal-open" data-for="draft">${I.cal}<span>${d.exam ? esc(fmtDate(d.exam, {weekday: 'long', day: 'numeric', month: 'long'})) : t('pickDate')}</span></button></label>
       </div>
       <label class="field"><span>${t('title')}</span>
         <input class="input" id="f-title" type="text" dir="auto" maxlength="120" placeholder="${esc(t('titlePh'))}" value="${esc(d.title)}" autocomplete="off"></label>
       <div class="field">
-        <label class="label" for="f-text">${t('material')}</label>
-        <div class="drop" id="dropZone"><textarea class="input" id="f-text" dir="auto" placeholder="${esc(t('materialPh'))}">${esc(d.text)}</textarea></div>
+        <label class="label" for="f-text">${d.mode === 'words' ? t('wordsLbl') : t('material')}</label>
+        <div class="drop" id="dropZone"><textarea class="input" id="f-text" dir="auto" placeholder="${esc(d.mode === 'words' ? t('wordsPh') : t('materialPh'))}">${esc(d.text)}</textarea></div>
         <div class="meta-row">
           <span class="row" style="gap:8px"><button type="button" class="btn" data-act="pick-file" id="pickBtn">${I.upload}<span>${t('upload')}</span></button><span class="hint">${t('dropHint')}</span></span>
           <span class="num" id="charCount">${t('chars', {n: fmtNum(len)})}</span>
@@ -1923,14 +1957,15 @@ function addForm() {
       ${msg}
       <p class="hint form-hint" id="formHint" aria-live="polite">${formHint(len, full)}</p>
       <div class="row">
-        <button type="submit" class="btn pri big" id="buildBtn" ${len < MIN_CHARS || full || fileBusy ? 'disabled' : ''}>${t('build')}</button>
+        <button type="submit" class="btn pri big" id="buildBtn" ${len < minFor(d) || full || fileBusy ? 'disabled' : ''}>${d.mode === 'words' ? t('buildWords') : t('build')}</button>
       </div>
       <p class="hint">${t('aiNote')}</p>
     </form></div>`;
 }
+const minFor = d => d && d.mode === 'words' ? MIN_WORDS : MIN_CHARS;
 function formHint(len, full) {
   if (full) return t('maxMats');
-  if (len < MIN_CHARS) return t('need', {n: fmtNum(MIN_CHARS - len)});
+  if (len < minFor(draft)) return draft.mode === 'words' ? t('needWords') : t('need', {n: fmtNum(minFor(draft) - len)});
   if (len > MAX_MATERIAL) return t('tooLong');
   return '';
 }
@@ -1939,7 +1974,7 @@ function updateFormMeta() {
   const full = s && matsOf(s.id).length >= MAX_MATERIALS;
   $('#charCount').textContent = t('chars', {n: fmtNum(len)});
   $('#formHint').textContent = formHint(len, full);
-  $('#buildBtn').disabled = len < MIN_CHARS || !!full || !!fileBusy;
+  $('#buildBtn').disabled = len < minFor(draft) || !!full || !!fileBusy;
 }
 function autoTitle() {
   if (draft.titleTouched) return;
@@ -1952,7 +1987,6 @@ function bindAddForm() {
   const sel = $('#f-subject');
   if (sel) sel.addEventListener('change', () => { draft.sid = sel.value; const s = subj(draft.sid); draft.exam = s ? (s.examDate || '') : ''; render(false); const n = $('#f-name'); if (n) n.focus(); });
   const nm = $('#f-name'); if (nm) nm.addEventListener('input', () => { draft.name = nm.value; });
-  $('#f-exam').addEventListener('input', e => { draft.exam = e.target.value; });
   $('#f-title').addEventListener('input', e => { draft.title = e.target.value; draft.titleTouched = !!e.target.value.trim(); });
   $('#f-text').addEventListener('input', e => { draft.text = e.target.value; if (!draft.text.trim()) draft.type = 'text'; fileMsg = null; autoTitle(); updateFormMeta(); });
   $('#f-file').addEventListener('change', e => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) readFile(f); });
@@ -1980,7 +2014,7 @@ async function readFile(f) {
 }
 function startBuild() {
   const d = draft, len = d.text.trim().length;
-  if (len < MIN_CHARS) return;
+  if (len < minFor(d)) return;
   let s = d.sid !== 'new' && subj(d.sid);
   if (!s) {
     const name = clip(d.name, 80);
@@ -1992,7 +2026,7 @@ function startBuild() {
     s.examDate = d.exam || null;
   }
   const text = clipMaterial(d.text.trim());
-  const m = {id: uid(), subjectId: s.id, title: clip(d.title, 120) || clip(text.split('\n')[0], 80), type: d.type, text, addedAt: Date.now(), plan: null, vocabDone: false, cardChunks: [], quizDone: false};
+  const m = {id: uid(), subjectId: s.id, title: clip(d.title, 120) || clip(text.split('\n')[0], 80), type: d.type, words: d.mode === 'words', text, addedAt: Date.now(), plan: null, vocabDone: false, cardChunks: [], quizDone: false};
   S.materials.push(m);
   save();
   draft = null; fileMsg = null;
@@ -2016,6 +2050,7 @@ function buildView() {
   let foot = '';
   if (job && job.off && !running) foot = `<p class="msg" role="alert">${t('aiOff')}</p><div class="row"><button type="button" class="btn pri big" data-act="retry-build" data-id="${m.id}" id="retryBtn">${t('retry')}</button><button type="button" class="btn big" data-act="open-subject" data-id="${s.id}" id="openSubjBtn">${t('openSubject')}</button></div>`;
   else if (job && job.error && !running) foot = `<p class="msg" role="alert">${errText(job.error)}</p><div class="row"><button type="button" class="btn pri big" data-act="retry-build" data-id="${m.id}" id="retryBtn">${t('retry')}</button>${made ? `<button type="button" class="btn big" data-act="cards" data-id="${s.id}" id="startBtn">${t('startCards')}</button>` : ''}<button type="button" class="btn big" data-act="open-subject" data-id="${s.id}" id="openSubjBtn">${t('openSubject')}</button></div>`;
+  else if (done && !running && m.words && wordsOf(s.id).length) foot = `<div class="row"><button type="button" class="btn pri big" data-act="words" data-id="${s.id}" id="startBtn">${t('startWords')}</button><button type="button" class="btn big" data-act="open-subject" data-id="${s.id}" id="openSubjBtn">${t('openSubject')}</button></div>`;
   else if (done && !running) foot = `<div class="row"><button type="button" class="btn pri big" data-act="cards" data-id="${s.id}" id="startBtn">${t('startCards')}</button><button type="button" class="btn big" data-act="open-subject" data-id="${s.id}" id="openSubjBtn">${t('openSubject')}</button></div>`;
   else foot = `<div class="row">${made >= 5 ? `<button type="button" class="btn pri big" data-act="cards" data-id="${s.id}" id="startBtn">${t('startNow')}</button>` : ''}<button type="button" class="btn big" data-act="open-subject" data-id="${s.id}" id="openSubjBtn">${t('openSubject')}</button></div><p class="hint">${t('buildHint')}</p>`;
   return `<div class="stack">
@@ -2045,7 +2080,7 @@ VIEWS.subject = () => {
   return `<div class="stack">
     <div>${backBtn(t('mySubjects'))}</div>
     <div class="stack" style="gap:10px"><h1 tabindex="-1" dir="auto">${esc(s.name)}</h1>
-      <div class="row" style="gap:8px"><span class="chip ${ex.cls}">${esc(ex.text)}</span>${s.examDate ? `<span class="hint">${esc(fmtDate(s.examDate, {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}))}</span>` : ''}</div></div>
+      <div class="row" style="gap:8px"><button type="button" class="chip as-btn ${ex.cls}" data-act="cal-open" data-for="subject" data-id="${s.id}" id="examChip">${I.cal}<span>${esc(ex.text)}</span></button>${s.examDate ? `<span class="hint">${esc(fmtDate(s.examDate, {weekday: 'short', day: 'numeric', month: 'long', year: 'numeric'}))}</span>` : ''}</div></div>
     ${status}
     <div class="tiles">
       <button type="button" class="tile ${due ? 'hot' : ''}" data-act="cards" data-id="${s.id}" id="tileCards" ${cs.length ? '' : 'disabled'}>
@@ -2054,6 +2089,7 @@ VIEWS.subject = () => {
         <span class="ic">${I.quiz}</span><span class="tx"><b>${t('practiceTitle')}</b><span class="meta">${quizMeta}</span></span></button>
       <button type="button" class="tile" data-act="summary" data-id="${s.id}" id="tileSum" ${sum || mats.length ? '' : 'disabled'}>
         <span class="ic">${I.doc}</span><span class="tx"><b>${t('summary')}</b><span class="meta">${sumMeta}</span></span></button>
+      ${!wordsOf(s.id).length ? `<button type="button" class="tile" data-act="add-words" data-id="${s.id}" id="tileWords"><span class="ic">${I.sound}</span><span class="tx"><b>${t('wTile')}</b><span class="meta">${t('wTileAdd')}</span></span></button>` : ''}
       ${wordsOf(s.id).length ? (() => { const wl = wordLang(s.id), tw = todayWords(s.id).length; return `<button type="button" class="tile ${tw && !wstate(s.id).done[todayStr()] ? 'hot' : ''}" data-act="words" data-id="${s.id}" id="tileWords"><span class="ic">${I.sound}</span><span class="tx"><b>${wl === 'ar' ? t('wTileAr') : t('wTile')}</b><span class="meta">${t('wKnownShort', {k: wKnown(s.id), n: wordsOf(s.id).length})}${tw && !wstate(s.id).done[todayStr()] ? ' · ' + t('wTileToday') : ''}</span></span></button>`; })() : ''}
     </div>
     ${mats.length ? askBtnHtml(s.id, '') : ''}
@@ -2609,7 +2645,7 @@ function planHtml(s, sh, isStatic) {
   const td = todayStr(), doneMap = (S.planDone && S.planDone[s.id]) || {}, reviewN = Object.keys((S.review && S.review[s.id]) || {}).length;
   const dayName = d => d === td ? t('today') : d === addDays(td, 1) ? t('tomorrow') : fmtDate(d, {weekday: 'long', day: 'numeric', month: 'short'});
   return `<section class="plan panel stack" id="sec-plan" style="gap:12px"><div class="sec-head" style="margin:0"><h2>${t('planTitle')}</h2>${s.examDate && !noDate ? `<span class="chip warn">${esc(examInfo(s).text)}</span>` : ''}</div>
-    ${noDate && !isStatic ? `<div class="row"><p class="hint" style="flex:1;min-width:200px">${t('planNoDate')}</p><input class="input" type="date" id="planDate" min="${td}" style="max-width:200px" aria-label="${esc(t('examDate'))}"></div>` : ''}
+    ${noDate && !isStatic ? `<div class="row"><p class="hint" style="flex:1;min-width:200px">${t('planNoDate')}</p><button type="button" class="btn" data-act="cal-open" data-for="subject" data-id="${s.id}" id="planDate">${I.cal}<span>${t('pickDate')}</span></button></div>` : ''}
     <ol class="days">${days.map((d, i) => {
       const target = d.topics.reduce((a, x) => a + x.practice.length, 0) + (d.extra ? 2 : 0);
       const what = d.review ? `${t('planReview', {n: reviewN})}${d.mock ? ` · ${t('planMock')}` : ''}` : d.extra ? t('planExtra') : '';
@@ -2817,14 +2853,17 @@ function submitPractice(pid) {
 VIEWS.practice = () => {
   const s = subj(route.id);
   if (!s) { route = {name: 'home'}; return VIEWS.home(); }
-  const quiz = S.quizzes[s.id], exam = S.exams && S.exams[s.id];
+  const quiz = S.quizzes[s.id], exam = S.exams && S.exams[s.id], set = S.topicSets[s.id];
+  const card = (ic, title, desc, chip, kind, btn) => `<section class="panel stack tool" style="gap:12px"><div class="row" style="gap:12px;flex-wrap:nowrap"><span class="ic">${ic}</span><div class="stack" style="gap:2px"><h2>${title}</h2><p class="hint">${desc}</p></div></div>${chip}${levelPicker(s.id, kind)}${btn}</section>`;
   return `<div class="stack">${'<div>' + backBtn(s.name) + '</div>'}
     <h1 tabindex="-1">${t('practiceTitle')}</h1>
-    <div class="choices">
-      <button type="button" class="choice" data-act="quiz" data-id="${s.id}" id="choiceQuiz"><span class="ic">${I.quiz}</span><b>${t('quickQuiz')}</b><span>${t('quickQuizDesc')}</span>${quiz && quiz.lastScore ? `<span class="chip">${t('lastScore', {s: iso(quiz.lastScore)})}</span>` : ''}</button>
-      <button type="button" class="choice" data-act="topics" data-id="${s.id}" id="choiceTopics"><span class="ic">${I.edit}</span><b>${t('topicPractice')}</b><span>${t('topicPracticeDesc')}</span>${S.topicSets[s.id] ? `<span class="chip">${t('topicsReady')}</span>` : ''}</button>
-      <button type="button" class="choice" data-act="exam" data-id="${s.id}" id="choiceExam"><span class="ic">${I.doc}</span><b>${t('realExam')}</b><span>${t('realExamDesc')}</span>${exam ? `<span class="chip">${t('lastExam', {d: esc(fmtDate(todayStr(new Date(exam.builtAt))))})}</span>` : ''}</button>
-    </div></div>`;
+    ${card(I.quiz, t('quickQuiz'), t('quickQuizDesc'), quiz && quiz.lastScore ? `<span class="chip" style="align-self:flex-start">${t('lastScore', {s: iso(quiz.lastScore)})}</span>` : '', 'quiz',
+      `<button type="button" class="btn pri big" data-act="quiz" data-id="${s.id}" id="choiceQuiz">${quiz && quiz.questions && quiz.questions.length && (quiz.level || 'medium') === levelOf(s.id, 'quiz') ? t('startQuiz') : t('makeQuizLvl')}</button>`)}
+    ${card(I.edit, t('topicPractice'), t('topicPracticeDesc'), set ? `<span class="chip" style="align-self:flex-start">${t('topicsReadyLvl', {l: t('wl_' + (set.level || 'medium'))})}</span>` : '', 'topics',
+      `<button type="button" class="btn pri big" data-act="topics" data-id="${s.id}" id="choiceTopics">${set ? t('openTopics') : t('makeTopics')}</button>`)}
+    ${card(I.doc, t('realExam'), t('realExamDesc'), exam ? `<span class="chip" style="align-self:flex-start">${t('lastExam', {d: esc(fmtDate(todayStr(new Date(exam.builtAt))))})}</span>` : '', 'exam',
+      `<button type="button" class="btn pri big" data-act="exam" data-id="${s.id}" id="choiceExam">${exam ? t('openExam') : t('makeExam')}</button>`)}
+  </div>`;
 };
 let TP = null;
 VIEWS.topics = () => {
@@ -2839,6 +2878,7 @@ VIEWS.topics = () => {
   const stale = matsOf(s.id).some(m => !(set.mids || []).includes(m.id));
   return `<div class="stack sheet">${head}
     <div class="stack" style="gap:8px"><p class="eyebrow">${t('topicPractice')}</p><h1 tabindex="-1" dir="${cd}">${esc(plainMath(set.sheet.title || s.name))}</h1></div>
+    ${(set.level || 'medium') !== levelOf(s.id, 'topics') ? `<div class="panel status"><p>${t('topicsOtherLevel', {a: t('wl_' + (set.level || 'medium')), b: t('wl_' + levelOf(s.id, 'topics'))})}</p><button type="button" class="btn pri" data-act="make-topics">${t('newTopics')}</button></div>` : ''}
     ${stale ? `<div class="panel status"><p>${t('topicsStale')}</p><button type="button" class="btn pri" data-act="make-topics">${t('newTopics')}</button></div>` : ''}
     ${err}${sheetV4Html(s, set, cd, false)}
     ${stale ? '' : `<div class="row"><button type="button" class="btn" data-act="make-topics" id="makeTopicsBtn">${t('newTopics')}</button></div>`}</div>`;
@@ -2882,7 +2922,7 @@ VIEWS.exam = () => {
   const rec = S.exams && S.exams[s.id];
   const head = `<div>${backBtn(s.name)}</div>`;
   if (EX.stage === 'gen') return `<div class="stack">${head}<div class="panel result" aria-live="polite"><span class="spin" style="width:32px;height:32px"></span><h1 tabindex="-1">${t('writingExam')}</h1><button type="button" class="btn big" data-act="stop-exam" id="stopExamBtn">${t('stop')}</button></div></div>`;
-  const form = `<div class="panel stack" style="gap:14px"><p class="label">${t('examLength')}</p><div class="row" role="radiogroup">
+  const form = `<div class="panel stack" style="gap:14px"><p class="label">${t('wLevel')}</p>${levelPicker(s.id, 'exam')}<p class="label">${t('examLength')}</p><div class="row" role="radiogroup">
       ${[45, 60, 90].map(m => `<button type="button" class="btn ${EX.minutes === m ? 'pri' : ''}" role="radio" aria-checked="${EX.minutes === m}" data-act="exam-len" data-v="${m}" id="len${m}">${t('len' + m)}</button>`).join('')}</div>
       ${EX.err ? `<p class="msg" role="alert">${errText(EX.err)}</p>` : ''}
       <div class="row"><button type="button" class="btn pri big" data-act="make-exam" id="makeExamBtn">${rec ? t('newExam') : t('makeExam')}</button></div><p class="hint">${t('examNote')}</p></div>`;
@@ -2986,6 +3026,16 @@ function markMock(key, v) {
   else delete S.review[sid][rk];
   save(); render(false);
 }
+
+/* ---------- difficulty level, chosen separately for each tool ---------- */
+const LEVEL_GEN = {
+  basic: 'BEGINNER, easier than a typical test: simple, direct questions, one step each, everyday wording and numbers, for a student still building the basics.',
+  medium: 'INTERMEDIATE, the level of most school tests in Israel and abroad.',
+  hard: 'CHALLENGING, a little harder than most tests: multi-step questions, less obvious wording and the traps students fall into, still fair and within the material.'
+};
+const levelOf = (sid, kind) => { const l = (S.levels[sid] || {})[kind]; return WLEVELS.includes(l) ? l : 'medium'; };
+const withLevel = (prompt, level) => prompt.replace('<material>', `Difficulty: ${LEVEL_GEN[level] || LEVEL_GEN.medium}\n\n<material>`);
+const levelPicker = (sid, kind) => `<div class="lvl-row lvl-sm" role="radiogroup" aria-label="${esc(t('wLevel'))}">${WLEVELS.map(l => `<button type="button" class="lvl-btn ${levelOf(sid, kind) === l ? 'on' : ''}" role="radio" aria-checked="${levelOf(sid, kind) === l}" data-act="lvl-set" data-k="${kind}" data-v="${l}" id="lv-${kind}-${l}"><b>${t('wl_' + l)}</b><span>${t('wl_' + l + '_d')}</span></button>`).join('')}</div>`;
 
 /* ---------- words and dictation: the student's word list, learned day by day until the test ---------- */
 const WLEVELS = ['basic', 'medium', 'hard'];
@@ -3294,7 +3344,7 @@ VIEWS.words = () => {
     ${lang !== 'ar' && downloadsApi ? `<div class="row"><button type="button" class="btn" data-act="w-word" id="wWordBtn">${I.save}<span>${t('wQuizWord')}</span></button></div>` : ''}
     ${hard.length ? `<section class="panel stack" style="gap:10px" id="wHard"><div class="sec-head" style="margin:0"><h2>${t('wHardTitle')} <span class="chip warn">${hard.length}</span></h2><button type="button" class="btn" data-act="w-hard" id="wHardBtn">${t('wHardPractice')}</button></div>
       <div class="chips">${hard.map(w => `<span class="chip warn" dir="auto">${esc(w.term)}</span>`).join('')}</div></section>` : ''}
-    <section class="panel stack" style="gap:10px" id="wPlan"><h2>${t('wPlanTitle')}${p.noDate ? '' : ` <span class="chip warn">${esc(examInfo(s).text)}</span>`}</h2>${p.noDate ? `<p class="hint">${t('wPlanNoDate')}</p>` : ''}
+    <section class="panel stack" style="gap:10px" id="wPlan"><h2>${t('wPlanTitle')}${p.noDate ? '' : ` <span class="chip warn">${esc(examInfo(s).text)}</span>`}</h2>${p.noDate ? `<div class="row"><p class="hint" style="flex:1;min-width:200px">${t('wPlanNoDate2')}</p><button type="button" class="btn" data-act="cal-open" data-for="subject" data-id="${s.id}" id="wDateBtn">${I.cal}<span>${t('pickDate')}</span></button></div>` : ''}
       <ol class="days">${p.days.map(d => `<li class="day ${d.date === td ? 'today' : ''} ${ws.done[d.date] ? 'done' : ''}"><div class="day-h"><b>${esc(dayName(d.date))}</b>${ws.done[d.date] ? `<span class="chip ok">✓ ${t('dayDone')}</span>` : ''}</div>
         <p class="hint">${d.final ? (lang === 'ar' ? t('wDayFinalAr') : t('wDayFinal')) : d.nNew ? t(d.nNew === 1 ? 'wDayNew1' : 'wDayNew', {n: d.nNew}) : t('wDayReview')}</p></li>`).join('')}</ol></section>
     <details class="panel"><summary class="label" style="cursor:pointer;min-height:44px;display:flex;align-items:center">${t('wListTitle', {n: list.length})}</summary>
@@ -3687,6 +3737,41 @@ async function downloadExam() {
   catch (e) { const c = e && e.code; if (c === 'declined') return; toast(c === 'extension_not_enabled' || c === 'rejected_extension' ? t('noDocx') : t('wordFail')); }
 }
 
+/* ---------- a small month calendar for the test date ---------- */
+let CAL = null;
+const WEEKDAYS = {he: ['א׳', 'ב׳', 'ג׳', 'ד׳', 'ה׳', 'ו׳', 'ש׳'], en: ['S', 'M', 'T', 'W', 'T', 'F', 'S']};
+function openCalendar(value, onPick) {
+  const base = value || todayStr(), [y, m] = base.split('-').map(Number);
+  CAL = {value: value || '', y, m: m - 1, onPick, prev: document.activeElement};
+  const d = $('#dlg');
+  d.setAttribute('aria-labelledby', 'calTitle');
+  d.onclose = () => { const p = CAL && CAL.prev; CAL = null; if (p && document.contains(p)) p.focus(); };
+  drawCalendar();
+  if (typeof d.showModal === 'function') { if (!d.open) d.showModal(); } else d.setAttribute('open', '');
+  const sel = d.querySelector('.cal-day.sel') || d.querySelector('.cal-day.today') || d.querySelector('.cal-day:not([disabled])'); if (sel) sel.focus();
+}
+function drawCalendar() {
+  const d = $('#dlg'); if (!CAL) return;
+  const td = todayStr(), first = new Date(CAL.y, CAL.m, 1), days = new Date(CAL.y, CAL.m + 1, 0).getDate(), lead = first.getDay();
+  const loc = S.settings.lang === 'he' ? 'he-IL' : 'en-GB', title = first.toLocaleDateString(loc, {month: 'long', year: 'numeric'});
+  const iso = n => `${CAL.y}-${pad(CAL.m + 1)}-${pad(n)}`;
+  const cells = range(lead).map(() => '<span></span>').concat(range(days).map(i => { const ds = iso(i + 1), past = ds < td; return `<button type="button" class="cal-day ${ds === td ? 'today' : ''} ${ds === CAL.value ? 'sel' : ''}" data-act="cal-pick" data-d="${ds}" ${past ? 'disabled' : ''} aria-label="${esc(fmtDate(ds, {weekday: 'long', day: 'numeric', month: 'long'}))}" aria-pressed="${ds === CAL.value}">${i + 1}</button>`; }));
+  const canPrev = CAL.y * 12 + CAL.m > Number(td.slice(0, 4)) * 12 + Number(td.slice(5, 7)) - 1;
+  const quick = [[1, t('calTomorrow')], [3, t('calIn3')], [7, t('calWeek')], [14, t('calTwoWeeks')]];
+  d.innerHTML = `<div class="cal">
+    <h2 id="calTitle">${t('dateTitle')}</h2>
+    <div class="chips cal-quick">${quick.map(([n, l]) => `<button type="button" class="chip as-btn" data-act="cal-pick" data-d="${addDays(td, n)}">${l}</button>`).join('')}</div>
+    <div class="cal-head"><button type="button" class="btn sq ghost" data-act="cal-move" data-v="-1" ${canPrev ? '' : 'disabled'} aria-label="${esc(t('calPrev'))}"><span class="flip-rtl" style="display:inline-flex">${I.back}</span></button><b class="cal-title">${esc(title)}</b><button type="button" class="btn sq ghost" data-act="cal-move" data-v="1" aria-label="${esc(t('calNext'))}"><span class="flip-rtl" style="display:inline-flex;transform:scaleX(-1)">${I.back}</span></button></div>
+    <div class="cal-grid" role="grid">${WEEKDAYS[S.settings.lang === 'he' ? 'he' : 'en'].map(w => `<span class="cal-wd">${w}</span>`).join('')}${cells.join('')}</div>
+    <div class="dlg-actions">${CAL.value ? `<button type="button" class="btn ghost" data-act="cal-pick" data-d="">${t('clearDate')}</button>` : ''}<span class="sp"></span><button type="button" class="btn" data-act="cal-close">${t('cancel')}</button></div>
+  </div>`;
+}
+function calOpenFor(el) {
+  if (el.dataset.for === 'draft') return openCalendar(draft.exam, v => { draft.exam = v; render(false); const b = $('#f-exam'); if (b) b.focus(); });
+  const s = subj(el.dataset.id || route.id); if (!s) return;
+  openCalendar(s.examDate, v => { s.examDate = v || null; save(); render(false); toast(v ? t('dateSaved', {d: fmtDate(v, {weekday: 'long', day: 'numeric', month: 'long'})}) : t('dateCleared')); });
+}
+
 /* ---------- dialogs, toast ---------- */
 let toastTimer = null;
 function toast(msg) { const el = $('#toast'); el.textContent = msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('show'), 2200); }
@@ -3717,7 +3802,7 @@ function deleteSubject(id) {
     S.subjects = S.subjects.filter(x => x.id !== id);
     S.materials = S.materials.filter(x => x.subjectId !== id);
     S.cards = S.cards.filter(x => x.subjectId !== id);
-    delete S.quizzes[id]; delete S.summaries[id]; delete S.exams[id]; delete S.checks[id]; ['attempts', 'review', 'planDone', 'examRuns', 'topicSets', 'words', 'asks'].forEach(k => delete S[k][id]);
+    delete S.quizzes[id]; delete S.summaries[id]; delete S.exams[id]; delete S.checks[id]; ['attempts', 'review', 'planDone', 'examRuns', 'topicSets', 'words', 'asks', 'levels'].forEach(k => delete S[k][id]);
     Object.keys(jobs).forEach(k => { if (jobs[k].sid === id) delete jobs[k]; });
     save(); go({name: 'home'});
   }});
@@ -4021,7 +4106,8 @@ const ACT = {
   'open-subject': el => go({name: 'subject', id: el.dataset.id}),
   menu: el => { menuFor = menuFor === el.dataset.id ? null : el.dataset.id; render(false); if (menuFor) { const f = $('#mi-rename'); if (f) f.focus(); } },
   rename: el => { const s = subj(el.dataset.id); closeMenu(el.dataset.id); if (!s) return; ask({title: t('renameTitle'), fields: [{id: 'name', label: t('name'), value: s.name, required: true}], ok: t('save'), onOk: v => { s.name = clip(v.name, 80); save(); render(false); }}); },
-  'change-date': el => { const s = subj(el.dataset.id); closeMenu(el.dataset.id); if (!s) return; ask({title: t('dateTitle'), fields: [{id: 'date', label: t('examDate'), type: 'date', value: s.examDate || ''}], ok: t('save'), extra: s.examDate ? {label: t('clearDate'), run: () => { s.examDate = null; save(); render(false); }} : null, onOk: v => { s.examDate = v.date || null; save(); render(false); }}); },
+  'change-date': el => { const s = subj(el.dataset.id); closeMenu(el.dataset.id); if (!s) return; calOpenFor({dataset: {for: 'subject', id: s.id}}); },
+  'change-date-old': el => { const s = subj(el.dataset.id); closeMenu(el.dataset.id); if (!s) return; ask({title: t('dateTitle'), fields: [{id: 'date', label: t('examDate'), type: 'date', value: s.examDate || ''}], ok: t('save'), extra: s.examDate ? {label: t('clearDate'), run: () => { s.examDate = null; save(); render(false); }} : null, onOk: v => { s.examDate = v.date || null; save(); render(false); }}); },
   'delete-subject': el => { const id = el.dataset.id; closeMenu(id); deleteSubject(id); },
   'delete-material': el => deleteMaterial(el.dataset.id),
   'pick-file': () => $('#f-file').click(),
@@ -4034,7 +4120,7 @@ const ACT = {
   again: () => answerCurrent(false),
   got: () => answerCurrent(true),
   'repeat-missed': () => { startRound(R.sid, [...R.missed]); render(true); },
-  quiz: el => { const qz = S.quizzes[el.dataset.id]; startQuiz(el.dataset.id, qz && qz.questions ? qz.questions.slice() : [], 'full'); go({name: 'quiz', id: el.dataset.id}); },
+  quiz: el => { const sid = el.dataset.id, qz = S.quizzes[sid], same = qz && qz.questions && qz.questions.length && (qz.level || 'medium') === levelOf(sid, 'quiz'); startQuiz(sid, same ? qz.questions.slice() : [], 'full'); go({name: 'quiz', id: sid}); if (!same) newQuiz(); },
   practice: el => go({name: 'practice', id: el.dataset.id}),
   exam: el => { EX = null; go({name: 'exam', id: el.dataset.id}); },
   topics: el => { TP = null; go({name: 'topics', id: el.dataset.id}); },
@@ -4057,6 +4143,12 @@ const ACT = {
   copy: () => copySummary(),
   'save-file': () => saveSummaryFile(),
   words: el => go({name: 'words', id: el.dataset.id}),
+  'add-words': el => { const sid = el.dataset.id || (route.name === 'subject' ? route.id : null); draft = newDraft(sid); draft.mode = 'words'; fileMsg = null; fileBusy = false; go({name: 'add', from: sid || null}); },
+  'cal-open': el => calOpenFor(el),
+  'cal-move': el => { CAL.m += Number(el.dataset.v); if (CAL.m < 0) { CAL.m = 11; CAL.y--; } if (CAL.m > 11) { CAL.m = 0; CAL.y++; } drawCalendar(); const b = $('#dlg [data-act=cal-move][data-v="' + el.dataset.v + '"]'); if (b && !b.disabled) b.focus(); },
+  'cal-pick': el => { const fn = CAL && CAL.onPick, v = el.dataset.d; const d = $('#dlg'); if (d.open) { if (typeof d.close === 'function') d.close(); else d.removeAttribute('open'); } if (fn) fn(v); },
+  'cal-close': () => { const d = $('#dlg'); if (typeof d.close === 'function') d.close(); else d.removeAttribute('open'); },
+  'lvl-set': el => { S.levels[route.id] = S.levels[route.id] || {}; S.levels[route.id][el.dataset.k] = el.dataset.v; save(); render(false); },
   'ask-about': el => askAbout(el.dataset.id || route.id, el.dataset.q || ''),
   'ask-follow': el => askQuestion(route.id, el.dataset.q),
   'ask-stop': () => { if (ASK && ASK.ctl) ASK.ctl.abort(); ASK = {sid: route.id, busy: false, err: null, draft: ASK && ASK.pending}; render(false); },
@@ -4147,6 +4239,10 @@ document.addEventListener('toggle', e => {
   if (d.open) openTopics.add(d.dataset.tid); else openTopics.delete(d.dataset.tid);
 }, true);
 document.addEventListener('keydown', e => {
+  if (CAL && $('#dlg').open && e.target.classList && e.target.classList.contains('cal-day') && /^Arrow/.test(e.key)) {
+    e.preventDefault(); const rtl = document.documentElement.dir === 'rtl', step = {ArrowUp: -7, ArrowDown: 7, ArrowLeft: rtl ? 1 : -1, ArrowRight: rtl ? -1 : 1}[e.key];
+    const next = addDays(e.target.dataset.d, step), b = $(`#dlg .cal-day[data-d="${next}"]`); if (b && !b.disabled) b.focus(); return;
+  }
   if (e.target && e.target.id === 'askIn' && e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); const f = $('#askForm'); if (f) f.requestSubmit ? f.requestSubmit() : f.dispatchEvent(new Event('submit', {cancelable: true})); return; }
   if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey || $('#dlg').open) return;
   const tag = (e.target.tagName || '').toLowerCase();
