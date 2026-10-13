@@ -3745,7 +3745,7 @@ function openCalendar(value, onPick) {
   CAL = {value: value || '', y, m: m - 1, onPick, prev: document.activeElement};
   const d = $('#dlg');
   d.setAttribute('aria-labelledby', 'calTitle');
-  d.onclose = () => { const p = CAL && CAL.prev; CAL = null; if (p && document.contains(p)) p.focus(); };
+  d.onclose = () => { const p = CAL && CAL.prev; CAL = null; d.innerHTML = ''; if (p && document.contains(p)) p.focus(); };
   drawCalendar();
   if (typeof d.showModal === 'function') { if (!d.open) d.showModal(); } else d.setAttribute('open', '');
   const sel = d.querySelector('.cal-day.sel') || d.querySelector('.cal-day.today') || d.querySelector('.cal-day:not([disabled])'); if (sel) sel.focus();
