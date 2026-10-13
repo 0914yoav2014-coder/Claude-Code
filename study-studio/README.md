@@ -42,6 +42,18 @@ A study app for students in grades 7–9. The student pastes notes, a chapter, a
    - **Solve it here**: a timer, answer fields and multiple choice. After handing in, the solutions and marking guide appear; multiple choice is marked automatically and the student gives themselves points for the rest. The result shows the score and a table by topic, and partly-wrong items join the review list.
    - **Word file**: the app writes it itself (a ZIP of WordprocessingML, RTL, figures as PNG), with the full solution and marking guide on the last pages.
 
+## Words and dictation
+
+When the material holds a word list (English vocabulary or Arabic words), the subject gets a **Words** tile ("מילים", or "מילים והכתבה" for Arabic). Subjects without a word list do not show it. The words always come from the student's list: the AI writes sentences and exercises around them but never adds words to learn.
+
+- **Hub**: one progress sentence ("אתה יודע 3 מתוך 20 מילים"), today's practice, the level, dictation, the word quiz (English), word cards, practice on all the words, a "hard words" box and the plan until the test. A word counts as known when its last answer was right.
+- **Levels**: basic (choosing from options, short simple sentences, matching), medium (the level of most tests: typing the meaning or the word, gaps, "is the word used correctly here?") and hard (a little harder than most tests: words that look or mean alike, word forms, translating a sentence). Arabic never asks the student to type Arabic; it uses spelling choices and gap choices instead. The level is saved per subject.
+- **AI sentences** (fast model, per level): a writer pass and then a checker pass that fixes or drops wrong items. The basic exercises work while the sentences are being written, and if writing fails a note with Retry appears and the local exercises still work.
+- **Daily plan and spaced repetition** (plain code, not AI): new words are spread over the days left until the test (one week when there is no date), and the last day is a full review with a dictation or quiz. A word answered right on a new day comes back later (tomorrow, in 3 days, then the day before the test); a wrong answer brings it back tomorrow. None of this is shown as boxes.
+- **A round**: each word comes back in up to three kinds of exercise, so even two words make a round of about ten items. A wrong answer comes back once at the end. Typed answers forgive case, "a/an/the/to" and a leading "ה"; a spelling slip within a small distance is shown as "כמעט!" with the different letters marked, and still counts as a mistake.
+- **Dictation**: the browser's own voice says each word (nothing is sent anywhere) while the student writes the word and its meaning on paper. Basic is slow with unlimited replays, medium allows two plays, hard plays once and ends with a short sentence. Answers can be shown after each word or at the end, like in class. The student then marks each word (right, spelling mistake, meaning mistake); the score is shown only when all are marked, and a word with one mistake earns half a point. "Dictation of the mistakes" repeats only the words that were not right. When the device has no voice for the language, the dictation is reversed: the meaning appears and the student writes the word.
+- **Word quiz** (English): one item per word, it moves on by itself, and ends with a score and a table of every question, the answer given and the right answer. **Word file**: the same quiz as a test on paper (translate, write the word, fill the gap) with the answers on the last page, written by the same Word writer as the real test.
+
 ## Where it differs from the original spec
 
 | Spec | Now | Why |

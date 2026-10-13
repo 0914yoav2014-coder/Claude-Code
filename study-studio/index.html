@@ -531,6 +531,23 @@ mark.dif-ok{background:var(--ok-soft);color:var(--ok);border-radius:4px;padding:
 .dict-list>li .dict-w::before{content:counter(d) ".";color:var(--mut);font-size:13px}
 .dict .dict-row{justify-content:center;flex-direction:column}
 @media (max-width:560px){.lvl-row{grid-template-columns:minmax(0,1fr)}.lvl-btn{min-height:0}.ar-big,[lang="ar"].qtext{font-size:26px}.dict-row .seg-yn{width:100%}.dict-row .yn{flex:1}}
+/* words QA: Arabic glyphs need a real Arabic face and more size than Latin/Hebrew at the same px */
+.wq .opt .tx[lang="ar"]{font-family:"Noto Naskh Arabic","Geeza Pro","Traditional Arabic","Arial",var(--font);font-size:24px;line-height:1.5;font-weight:600}
+.wq .qtext.sent:dir(rtl){font-family:"Noto Naskh Arabic","Geeza Pro","Traditional Arabic","Arial",var(--font);font-size:27px;line-height:1.7}
+.wq .fb b[dir="auto"]:dir(rtl){font-family:"Noto Naskh Arabic","Geeza Pro","Traditional Arabic","Arial",var(--font);font-size:19px}
+.match-row>span.ar-big{font-size:26px;line-height:1.4}
+#wHard .chips .chip[dir="auto"]:dir(rtl),.result:has([data-act="w-hard"]) .chips .chip[dir="auto"]:dir(rtl){font-family:"Noto Naskh Arabic","Geeza Pro","Traditional Arabic","Arial",var(--font);font-size:17px;height:auto;min-height:30px;padding-block:2px}
+/* the ✓ / ✗ after a match row stays on the row instead of wrapping under it */
+@media (min-width:561px){.match-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,max-content)}.match-row .bad-ic{max-width:14em}}
+/* tables with mixed-script cells: every cell lines up with the page direction, not with its own text */
+:root[dir="rtl"] .words .vt :is(th,td),:root[dir="rtl"] .result .vt :is(th,td){text-align:right}
+:root[dir="ltr"] .words .vt :is(th,td),:root[dir="ltr"] .result .vt :is(th,td){text-align:left}
+.words .vt td:first-child{white-space:nowrap}
+.words .vt .spk{width:34px;height:34px;margin-inline-start:6px}
+.words .vt .spk svg{width:17px;height:17px}
+/* dictation marks: long labels wrap inside a taller button instead of spilling */
+.dict-row .yn{height:auto;min-height:44px;padding:6px 12px;line-height:1.25}
+.dict .dict-row .dict-w{align-items:center}
 
 /* Dialog, toast */
 dialog{border:0;border-radius:24px;padding:24px;background:var(--card);color:var(--ink);width:min(440px,calc(100% - 32px));box-shadow:0 24px 64px rgba(0,0,0,.25)}
