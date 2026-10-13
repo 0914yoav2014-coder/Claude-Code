@@ -538,7 +538,7 @@ mark.dif-ok{background:var(--ok-soft);color:var(--ok);border-radius:4px;padding:
 .match-row>span.ar-big{font-size:26px;line-height:1.4}
 #wHard .chips .chip[dir="auto"]:dir(rtl),.result:has([data-act="w-hard"]) .chips .chip[dir="auto"]:dir(rtl){font-family:"Noto Naskh Arabic","Geeza Pro","Traditional Arabic","Arial",var(--font);font-size:17px;height:auto;min-height:30px;padding-block:2px}
 /* the ✓ / ✗ after a match row stays on the row instead of wrapping under it */
-@media (min-width:561px){.match-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,max-content)}.match-row .bad-ic{max-width:14em}}
+@media (min-width:561px){.match{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,max-content);column-gap:10px}.match-row{grid-column:1/-1;grid-template-columns:subgrid}.match-row .bad-ic{max-width:14em}}
 /* tables with mixed-script cells: every cell lines up with the page direction, not with its own text */
 :root[dir="rtl"] .words .vt :is(th,td),:root[dir="rtl"] .result .vt :is(th,td){text-align:right}
 :root[dir="ltr"] .words .vt :is(th,td),:root[dir="ltr"] .result .vt :is(th,td){text-align:left}
@@ -549,6 +549,21 @@ mark.dif-ok{background:var(--ok-soft);color:var(--ok);border-radius:4px;padding:
 .dict-row .yn{height:auto;min-height:44px;padding:6px 12px;line-height:1.25}
 .dict .dict-row .dict-w{align-items:center}
 
+/* ask a question */
+.ask-cta{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--soft);border-radius:16px;padding:12px 16px}
+.ask-cta>span{font-weight:600;color:var(--acc)}
+.qa{display:grid;gap:10px}
+.q-b{margin:0;justify-self:start;max-width:85%;background:var(--btn);color:var(--on-btn);border-radius:18px;border-start-start-radius:6px;padding:10px 16px;font-size:16.5px;white-space:pre-wrap;overflow-wrap:anywhere}
+.a-b{background:var(--card);border:1px solid var(--line);border-radius:18px;border-start-end-radius:6px;padding:14px 18px;font-size:16.5px;line-height:1.7;overflow-wrap:anywhere}
+.a-b p{margin:0 0 8px}.a-b p:last-child{margin-bottom:0}
+.a-b ul,.a-b ol{margin:0 0 8px;padding-inline-start:22px}
+.a-b strong{font-weight:700}
+.ask-form{display:grid;gap:10px;position:sticky;bottom:0;background:var(--bg);padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px))}
+.ask-form textarea{min-height:84px;resize:vertical}
+.more .ask-cta{margin-bottom:4px}
+@media print{.ask-cta{display:none}}
+
+.diff{unicode-bidi:isolate;display:inline-block}
 /* Dialog, toast */
 dialog{border:0;border-radius:24px;padding:24px;background:var(--card);color:var(--ink);width:min(440px,calc(100% - 32px));box-shadow:0 24px 64px rgba(0,0,0,.25)}
 dialog::backdrop{background:var(--scrim)}
@@ -694,7 +709,7 @@ he: {
   conclusionTitle: 'לסיכום', topicPractice: 'תרגול לפי נושאים', topicPracticeDesc: 'כל נושא עם הכלל, טעות נפוצה ותרגילים בשלוש רמות עם רמזים ופתרון מלא. כולל תוכנית לימוד לפי הימים שנשארו.', topicsReady: 'מוכן', makeTopics: 'להכין תרגול', newTopics: 'להכין תרגול חדש', writingTopics: 'מכין תרגול לפי נושאים… זה לוקח כדקה או שתיים.', topicsNote: 'התרגול נכתב לפי החומר שלך.', topicsStale: 'הוספת חומר מאז שהתרגול נכתב.', oldSheet5: 'הסיכום הזה נכתב בגרסה הקודמת, עם תרגילים בתוכו. התרגילים עברו למסך התרגול. אפשר לכתוב עכשיו סיכום נקי של החומר.',
   wTile: 'מילים', wTileAr: 'מילים והכתבה', wKnownShort: '{k} מתוך {n} מילים', wTileToday: 'יש תרגול להיום', listen: 'להשמיע',
   wTitle: 'מילים', wTitleAr: 'מילים והכתבה בערבית', wTitleEn: 'אוצר מילים באנגלית', wKnownLine: 'אתה יודע {k} מתוך {n} מילים', wAllKnown: 'אתה יודע את כל המילים. מכאן רק שומרים עליהן.', wLeft: 'נשארו {n}.',
-  wToday: 'התרגול של היום', wTodayAgain: 'עוד סבב להיום', wTodayMeta: '{n} מילים חדשות, {r} לחזרה', wTodayExtra: 'אין מה לחזור היום. סבב חיזוק על המילים הקשות.', wFinalToday: 'היום האחרון לפני הבוחן: חזרה על הכל, ואחריה הכתבה או בוחן מלא.',
+  wToday: 'התרגול של היום', wTodayAgain: 'עוד סבב להיום', wTodayMeta: '{n} מילים חדשות, {r} לחזרה', wTodayMeta1: 'מילה חדשה אחת, {r} לחזרה', wDayNew1: 'מילה חדשה אחת וחזרה', wTodayExtra: 'אין מה לחזור היום. סבב חיזוק על המילים הקשות.', wFinalToday: 'היום האחרון לפני הבוחן: חזרה על הכל, ואחריה הכתבה או בוחן מלא.',
   wLevel: 'רמה', wl_basic: 'מתחיל', wl_basic_d: 'משפטים פשוטים ובחירה מתוך אפשרויות', wl_medium: 'מתקדם', wl_medium_d: 'ברמה של רוב המבחנים', wl_hard: 'מאתגר', wl_hard_d: 'קצת יותר קשה מהמבחנים',
   wGen: 'מכין משפטים ותרגילים לרמה הזו… בינתיים אפשר כבר לתרגל.', wGenFail: 'לא הצלחתי להכין משפטים לרמה הזו. התרגילים הבסיסיים עובדים.',
   wDictation: 'הכתבה', wDictDescAr: 'האתר אומר מילה בערבית, ואתה כותב על דף את המילה ואת התרגום. אחר כך בודקים.', wDictDesc: 'האתר אומר מילה, ואתה כותב על דף את המילה ואת התרגום. אחר כך בודקים.',
@@ -704,15 +719,17 @@ he: {
   wListTitle: 'רשימת המילים ({n})', wStatus: 'מצב', wNew: 'חדשה', wKnownTag: 'יודע', wHardTag: 'קשה', wLearning: 'בלמידה', wFilled: 'הושלם', wFilledTip: 'התרגום לא היה בחומר והושלם. כדאי לבדוק מול הדף של המורה.',
   wBack: 'למילים', wNothing: 'אין מילים לתרגל כאן.', wFinish: 'לסיום', wProgress: 'התקדמות בסבב', wRoundDone: '{k} מתוך {n} נכון', wQuizScore: 'הציון שלך: {s}', wToRepeat: 'מילים לחזור עליהן', wAllRight: 'הכל נכון. כל הכבוד!',
   xWhatMeans: 'מה התרגום?', xWhichWord: 'איזו מילה זו?', xSpell: 'איך כותבים נכון?', xGapType: 'כתוב את המילה החסרה', xGapPick: 'בחר את המילה החסרה', xUsage: 'האם המילה "{w}" משמשת כאן נכון?', xConfuse: 'בחר את המילה שמתאימה', xForm: 'כתוב את הצורה הנכונה של "{w}"', xTranslate: 'תרגם לאנגלית, עם המילה "{w}"', xMatch: 'התאם לכל מילה את התרגום', xPick: 'בחר תרגום', xTrue: 'נכון', xFalse: 'לא נכון',
-  xAlmost: 'כמעט!', xSpellSlip: 'טעות כתיב:', xSpellTrap: 'שים לב לכתיב: האות שונה ממה שבחרת.',
+  xHeNote: 'כדאי לכתוב:', xWrongForm: 'צורה לא נכונה של המילה:', xAlmost: 'כמעט!', xSpellSlip: 'טעות כתיב:', xSpellTrap: 'שים לב לכתיב: האות שונה ממה שבחרת.',
   dReady: 'הכתבה של {n} מילים', dHowAr: 'קח דף ועט. האתר יגיד מילה בערבית. כתוב את המילה בערבית ולידה את התרגום לעברית.', dHow: 'קח דף ועט. האתר יגיד מילה. כתוב את המילה ולידה את התרגום.', dHowReverse: 'קח דף ועט. יופיע תרגום, ואתה כותב את המילה.',
   dNoVoice: 'במכשיר הזה אין קול להקראה, אז ההכתבה הפוכה: מופיע התרגום ואתה כותב את המילה.', dNoVoiceAr: 'במכשיר הזה אין קול בערבית, אז ההכתבה הפוכה: מופיע התרגום בעברית ואתה כותב את המילה בערבית.',
-  dWhich: 'אילו מילים?', dToday: 'של היום ({n})', dAll: 'כל המילים ({n})', dWhen: 'מתי לראות את התשובה?', dReveal_each: 'אחרי כל מילה', dReveal_end: 'בסוף, כמו בכיתה', dMode_audio: 'לשמוע את המילה', dMode_reverse: 'לראות את התרגום',
+  dWhich: 'אילו מילים?', dHowLbl: 'איך לקבל את המילה', dToday: 'של היום ({n})', dMistakes: 'הטעויות ({n})', dAll: 'כל המילים ({n})', dWhen: 'מתי לראות את התשובה?', dReveal_each: 'אחרי כל מילה', dReveal_end: 'בסוף, כמו בכיתה', dMode_audio: 'לשמוע את המילה', dMode_reverse: 'לראות את התרגום',
   dLevelNote_basic: 'מתחיל: קצב איטי, ואפשר לשמוע שוב כמה שרוצים.', dLevelNote_medium: 'מתקדם: קצב כמו בכיתה, ואפשר לשמוע שוב פעם אחת.', dLevelNote_hard: 'מאתגר: קצב מהיר, שומעים פעם אחת, ובסוף משפט קצר.',
   dStart: 'להתחיל', dSentence: 'משפט לסיום', dPlaysFree: 'אפשר לשמוע שוב כמה שרוצים', dPlaysLeft: 'אפשר לשמוע עוד {n} פעמים', dWrite: 'כתוב את המילה ואת התרגום', dWriteAr: 'כתוב את המילה בערבית ואת התרגום לעברית', dWriteSentence: 'כתוב את המשפט', dWriteWordFor: 'כתוב את המילה שפירושה:',
   dShowWord: 'לראות את התשובה', dNextWord: 'למילה הבאה', dToCheck: 'סיימתי, לבדיקה', dToScore: 'לציון', dCheckTitle: 'בדיקה', dCheckHow: 'השווה למה שכתבת על הדף, וסמן לכל מילה.', dCheckHowReverse: 'השווה את הכתיב שלך, וסמן לכל מילה.', dMarkAll: 'סמן את כל המילים כדי לראות ציון.',
   dMark_ok: 'כתבתי נכון', dMark_spell: 'טעות בכתיב', dMark_trans: 'טעות בתרגום', dScoreTitle: 'הציון בהכתבה', dAgainWrong: 'הכתבה חוזרת על הטעויות',
   wqA: 'תרגם לעברית:', wqB: 'כתוב את המילה באנגלית:', wqC: 'השלם את המילה החסרה:', wqI1: 'ענה על כל השאלות.', wqI2: 'הקפד על כתיב נכון.',
+  askTitle: 'לשאול שאלה', askLead: 'משהו בחומר לא ברור? כתוב מה לא הבנת, ותקבל הסבר לפי החומר שלך.', askExamples: 'אפשר לשאול למשל:', askEx1: 'תסביר לי במילים פשוטות את הנושא הראשון', askEx2: 'מה ההבדל בין שני המושגים שהכי מבלבלים בחומר?', askEx3: 'מה הכי חשוב לזכור למבחן?',
+  askThinking: 'חושב על תשובה…', askPlaceholder: 'כתוב כאן את השאלה שלך…', askSend: 'לשאול', askClear: 'למחוק את השיחה', askClearQ: 'למחוק את כל השאלות והתשובות?', askCta: 'משהו לא ברור?', askAboutTopic: 'לא הבנתי את "{x}". תסביר לי שוב בצורה פשוטה?',
   orderHint: 'לחץ על השורות לפי הסדר הנכון.', reset: 'להתחיל מחדש', pickReason: 'בחר נימוק', criteriaLbl: 'בדוק את עצמך: מה צריך להופיע בתשובה?', doneChecking: 'סיימתי לבדוק', showModel: 'להראות תשובה לדוגמה',
   likelyMistake: 'כנראה:', lvlBasic: 'בסיסי', lvlMedium: 'בינוני', lvlExam: 'ברמת מבחן', orderScore: '{k} מתוך {n} שורות במקום הנכון.', tryHint: 'נסה שוב, או פתח רמז.', hintLbl: 'רמז:', hintBtn: 'רמז', nextStep: 'צעד {k} מתוך {n}', fullSolution: 'פתרון מלא',
   topicScore: 'בנושא הזה: {k} מתוך {n} נכון.', reviewThese: 'נוסף לרשימת „לחזור על זה”: {list}.', conclusionLbl: 'מסקנה:', practiceStatic: 'תרגול', practiceLive: 'תרגל עכשיו: בסיסי, בינוני, ברמת מבחן', moreLbl: 'הסבר מלא, דוגמה ותרגול',
@@ -802,7 +819,7 @@ en: {
   conclusionTitle: 'In short', topicPractice: 'Practice by topic', topicPracticeDesc: 'Each topic with its rule, a common mistake and exercises at three levels, with hints and full solutions. Includes a study plan for the days left.', topicsReady: 'Ready', makeTopics: 'Prepare practice', newTopics: 'Prepare new practice', writingTopics: 'Preparing practice by topic… this takes a minute or two.', topicsNote: 'The practice is written from your material.', topicsStale: 'You added material since this practice was written.', oldSheet5: 'This summary was written by the previous version, with exercises inside it. The exercises moved to the practice screen. You can now write a clean summary of the material.',
   wTile: 'Words', wTileAr: 'Words and dictation', wKnownShort: '{k} of {n} words', wTileToday: 'practice ready for today', listen: 'Listen',
   wTitle: 'Words', wTitleAr: 'Arabic words and dictation', wTitleEn: 'English vocabulary', wKnownLine: 'You know {k} of {n} words', wAllKnown: 'You know all the words. From here you just keep them fresh.', wLeft: '{n} to go.',
-  wToday: "Today's practice", wTodayAgain: 'Another round for today', wTodayMeta: '{n} new words, {r} to review', wTodayExtra: 'Nothing to review today. A booster round on the hard words.', wFinalToday: 'Last day before the test: review everything, then a full dictation or quiz.',
+  wToday: "Today's practice", wTodayAgain: 'Another round for today', wTodayMeta: '{n} new words, {r} to review', wTodayMeta1: 'One new word, {r} to review', wDayNew1: 'One new word and review', wTodayExtra: 'Nothing to review today. A booster round on the hard words.', wFinalToday: 'Last day before the test: review everything, then a full dictation or quiz.',
   wLevel: 'Level', wl_basic: 'Beginner', wl_basic_d: 'Simple sentences and multiple choice', wl_medium: 'Intermediate', wl_medium_d: 'The level of most tests', wl_hard: 'Challenging', wl_hard_d: 'A little harder than the tests',
   wGen: 'Preparing sentences and exercises for this level… you can already practise.', wGenFail: 'Could not prepare sentences for this level. The basic exercises work.',
   wDictation: 'Dictation', wDictDescAr: 'The site says an Arabic word; you write the word and its translation on paper, then check.', wDictDesc: 'The site says a word; you write the word and its translation on paper, then check.',
@@ -812,15 +829,17 @@ en: {
   wListTitle: 'Word list ({n})', wStatus: 'Status', wNew: 'new', wKnownTag: 'known', wHardTag: 'hard', wLearning: 'learning', wFilled: 'filled in', wFilledTip: 'The meaning was not in the material and was filled in. Check it against your teacher’s list.',
   wBack: 'Words', wNothing: 'No words to practise here.', wFinish: 'Finish', wProgress: 'Round progress', wRoundDone: '{k} of {n} right', wQuizScore: 'Your score: {s}', wToRepeat: 'Words to go over', wAllRight: 'All right. Well done!',
   xWhatMeans: 'What does it mean?', xWhichWord: 'Which word is it?', xSpell: 'Which spelling is right?', xGapType: 'Type the missing word', xGapPick: 'Pick the missing word', xUsage: 'Is "{w}" used correctly here?', xConfuse: 'Pick the word that fits', xForm: 'Type the right form of "{w}"', xTranslate: 'Translate into English, using "{w}"', xMatch: 'Match each word to its meaning', xPick: 'Pick a meaning', xTrue: 'Correct', xFalse: 'Not correct',
-  xAlmost: 'Almost!', xSpellSlip: 'Spelling slip:', xSpellTrap: 'Watch the spelling: one letter is different.',
+  xHeNote: 'Spelled:', xWrongForm: 'Wrong form of the word:', xAlmost: 'Almost!', xSpellSlip: 'Spelling slip:', xSpellTrap: 'Watch the spelling: one letter is different.',
   dReady: 'Dictation of {n} words', dHowAr: 'Take paper and a pen. The site says an Arabic word. Write it in Arabic and its meaning next to it.', dHow: 'Take paper and a pen. The site says a word. Write it and its meaning next to it.', dHowReverse: 'Take paper and a pen. A meaning appears; you write the word.',
   dNoVoice: 'This device has no voice for reading aloud, so the dictation is reversed: the meaning appears and you write the word.', dNoVoiceAr: 'This device has no Arabic voice, so the dictation is reversed: the meaning appears and you write the word in Arabic.',
-  dWhich: 'Which words?', dToday: "Today's ({n})", dAll: 'All words ({n})', dWhen: 'When to see the answer?', dReveal_each: 'After each word', dReveal_end: 'At the end, like in class', dMode_audio: 'Hear the word', dMode_reverse: 'See the meaning',
+  dWhich: 'Which words?', dHowLbl: 'How to get the word', dToday: "Today's ({n})", dMistakes: 'Mistakes ({n})', dAll: 'All words ({n})', dWhen: 'When to see the answer?', dReveal_each: 'After each word', dReveal_end: 'At the end, like in class', dMode_audio: 'Hear the word', dMode_reverse: 'See the meaning',
   dLevelNote_basic: 'Beginner: slow, and you can listen again as often as you like.', dLevelNote_medium: 'Intermediate: class pace, and you can listen once more.', dLevelNote_hard: 'Challenging: fast, you hear each word once, and a short sentence at the end.',
   dStart: 'Start', dSentence: 'Final sentence', dPlaysFree: 'You can listen again as often as you like', dPlaysLeft: 'You can listen {n} more times', dWrite: 'Write the word and its meaning', dWriteAr: 'Write the word in Arabic and its meaning', dWriteSentence: 'Write the sentence', dWriteWordFor: 'Write the word that means:',
   dShowWord: 'See the answer', dNextWord: 'Next word', dToCheck: 'Done, check it', dToScore: 'See score', dCheckTitle: 'Check', dCheckHow: 'Compare with what you wrote and mark each word.', dCheckHowReverse: 'Compare your spelling and mark each word.', dMarkAll: 'Mark every word to see the score.',
   dMark_ok: 'Right', dMark_spell: 'Spelling mistake', dMark_trans: 'Meaning mistake', dScoreTitle: 'Dictation score', dAgainWrong: 'Dictation of the mistakes',
   wqA: 'Translate:', wqB: 'Write the English word:', wqC: 'Fill in the missing word:', wqI1: 'Answer all the questions.', wqI2: 'Spelling counts.',
+  askTitle: 'Ask a question', askLead: 'Something in the material not clear? Write what you did not understand and get an explanation based on your material.', askExamples: 'For example:', askEx1: 'Explain the first topic in simple words', askEx2: 'What is the difference between the two most confusing terms?', askEx3: 'What is most important to remember for the test?',
+  askThinking: 'Thinking…', askPlaceholder: 'Type your question here…', askSend: 'Ask', askClear: 'Clear the conversation', askClearQ: 'Delete all questions and answers?', askCta: 'Something not clear?', askAboutTopic: 'I did not understand "{x}". Can you explain it again simply?',
   orderHint: 'Tap the lines in the right order.', reset: 'Start over', pickReason: 'Pick a reason', criteriaLbl: 'Check yourself: what must your answer include?', doneChecking: 'Done checking', showModel: 'Show a model answer',
   likelyMistake: 'Likely mistake:', lvlBasic: 'Basic', lvlMedium: 'Medium', lvlExam: 'Test level', orderScore: '{k} of {n} lines are in the right place.', tryHint: 'Try again, or open a hint.', hintLbl: 'Hint:', hintBtn: 'Hint', nextStep: 'Step {k} of {n}', fullSolution: 'Full solution',
   topicScore: 'This topic: {k} of {n} right.', reviewThese: 'Added to “Go over again”: {list}.', conclusionLbl: 'Conclusion:', practiceStatic: 'Practice', practiceLive: 'Practice now: basic, medium, test level', moreLbl: 'Full explanation, example and practice',
@@ -855,6 +874,7 @@ const I = {
   warn: sv('<path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17v.5"/>', 18),
   sound: sv('<path d="M4 9.5v5h3.5L12 19V5L7.5 9.5z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>', 22),
   play: sv('<path d="M8 5.5v13l10.5-6.5z"/>', 22),
+  chat: sv('<path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-8l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/><path d="M9 10.5h.01M12 10.5h.01M15 10.5h.01"/>', 20),
   star: sv('<path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.5 9.7l5.9-.9z" fill="currentColor"/>', 16)
 };
 
@@ -889,7 +909,7 @@ const fmtScore = n => Number.isInteger(n) ? String(n) : n.toFixed(1);
 
 /* ---------- state + saving ---------- */
 let storageOk = true, saveState = 'ok', saveTimer = null;
-function blank() { return {v: 1, subjects: [], materials: [], cards: [], quizzes: {}, summaries: {}, exams: {}, checks: {}, attempts: {}, review: {}, planDone: {}, examRuns: {}, topicSets: {}, words: {}, settings: {theme: 'system', lang: 'he', v: 2}}; }
+function blank() { return {v: 1, subjects: [], materials: [], cards: [], quizzes: {}, summaries: {}, exams: {}, checks: {}, attempts: {}, review: {}, planDone: {}, examRuns: {}, topicSets: {}, words: {}, asks: {}, settings: {theme: 'system', lang: 'he', v: 2}}; }
 function load() {
   let d = null;
   try { const raw = localStorage.getItem(KEY); if (raw) d = JSON.parse(raw); } catch (e) { storageOk = false; }
@@ -899,7 +919,7 @@ function load() {
   out.settings = Object.assign(blank().settings, d.settings || {});
   if (!(d.settings && d.settings.v >= 2)) { out.settings.lang = 'he'; out.settings.v = 2; } // Hebrew is now the default for everyone once
   ['subjects', 'materials', 'cards'].forEach(k => { if (!Array.isArray(out[k])) out[k] = []; });
-  ['quizzes', 'summaries', 'exams', 'checks', 'attempts', 'review', 'planDone', 'examRuns', 'topicSets', 'words'].forEach(k => { if (!out[k] || typeof out[k] !== 'object') out[k] = {}; });
+  ['quizzes', 'summaries', 'exams', 'checks', 'attempts', 'review', 'planDone', 'examRuns', 'topicSets', 'words', 'asks'].forEach(k => { if (!out[k] || typeof out[k] !== 'object') out[k] = {}; });
   // summaries from v3/v4 held topic cards with practice: that practice now lives on the practice screen
   Object.entries(out.summaries).forEach(([sid, sum]) => { if (sum && sum.sheet && (sum.sheet.v === 3 || sum.sheet.v === 4) && !out.topicSets[sid]) out.topicSets[sid] = {sheet: sum.sheet, mids: sum.mids || [], builtAt: sum.builtAt}; });
   out.materials.forEach(m => { m.cardChunks = m.cardChunks || []; });
@@ -1806,7 +1826,7 @@ function goBack() {
   if (r.name === 'add' && r.from) return go({name: 'subject', id: r.from});
   if (['quiz', 'exam', 'topics'].includes(r.name)) { if (r.name === 'quiz' && Q && Q.ctl) Q.ctl.abort(); if (r.name === 'topics' && TP && TP.ctl && TP.stage === 'gen') { TP.ctl.abort(); TP.stage = 'idle'; } if (r.name === 'exam' && EX && EX.ctl && EX.stage === 'gen') { EX.ctl.abort(); EX.stage = 'idle'; } return go({name: 'practice', id: r.id}); }
   if (['wsess', 'wquiz', 'dict'].includes(r.name)) { if (window.speechSynthesis) try { speechSynthesis.cancel(); } catch (e) {} return go({name: 'words', id: r.id}); }
-  if (r.name === 'words') return go({name: 'subject', id: r.id});
+  if (r.name === 'words' || r.name === 'ask') { if (ASK && ASK.ctl && ASK.busy) ASK.ctl.abort(); return go({name: 'subject', id: r.id}); }
   if (r.name === 'cards' && R && R.fromWords) return go({name: 'words', id: r.id});
   if (r.name === 'mock') { clearInterval(mockTimer); mockTimer = null; return go({name: 'exam', id: r.id}); }
   if (['cards', 'summary', 'practice'].includes(r.name)) return go({name: 'subject', id: r.id});
@@ -2035,6 +2055,7 @@ VIEWS.subject = () => {
         <span class="ic">${I.doc}</span><span class="tx"><b>${t('summary')}</b><span class="meta">${sumMeta}</span></span></button>
       ${wordsOf(s.id).length ? (() => { const wl = wordLang(s.id), tw = todayWords(s.id).length; return `<button type="button" class="tile ${tw && !wstate(s.id).done[todayStr()] ? 'hot' : ''}" data-act="words" data-id="${s.id}" id="tileWords"><span class="ic">${I.sound}</span><span class="tx"><b>${wl === 'ar' ? t('wTileAr') : t('wTile')}</b><span class="meta">${t('wKnownShort', {k: wKnown(s.id), n: wordsOf(s.id).length})}${tw && !wstate(s.id).done[todayStr()] ? ' · ' + t('wTileToday') : ''}</span></span></button>`; })() : ''}
     </div>
+    ${mats.length ? askBtnHtml(s.id, '') : ''}
     ${cs.length ? `<section class="panel prog"><p class="big">${t('progress', {k, n: cs.length})}</p>
       <div class="bar ok" role="progressbar" aria-label="${esc(t('knownShort', {k, n: cs.length}))}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${p}"><span style="width:${p}%"></span></div>
       <p class="hint">${t('progressHint')}</p></section>` : ''}
@@ -2416,7 +2437,7 @@ let katexState = 'idle';
 function ensureKatex() {
   if (katexState !== 'idle') return;
   katexState = 'loading';
-  loadScript(KATEX).then(() => { katexState = window.katex ? 'ready' : 'failed'; if (['summary', 'mock', 'topics'].includes(route.name)) render(false); }, () => { katexState = 'failed'; });
+  loadScript(KATEX).then(() => { katexState = window.katex ? 'ready' : 'failed'; if (['summary', 'mock', 'topics', 'ask'].includes(route.name)) render(false); }, () => { katexState = 'failed'; });
 }
 function deLatex(t) {
   let s = String(t);
@@ -2442,7 +2463,8 @@ function richLine(s, cls = '') {
 function inline(s) {
   return bidiMath(esc(s).replace(/`([^`]+)`/g, '<code>$1</code>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/(^|[^*\w])\*([^*\s][^*]*?)\*(?!\*)/g, '$1<em>$2</em>'));
 }
-function md(src) {
+function md(src, fmt = inline) {
+  const inline = fmt;
   let html = '', list = null, para = [];
   const flushP = () => { if (para.length) { html += `<p>${inline(para.join(' '))}</p>`; para = []; } };
   const closeL = () => { if (list) { html += `</${list}>`; list = null; } };
@@ -2552,7 +2574,7 @@ function topicHtml(tp, ctx) {
   const visible = `${tp.what ? `<p class="tp-what">${rich(tp.what)}</p>` : ''}
     ${tp.rules.length ? `<div class="fbox">${tp.rules.map(r => richLine(r)).join('')}</div>` : ''}
     ${mk ? `<div class="mbox"><p class="k">${t('mistakeLbl')}</p>${mk.wrong ? `<p><b>✗ ${t('wrongLbl')}</b> <span class="w">${rich(mk.wrong)}</span></p>` : ''}${mk.right ? `<p><b>✓ ${t('rightLbl')}</b> <span class="r">${rich(mk.right)}</span></p>` : ''}${mk.why ? `<p class="hint">${rich(mk.why)}</p>` : ''}</div>` : ''}`;
-  const more = `${tp.terms.length ? `<dl class="terms">${tp.terms.map(x => `<div><dt>${rich(x.term)}</dt><dd>${rich(x.def)}</dd></div>`).join('')}</dl>` : ''}
+  const more = `${ctx.static ? '' : askBtnHtml(ctx.sid, t('askAboutTopic', {x: plainMath(tp.title)}))}${tp.terms.length ? `<dl class="terms">${tp.terms.map(x => `<div><dt>${rich(x.term)}</dt><dd>${rich(x.def)}</dd></div>`).join('')}</dl>` : ''}
     ${tp.steps.length ? `<div class="blk"><p class="k">${t('howSolve')}</p><ol class="steps-ol">${tp.steps.map(x => `<li>${richLine(x, 'in')}</li>`).join('')}</ol></div>` : ''}
     ${tp.table ? tableHtml(tp.table) : ''}
     ${tp.diagram ? `<figure class="dg">${diagramSvg(tp.diagram)}${tp.diagram.caption ? `<figcaption>${rich(tp.diagram.caption)}</figcaption>` : ''}</figure>` : ''}
@@ -2668,6 +2690,7 @@ VIEWS.summary = () => {
       <div class="row" ${sum.sheet && sum.sheet.v >= 3 && sum.sheet.v < 5 ? 'hidden' : ''}><button type="button" class="btn" data-act="copy" id="copyBtn">${I.copy}<span>${t('copy')}</span></button>${downloadsApi ? `<button type="button" class="btn" data-act="save-file" id="saveBtn">${I.save}<span>${t('saveFile')}</span></button>` : ''}</div></div>
     ${job ? `<p class="msg info row" style="gap:10px"><span class="spin"></span>${t('writingSheet')}</p>` : ''}
     ${sheetBodyHtml(s, sum, cd, false)}
+    ${askBtnHtml(s.id, '')}
     <textarea id="copyArea" class="input" readonly hidden aria-label="${t('summary')}"></textarea></div>`;
 };
 function sheetPlain(s, sum) {
@@ -2965,7 +2988,8 @@ function markMock(key, v) {
 
 /* ---------- words and dictation: the student's word list, learned day by day until the test ---------- */
 const WLEVELS = ['basic', 'medium', 'hard'];
-const wkey = term => norm(term);
+const noMarks = s => String(s || '').normalize('NFKD').replace(/[\p{M}\u0640]/gu, '').normalize('NFC');
+const wkey = term => norm(noMarks(term)); // the same word with or without harakat/niqqud
 const isArabic = s => /[؀-ۿ]/.test(String(s || ''));
 const wordsOf = sid => subjectPlan(sid).vocab;
 function wordLang(sid) {
@@ -2991,14 +3015,16 @@ function wMark(sid, w, res) {
   const st = ws.stats[k] = ws.stats[k] || {box: 0, due: td, seen: 0, ok: 0, bad: 0, last: '', okDay: ''};
   st.seen++; st.last = res; st.at = Date.now();
   if (res === 'ok') { st.ok++; if (st.okDay !== td) { st.box = Math.min(3, st.box + 1); st.okDay = td; } }
+  else if (res === 'spell') { st.bad++; st.okDay = ''; }
   else { st.bad++; st.box = 0; st.okDay = ''; }
   const s = subj(sid), left = s && s.examDate ? daysBetween(td, s.examDate) : null;
-  let days = res === 'ok' ? WBOX_DAYS[st.box] : 1;
+  let days = res === 'ok' ? WBOX_DAYS[st.box] : 1; // wrong or almost: tomorrow
   if (left != null && left > 1) days = Math.min(days, left - 1);
   st.due = addDays(td, Math.max(1, days));
 }
 function wPlan(sid) {
   const s = subj(sid), td = todayStr(), ws = wstate(sid), list = wordsOf(sid);
+  if (!(s && s.examDate) && daysBetween(ws.start, td) >= 7) ws.start = td; // no date: a new week starts
   const left = s && s.examDate ? daysBetween(td, s.examDate) : null, noDate = left == null || left < 0;
   const daysLeft = noDate ? Math.max(1, 7 - daysBetween(ws.start, td)) : Math.max(1, left);
   const learnDays = daysLeft - 1, unseen = list.filter(w => !wStat(sid, w));
@@ -3027,21 +3053,29 @@ const LEVEL_DESC = {
   medium: 'INTERMEDIATE, the level of most school tests in Israel and abroad: sentences of 8 to 14 words in the style of a regular class test.',
   hard: 'CHALLENGING, a little harder than most tests: longer sentences (12 to 20 words) with richer context, and choices between words that look or mean alike.'
 };
+const LEVEL_DESC_AR = {
+  basic: 'BEGINNER (2nd to 3rd year of school Arabic): only the word itself and phrases of 2 to 4 words.',
+  medium: 'INTERMEDIATE, the level of a regular school Arabic test in Israel: simple sentences of 3 to 6 words built from the list words and only the most basic words (هذا، هذه، في، على، و، أنا، هو، هي، عند، كبير، جديد).',
+  hard: 'CHALLENGING, a little harder than a school test: sentences of 5 to 8 words with one simple verb, still built from the list words and basic words.'
+};
 function drillPrompt(sid, level, chunk) {
   const lang = wordLang(sid), expl = S.settings.lang === 'en' ? 'English' : 'Hebrew';
   const list = chunk.map(w => `${w.term} = ${w.meaning}`).join('\n');
+  const alts = `- "alts": 0 to 5 other correct translations into ${expl}, including forms a student may type (singular/plural, masculine/feminine, with or without ל, a common abbreviation such as חו"ל); never instead of the given meaning.`;
   const enSpec = `For every word:
-- "alts": 0 to 3 other correct translations into ${expl} (never instead of the given meaning).
-- "gap": {"sentence": a sentence with the word replaced by "___", "answer": the missing word${level === 'hard' ? ' (or the form the sentence needs, such as "went" for "go")' : ' exactly as in the list'}}. Only this word from the list fits the gap.
-${level !== 'basic' ? `- "usage": {"sentence": a sentence that uses the word, "correct": true or false, "why": one short sentence in ${expl}}. About half are false; a false one misuses the word the way students typically do (wrong meaning, wrong preposition, wrong form).\n` : ''}${level === 'hard' ? `- "confuse": {"sentence": a sentence with "___", "options": 3 or 4 words students confuse with it (similar spelling or meaning, or other forms of it), "answer": the one that fits}.
-- "form": {"sentence": a sentence with "___", "base": the word, "answer": the form the sentence needs}.
-- "translate": {"source": a ${expl} sentence of 8 to 14 words whose translation needs the word, "model": a correct English translation}.\n` : ''}`;
+${alts}
+- "gap": {"sentence": a sentence with the word replaced by "___", "answer": the word exactly as in the list}. Only this word from the list fits the gap: check every other list word with the same part of speech (e.g. journey/delay, ancient/crowded, explore/discover) and add a detail that rules each one out. Never put "a" or "an" right before the gap. Write the sentence so that the word exactly as in the list is correct.
+${level !== 'basic' ? `- "usage": {"sentence": a sentence that uses the word, "correct": true or false, "why": up to 12 words in ${expl}}. About half are false; a false one is wrong ONLY because of how this word is used (wrong meaning, wrong preposition, countable/uncountable, wrong part of speech, e.g. "I went to abroad", "two luggages"); everything else in it is correct. "why" names the exact problem.\n` : ''}${level === 'hard' ? `- "confuse" (null if the word has no real confusable): {"sentence": a sentence with "___", "options": the answer plus 2 or 3 real words that Hebrew-speaking students mix up with it — look-alikes (abroad/aboard, explore/explain) or near meanings that clearly do NOT fit this sentence (souvenir/memory) — never a synonym that could also fit and never a non-word, "answer": the one that fits}.
+- "form" (null if the word has no other form a 9th grader learns: past, -ing, plural, or word family such as explore→exploration): {"sentence": a sentence with "___", "base": the word, "answer": the form the sentence needs}. The sentence allows only one form.
+- "translate": {"source": a Hebrew sentence of 8 to 14 words that contains the list meaning (as in the list, inflected if needed); its other words are ones a 9th grader knows, "model": a correct English translation that uses the word}.\n` : ''}`;
   const arSpec = `For every word:
-- "alts": 0 to 3 other correct translations into ${expl} (never instead of the given meaning).
-- "spell": 3 misspellings a Hebrew-speaking student would really write (a missing or extra letter, ة instead of ه or the reverse, ا instead of ى, a similar letter such as ت/ط, س/ص, ذ/ز, ه/ح, ك/ق)${level === 'hard' ? ', each differing from the right spelling in one letter only' : ''}. Never the correct spelling.
-${level !== 'basic' ? `- "gap": {"sentence": an Arabic sentence with the word replaced by "___" where only this word from the list fits, "answer": the word exactly as in the list, "tr": the sentence in ${expl}}.\n` : ''}${level === 'hard' ? `Also one "sentence" for the whole list: {"text": a short Arabic sentence (4 to 7 words) that uses 2 or 3 of the list words, for dictation, "tr": its translation into ${expl}}.\n` : ''}Copy every list word letter for letter, with its niqqud if it has any.`;
+${alts}
+- "spell": 3 misspellings a Hebrew-speaking student would really write (a missing or extra letter, ة instead of ه or the reverse, ا instead of ى, a similar letter such as ت/ط, س/ص, ذ/ز, ه/ح, ك/ق, ع/أ, ض/د, ث/ت, ظ/ز, a long vowel left out or added)${level === 'hard' ? ', each differing from the right spelling in one letter only' : ''}. Never the correct spelling. Write each misspelling with the same harakat as the list word (none if it has none). A version that differs only in harakat, shadda or the seat of hamza is NOT a misspelling. Never use another real Arabic word (كتب for كتاب, والد for ولد, كتابه for كتاب).
+${level !== 'basic' ? `- "gap": {"sentence": an Arabic sentence where the word, exactly as in the list (no ال and no case ending added), is grammatically correct in the place of "___" (after هذا/هذه, after a preposition, or as the subject); check every other list word of the same kind and add a detail that rules it out (a feminine verb, an action only this noun fits), "answer": the word exactly as in the list, "tr": the sentence in ${expl} with "___" in place of the word}.\n` : ''}${level === 'hard' ? `Also one "sentence" for the whole list: {"text": a short Arabic sentence (4 to 7 words) that uses 2 or 3 of the list words, for dictation, "tr": its translation into ${expl}}.\n` : ''}Copy every list word letter for letter, with its harakat if it has any.`;
+  const keys = lang === 'ar' ? '"spell":["","",""]' + (level !== 'basic' ? ',"gap":{"sentence":"","answer":"","tr":""}' : '')
+    : '"gap":{"sentence":"","answer":""}' + (level !== 'basic' ? ',"usage":{"sentence":"","correct":true,"why":""}' : '') + (level === 'hard' ? ',"confuse":{"sentence":"","options":[""],"answer":""},"form":{"sentence":"","base":"","answer":""},"translate":{"source":"","model":""}' : '');
   return `You are an experienced ${lang === 'ar' ? 'Arabic' : 'English'} teacher in Israel writing vocabulary practice for ${AUDIENCE}.
-Level: ${LEVEL_DESC[level]}
+Level: ${(lang === 'ar' ? LEVEL_DESC_AR : LEVEL_DESC)[level]}
 
 The student's word list (use ONLY these words as answers; never add other words to learn):
 ${list}
@@ -3050,31 +3084,35 @@ ${lang === 'ar' ? arSpec : enSpec}
 Every sentence must be correct, natural and suitable for ages 13 to 15. Each gap has exactly one right answer.
 
 Reply with JSON only:
-{"words":[{"term":"","alts":[""],${lang === 'ar' ? '"spell":["","",""],"gap":{"sentence":"","answer":"","tr":""}' : '"gap":{"sentence":"","answer":""},"usage":{"sentence":"","correct":true,"why":""},"confuse":{"sentence":"","options":[""],"answer":""},"form":{"sentence":"","base":"","answer":""},"translate":{"source":"","model":""}'}}]${lang === 'ar' ? ',"sentence":{"text":"","tr":""}' : ''}}`;
+{"words":[{"term":"","alts":[""],${keys}}]${lang === 'ar' && level === 'hard' ? ',"sentence":{"text":"","tr":""}' : ''}}`;
 }
-function drillCheckPrompt(sid, chunk, data) {
-  return `You are a strict ${wordLang(sid) === 'ar' ? 'Arabic' : 'English'} teacher checking vocabulary practice for ${AUDIENCE}. The word list:
+function drillCheckPrompt(sid, chunk, data, level) {
+  const lang = wordLang(sid);
+  return `You are a strict ${lang === 'ar' ? 'Arabic' : 'English'} teacher checking vocabulary practice for ${AUDIENCE}. Level: ${(lang === 'ar' ? LEVEL_DESC_AR : LEVEL_DESC)[level]}
+The word list:
 ${chunk.map(w => `${w.term} = ${w.meaning}`).join('\n')}
 
-Check every item below. Fix it, or set it to null, when: the sentence has a grammar or spelling mistake; more than one list word fits a gap, or the answer does not fit; a "usage" item has the wrong true/false or a wrong "why"; a misspelling in "spell" is actually a correct spelling; a translation is wrong; or an answer is not a list word (or its form). Keep everything that is right exactly as it is.
+Check every item below. Fix it, or set it to null, when: a sentence has a grammar or spelling mistake or is longer than the level allows; another list word could fill a gap, or "a/an" before the gap gives it away; "tr" or a "translate" source gives the answer away or uses a Hebrew meaning different from the list; a "confuse" option other than the answer could also fit, or is not a real word; a false "usage" sentence has a mistake that is not about this word, or true/false or "why" is wrong; a "spell" item equals the right spelling once harakat are ignored, is another real word, or (at the challenging level) differs in more than one letter; an Arabic gap needs ال or a case ending; an answer is not a list word (or its form). Never change "term". Keep everything that is right exactly as it is.
 
 Reply with the corrected JSON only, in the same shape.
 
 ${JSON.stringify(data)}`;
 }
-function cleanDrill(d, chunk) {
+function cleanDrill(d, chunk, level) {
   if (!d || typeof d !== 'object' || !Array.isArray(d.words)) throw {code: 'invalid_json'};
   const byKey = {}, inList = new Map(chunk.map(w => [wkey(w.term), w]));
   const sent = o => o && typeof o === 'object' ? o : null;
   for (const x of d.words) {
     const k = wkey(x && x.term); if (!inList.has(k)) continue;
-    const it = {alts: arr(x.alts, 3, 80)};
-    const g = sent(x.gap); if (g && /_{2,}/.test(g.sentence || '') && clip(g.answer, 60)) it.gap = {sentence: clip(g.sentence, 260), answer: clip(g.answer, 60), tr: clip(g.tr, 260)};
+    const it = {alts: arr(x.alts, 5, 80)};
+    const g = sent(x.gap); if (g && /_{2,}/.test(g.sentence || '') && clip(g.answer, 60) && (level === 'hard' || wkey(g.answer) === k)) it.gap = {sentence: clip(g.sentence, 260), answer: clip(g.answer, 60), tr: clip(g.tr, 260)};
     const u = sent(x.usage); if (u && clip(u.sentence, 260) && typeof u.correct === 'boolean') it.usage = {sentence: clip(u.sentence, 260), correct: u.correct, why: clip(u.why, 260)};
     const c = sent(x.confuse); if (c && /_{2,}/.test(c.sentence || '')) { const options = arr(c.options, 4, 60), answer = clip(c.answer, 60); if (options.length >= 2 && options.some(o => norm(o) === norm(answer))) it.confuse = {sentence: clip(c.sentence, 260), options, answer}; }
     const f = sent(x.form); if (f && /_{2,}/.test(f.sentence || '') && clip(f.answer, 60)) it.form = {sentence: clip(f.sentence, 260), base: clip(f.base, 60), answer: clip(f.answer, 60)};
     const tr = sent(x.translate); if (tr && clip(tr.source, 300) && clip(tr.model, 300)) it.translate = {source: clip(tr.source, 300), model: clip(tr.model, 300)};
-    const sp = arr(x.spell, 3, 60).filter(s => s !== inList.get(k).term); if (sp.length >= 2) it.spell = sp;
+    const plain = s => noMarks(s).replace(/\s+/g, ''), tp = plain(inList.get(k).term), otherTerms = new Set([...inList.values()].map(w => plain(w.term)));
+    const sp = [...new Set(arr(x.spell, 4, 60).map(plain))].filter(s => s && s !== tp && !otherTerms.has(s) && (level !== 'hard' || lev(s, tp) <= 1)).slice(0, 3);
+    if (sp.length >= 2) it.spell = sp;
     byKey[k] = it;
   }
   const s = sent(d.sentence);
@@ -3091,8 +3129,8 @@ async function makeDrills(sid, level) {
     const results = await Promise.all(chunks.map(async ch => {
       const raw = await askJson(drillPrompt(sid, level, ch), {modelTier: 'quick'});
       let checked = raw;
-      try { checked = await askJson(drillCheckPrompt(sid, ch, raw), {modelTier: 'quick'}); } catch (e) { /* the unchecked set is still filtered below */ }
-      try { return cleanDrill(checked, ch); } catch (e) { return cleanDrill(raw, ch); }
+      try { checked = await askJson(drillCheckPrompt(sid, ch, raw, level), {modelTier: 'quick'}); } catch (e) { /* the unchecked set is still filtered below */ }
+      try { return cleanDrill(checked, ch, level); } catch (e) { return cleanDrill(raw, ch, level); }
     }));
     if (!subj(sid)) return;
     const byKey = Object.assign({}, ...results.map(r => r.byKey));
@@ -3130,7 +3168,7 @@ function makeEx(sid, w, type, dr) {
     case 'mcW': { const options = wOptions(sid, w, 'term'); return Object.assign(base, {options, correct: options.indexOf(w.term)}); }
     case 'typeT': return Object.assign(base, {answers: [w.meaning, ...(it.alts || [])]});
     case 'typeW': return lang === 'ar' ? null : Object.assign(base, {answers: [w.term]});
-    case 'spell': { if (!it.spell) return null; const options = shuffle([w.term, ...it.spell.slice(0, 3)]); return Object.assign(base, {options, correct: options.indexOf(w.term)}); }
+    case 'spell': { if (!it.spell) return null; const right = noMarks(w.term), options = shuffle([right, ...it.spell.slice(0, 3)]); return Object.assign(base, {options, correct: options.indexOf(right)}); }
     case 'gapBank': case 'gapMc': { if (!it.gap) return null; const options = wOptions(sid, w, 'term'); return Object.assign(base, {sentence: it.gap.sentence, tr: it.gap.tr || '', options, correct: options.indexOf(w.term)}); }
     case 'gap': return it.gap ? Object.assign(base, {sentence: it.gap.sentence, answers: [it.gap.answer]}) : null;
     case 'usage': return it.usage ? Object.assign(base, {sentence: it.usage.sentence, correctTF: it.usage.correct, why: it.usage.why}) : null;
@@ -3180,13 +3218,26 @@ function lev(a, b) {
   for (let i = 1; i <= m; i++) { let prev = d[0]; d[0] = i; for (let j = 1; j <= n; j++) { const tmp = d[j]; d[j] = Math.min(d[j] + 1, d[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1)); prev = tmp; } }
   return d[n];
 }
-const wForms = s => { const out = new Set(); for (const p of [s, ...String(s).split(/[,;/]|\s+או\s+|\s+or\s+/)]) for (const f of ansForms(p)) { out.add(f); out.add(f.replace(/^(a|an|the|to)\s+/, '')); } out.delete(''); return out; };
-function wJudge(given, answers) {
+const HE_FINAL = {'ך': 'כ', 'ם': 'מ', 'ן': 'נ', 'ף': 'פ', 'ץ': 'צ'};
+const heLoose = s => s.replace(/[ךםןףץ]/g, c => HE_FINAL[c]).replace(/[וי'"״׳]/g, '');
+function wForms(s) {
+  const out = new Set(), parts = [s, ...String(s).split(/[,;/]|\s+או\s+|\s+or\s+/)];
+  for (const p of parts) for (const f of ansForms(p)) {
+    const g = f.replace(/^(a|an|the|to)\s+/, ''); out.add(f); out.add(g);
+    if (/[א-ת]/.test(g)) { const h = g.replace(/^[הלובש](?=[א-ת]{2})/, ''); out.add(h); out.add(heLoose(g)); out.add(heLoose(h)); }
+  }
+  out.delete(''); return out;
+}
+function wJudge(given, answers, others) {
   const g = [...wForms(given)]; if (!g.length) return null;
   const forms = new Set(answers.flatMap(a => [...wForms(a)]));
   if (g.some(x => forms.has(x))) return {res: 'ok'};
+  const he = /[א-ת]/.test(given);
+  if (!he && others && others.some(o => [...wForms(o)].some(x => g.includes(x)))) return {res: 'bad'}; // another real word from the list is a mistake, not a slip
+  if (!he) { for (const f of forms) for (const x of g) { const base = s => s.replace(/(es|s|ed|d|ing)$/, ''); if (x !== f && base(x) === base(f) && base(f).length > 2) return {res: 'form', near: f}; } }
   let best = null;
   for (const f of forms) for (const x of g) { const d = lev(x, f); if (d <= Math.max(1, Math.floor(f.length / 5)) && (!best || d < best.d)) best = {d, near: f}; }
+  if (best && he) return {res: 'ok', note: answers[0]}; // the meaning is what is tested, not Hebrew spelling
   return best ? {res: 'spell', near: best.near} : {res: 'bad'};
 }
 /* letters that differ are marked, so a spelling slip is easy to see */
@@ -3194,7 +3245,7 @@ function diffHtml(given, right) {
   const a = String(given), b = String(right); let i = 0; while (i < a.length && i < b.length && a[i].toLowerCase() === b[i].toLowerCase()) i++;
   let j = 0; while (j < a.length - i && j < b.length - i && a[a.length - 1 - j].toLowerCase() === b[b.length - 1 - j].toLowerCase()) j++;
   const mark = (s, cls) => `${esc(s.slice(0, i))}<mark class="${cls}">${esc(s.slice(i, s.length - j)) || '&nbsp;'}</mark>${esc(s.slice(s.length - j))}`;
-  return `<span dir="auto">${mark(a, 'dif-bad')}</span> → <span dir="auto">${mark(b, 'dif-ok')}</span>`;
+  return `<span dir="ltr" class="diff"><span>${mark(a, 'dif-bad')}</span> → <span>${mark(b, 'dif-ok')}</span></span>`;
 }
 
 /* ---------- speaking (the browser's own voices; nothing is sent anywhere) ---------- */
@@ -3220,7 +3271,7 @@ VIEWS.words = () => {
   ensureDrills(s.id);
   const gen = WGEN && WGEN.sid === s.id && WGEN.level === ws.level ? WGEN : null;
   const todayN = todayWords(s.id).length;
-  const todayMeta = p.final ? t('wFinalToday') : todayN ? t('wTodayMeta', {n: p.newWords.length, r: p.due.filter(w => !p.newWords.includes(w)).length}) : t('wTodayExtra');
+  const todayMeta = p.final ? t('wFinalToday') : todayN ? t(p.newWords.length === 1 ? 'wTodayMeta1' : 'wTodayMeta', {n: p.newWords.length, r: p.due.filter(w => !p.newWords.includes(w)).length}) : t('wTodayExtra');
   const doneToday = !!ws.done[td];
   const levelBtns = WLEVELS.map(l => `<button type="button" class="lvl-btn ${ws.level === l ? 'on' : ''}" role="radio" aria-checked="${ws.level === l}" data-act="w-level" data-v="${l}" id="wl-${l}"><b>${t('wl_' + l)}</b><span>${t('wl_' + l + '_d')}</span></button>`).join('');
   const dayName = d => d === td ? t('today') : d === addDays(td, 1) ? t('tomorrow') : fmtDate(d, {weekday: 'long', day: 'numeric', month: 'short'});
@@ -3232,9 +3283,9 @@ VIEWS.words = () => {
     <div class="panel stack" style="gap:12px"><button type="button" class="btn pri big wide" data-act="w-today" id="wTodayBtn" data-autofocus>${I.play}<span>${doneToday ? t('wTodayAgain') : t('wToday')}</span></button><p class="hint" style="text-align:center">${todayMeta}</p>
       ${p.final ? `<button type="button" class="btn big wide" data-act="${lang === 'ar' ? 'dict-open' : 'w-quiz'}" id="wFinalBtn">${testLbl}</button>` : ''}</div>
     <section class="stack" style="gap:8px"><p class="label">${t('wLevel')}</p><div class="lvl-row" role="radiogroup" aria-label="${esc(t('wLevel'))}">${levelBtns}</div>
-      ${gen && gen.running ? `<p class="hint row" style="gap:8px"><span class="spin"></span>${t('wGen')}</p>` : gen && gen.err ? `<p class="msg row" style="justify-content:space-between"><span>${t('wGenFail')}</span><button type="button" class="btn" data-act="w-regen">${t('retry')}</button></p>` : ''}</section>
+      ${gen && gen.running ? `<p class="hint row" style="gap:8px"><span class="spin"></span>${t('wGen')}</p>` : gen && gen.err ? `<p class="msg row" style="justify-content:space-between"><span>${t('wGenFail')}</span>${OFF_CODES.has(gen.err) ? '' : `<button type="button" class="btn" data-act="w-regen">${t('retry')}</button>`}</p>` : ''}</section>
     <div class="choices">
-      <button type="button" class="choice" data-act="dict-open" id="wDictBtn"><span class="ic">${I.sound}</span><b>${t('wDictation')}</b><span>${lang === 'ar' ? t('wDictDescAr') : t('wDictDesc')}</span></button>
+      <button type="button" class="choice" data-act="dict-open" id="wDictBtn"><span class="ic">${I.sound}</span><b>${t('wDictation')}</b><span>${!voiceFor(lang === 'ar' ? 'ar' : 'en') ? t('dHowReverse') : lang === 'ar' ? t('wDictDescAr') : t('wDictDesc')}</span></button>
       ${lang !== 'ar' ? `<button type="button" class="choice" data-act="w-quiz" id="wQuizBtn"><span class="ic">${I.quiz}</span><b>${t('wQuiz')}</b><span>${t('wQuizDesc')}</span></button>` : ''}
       <button type="button" class="choice" data-act="w-cards" id="wCardsBtn"><span class="ic">${I.cards}</span><b>${t('wCards')}</b><span>${t('wCardsDesc')}</span></button>
       <button type="button" class="choice" data-act="w-all" id="wAllBtn"><span class="ic">${I.edit}</span><b>${t('wAll')}</b><span>${t('wAllDesc', {n: list.length})}</span></button>
@@ -3244,9 +3295,9 @@ VIEWS.words = () => {
       <div class="chips">${hard.map(w => `<span class="chip warn" dir="auto">${esc(w.term)}</span>`).join('')}</div></section>` : ''}
     <section class="panel stack" style="gap:10px" id="wPlan"><h2>${t('wPlanTitle')}${p.noDate ? '' : ` <span class="chip warn">${esc(examInfo(s).text)}</span>`}</h2>${p.noDate ? `<p class="hint">${t('wPlanNoDate')}</p>` : ''}
       <ol class="days">${p.days.map(d => `<li class="day ${d.date === td ? 'today' : ''} ${ws.done[d.date] ? 'done' : ''}"><div class="day-h"><b>${esc(dayName(d.date))}</b>${ws.done[d.date] ? `<span class="chip ok">✓ ${t('dayDone')}</span>` : ''}</div>
-        <p class="hint">${d.final ? (lang === 'ar' ? t('wDayFinalAr') : t('wDayFinal')) : d.nNew ? t('wDayNew', {n: d.nNew}) : t('wDayReview')}</p></li>`).join('')}</ol></section>
+        <p class="hint">${d.final ? (lang === 'ar' ? t('wDayFinalAr') : t('wDayFinal')) : d.nNew ? t(d.nNew === 1 ? 'wDayNew1' : 'wDayNew', {n: d.nNew}) : t('wDayReview')}</p></li>`).join('')}</ol></section>
     <details class="panel"><summary class="label" style="cursor:pointer;min-height:44px;display:flex;align-items:center">${t('wListTitle', {n: list.length})}</summary>
-      <div class="tw" style="margin-top:10px"><table class="vt"><thead><tr><th>${t('term')}</th><th>${t('meaning')}</th><th>${t('wStatus')}</th></tr></thead><tbody>${list.map(w => { const st = wStat(s.id, w); return `<tr><td dir="auto" lang="${lang === 'ar' ? 'ar' : 'en'}" class="${lang === 'ar' ? 'ar-big' : ''}"><b>${esc(w.term)}</b> ${spkBtn(w.term, lang)}</td><td dir="auto">${esc(w.meaning)}${w.filled ? ` <span class="chip plain" title="${esc(t('wFilledTip'))}">${t('wFilled')}</span>` : ''}</td><td>${!st ? `<span class="hint">${t('wNew')}</span>` : st.box >= 2 ? `<span class="chip ok">${t('wKnownTag')}</span>` : st.last !== 'ok' ? `<span class="chip warn">${t('wHardTag')}</span>` : `<span class="chip">${t('wLearning')}</span>`}</td></tr>`; }).join('')}</tbody></table></div></details>
+      <div class="tw" style="margin-top:10px"><table class="vt"><thead><tr><th>${t('term')}</th><th>${t('meaning')}</th><th>${t('wStatus')}</th></tr></thead><tbody>${list.map(w => { const st = wStat(s.id, w); return `<tr><td dir="auto" lang="${lang === 'ar' ? 'ar' : 'en'}" class="${lang === 'ar' ? 'ar-big' : ''}"><b>${esc(w.term)}</b> ${spkBtn(w.term, lang)}</td><td dir="auto">${esc(w.meaning)}${w.filled ? ` <span class="chip plain" title="${esc(t('wFilledTip'))}">${t('wFilled')}</span>` : ''}</td><td>${!st ? `<span class="hint">${t('wNew')}</span>` : wIsKnown(s.id, w) ? `<span class="chip ok">${t('wKnownTag')}</span>` : st.last !== 'ok' ? `<span class="chip warn">${t('wHardTag')}</span>` : `<span class="chip">${t('wLearning')}</span>`}</td></tr>`; }).join('')}</tbody></table></div></details>
   </div>`;
 };
 
@@ -3259,7 +3310,7 @@ function exPromptHtml(x, lang) {
     case 'mcT': case 'typeT': return `<p class="label">${t('xWhatMeans')}</p><div class="row" style="justify-content:center;gap:10px">${big(x.w.term, L)}${spkBtn(x.w.term, L)}</div>`;
     case 'mcW': case 'typeW': return `<p class="label">${t('xWhichWord')}</p>${big(x.w.meaning, 'he')}`;
     case 'spell': return `<p class="label">${t('xSpell')}</p>${big(x.w.meaning, 'he')}`;
-    case 'gapBank': case 'gapMc': case 'gap': return `<p class="label">${x.answers ? t('xGapType') : t('xGapPick')}</p>${sentence(x.sentence)}${x.tr ? `<p class="hint" dir="auto">${esc(x.tr)}</p>` : ''}`;
+    case 'gapBank': case 'gapMc': case 'gap': return `<p class="label">${x.answers ? t('xGapType') : t('xGapPick')}</p>${sentence(x.sentence)}${x.tr && WS && WS.answered ? `<p class="hint" dir="auto">${esc(x.tr)}</p>` : ''}`;
     case 'usage': return `<p class="label">${t('xUsage', {w: x.w.term})}</p>${sentence(x.sentence)}`;
     case 'confuse': return `<p class="label">${t('xConfuse')}</p>${sentence(x.sentence)}`;
     case 'form': return `<p class="label">${t('xForm', {w: x.hintBase || x.w.term})}</p>${sentence(x.sentence)}`;
@@ -3301,8 +3352,9 @@ VIEWS.wsess = () => {
   let fb = '';
   if (a && !quiz) {
     if (x.type === 'translate') fb = `<div class="model-box"><p class="k">${t('modelAnswer')}</p><p dir="ltr" lang="en">${esc(x.model)}</p>${a.self == null ? `<div class="row"><button type="button" class="btn pri" data-act="w-self" data-v="1">${t('iGotIt')}</button><button type="button" class="btn" data-act="w-self" data-v="0">${t('iMissed')}</button></div>` : ''}</div>`;
+    else if (a.res === 'ok' && a.note) fb = `<div class="fb ok">${I.check}<b>${t('correct')}</b><span>${t('xHeNote')} <b dir="auto">${esc(a.note)}</b></span></div>`;
     else if (a.res === 'ok') fb = `<div class="fb ok">${I.check}<b>${t('correct')}</b>${x.type === 'mcT' || x.type === 'typeT' ? '' : `<span dir="auto">${esc(x.w.term)} = ${esc(x.w.meaning)}</span>`}</div>`;
-    else if (a.res === 'spell') fb = `<div class="fb almost"><b>${t('xAlmost')}</b><span>${t('xSpellSlip')} ${diffHtml(a.given, a.near || exRightText(x))}</span></div>`;
+    else if (a.res === 'spell') fb = `<div class="fb almost"><b>${t('xAlmost')}</b><span>${a.form ? t('xWrongForm') : t('xSpellSlip')} ${diffHtml(a.given, a.near || exRightText(x))}</span></div>`;
     else if (x.type !== 'match') fb = `<div class="fb bad">${I.x}<b>${t('wrong')}</b><span>${t('rightAnswer')}: <b dir="auto">${esc(exRightText(x))}</b>${x.why ? ` · ${esc(x.why)}` : ''}${a.trap ? ` · ${esc(a.trap)}` : ''}</span></div>`;
   }
   const next = a && (x.type !== 'translate' || a.self != null || quiz) ? `<button type="button" class="btn pri big" data-act="w-next" id="wNext" data-autofocus>${WS.pos + 1 >= WS.items.length ? t('wFinish') : t('cont')}</button>` : '';
@@ -3336,6 +3388,7 @@ function wAnswer(res, given, extra) {
     if (res !== 'ok' && WS.kind !== 'quiz' && !WS.requeued.has(x.key)) { WS.requeued.add(x.key); const again = exFor(WS.sid, x.w, WS.level, WS.items.length, x.type); if (again) WS.items.push(again); }
   }
   save(); render(false);
+  setTimeout(() => { const n = $('#wNext'); if (n) n.focus({preventScroll: true}); }, 0);
   if (WS.kind === 'quiz' && (x.type !== 'translate')) setTimeout(() => { if (WS && WS.answered) wNext(); }, 350);
 }
 function wNext() {
@@ -3347,8 +3400,10 @@ function wNext() {
 function wSubmit() {
   const el = $('#wIn'), x = WS && WS.items[WS.pos]; if (!el || !x || WS.answered) return;
   const given = el.value.trim(); if (!given) { el.focus(); return; }
-  const j = wJudge(given, x.answers);
-  wAnswer(j.res, given, {near: j.near});
+  const others = wordsOf(WS.sid).filter(w => wkey(w.term) !== x.key).map(w => w.term);
+  const j = wJudge(given, x.answers, x.type === 'typeT' ? null : others);
+  if (!j) { el.focus(); return; }
+  wAnswer(j.res === 'form' ? 'spell' : j.res, given, {near: j.near, note: j.note, form: j.res === 'form'});
 }
 
 /* ---------- dictation: the site says the word, the student writes it on paper with its translation, then marks it ---------- */
@@ -3357,7 +3412,7 @@ const DICT = {basic: {rate: 0.7, plays: 99}, medium: {rate: 0.85, plays: 2}, har
 function openDict(sid, list) {
   const ws = wstate(sid), lang = wordLang(sid) === 'ar' ? 'ar' : 'en', p = wPlan(sid);
   const words = list || (p.final ? wordsOf(sid) : todayWords(sid).length >= 5 ? todayWords(sid) : wordsOf(sid));
-  WD = {sid, lang, level: ws.level, words: shuffle(words), pos: 0, stage: 'setup', reveal: 'end', plays: {}, marks: {}, mode: voiceFor(lang) ? 'audio' : 'reverse', scope: list ? 'hard' : (words.length === wordsOf(sid).length ? 'all' : 'today'), shown: false};
+  WD = {sid, lang, level: ws.level, words: shuffle(words), hardList: list || [], pos: 0, stage: 'setup', reveal: 'end', plays: {}, marks: {}, mode: voiceFor(lang) ? 'audio' : 'reverse', scope: list ? 'hard' : (words.length === wordsOf(sid).length ? 'all' : 'today'), shown: false};
   go({name: 'dict', id: sid});
 }
 function dictPlay() {
@@ -3385,9 +3440,9 @@ VIEWS.dict = () => {
       <h1 tabindex="-1">${t('dReady', {n: WD.words.length})}</h1>
       <p class="lead">${WD.mode === 'audio' ? (L === 'ar' ? t('dHowAr') : t('dHow')) : t('dHowReverse')}</p>
       ${hasVoice ? '' : `<p class="msg" role="status">${L === 'ar' ? t('dNoVoiceAr') : t('dNoVoice')}</p>`}
-      <div class="stack" style="gap:8px"><p class="label">${t('dWhich')}</p><div class="row" role="radiogroup">${['today', 'all'].map(v => `<button type="button" class="btn ${WD.scope === v ? 'pri' : ''}" role="radio" aria-checked="${WD.scope === v}" data-act="dict-scope" data-v="${v}">${v === 'today' ? t('dToday', {n: todayWords(s.id).length}) : t('dAll', {n: wordsOf(s.id).length})}</button>`).join('')}</div></div>
+      <div class="stack" style="gap:8px"><p class="label">${t('dWhich')}</p><div class="row" role="radiogroup">${[WD.scope === 'hard' ? 'hard' : null, todayWords(s.id).length ? 'today' : null, 'all'].filter(Boolean).map(v => `<button type="button" class="btn ${WD.scope === v ? 'pri' : ''}" role="radio" aria-checked="${WD.scope === v}" data-act="dict-scope" data-v="${v}">${v === 'hard' ? t('dMistakes', {n: WD.hardList.length}) : v === 'today' ? t('dToday', {n: todayWords(s.id).length}) : t('dAll', {n: wordsOf(s.id).length})}</button>`).join('')}</div></div>
       <div class="stack" style="gap:8px"><p class="label">${t('dWhen')}</p><div class="row" role="radiogroup">${['each', 'end'].map(v => `<button type="button" class="btn ${WD.reveal === v ? 'pri' : ''}" role="radio" aria-checked="${WD.reveal === v}" data-act="dict-reveal" data-v="${v}">${t('dReveal_' + v)}</button>`).join('')}</div></div>
-      ${hasVoice ? `<div class="row" role="radiogroup">${['audio', 'reverse'].map(v => `<button type="button" class="btn ${WD.mode === v ? 'pri' : ''}" role="radio" aria-checked="${WD.mode === v}" data-act="dict-mode" data-v="${v}">${t('dMode_' + v)}</button>`).join('')}</div>` : ''}
+      ${hasVoice ? `<div class="row" role="radiogroup" aria-label="${esc(t('dHowLbl'))}">${['audio', 'reverse'].map(v => `<button type="button" class="btn ${WD.mode === v ? 'pri' : ''}" role="radio" aria-checked="${WD.mode === v}" data-act="dict-mode" data-v="${v}">${t('dMode_' + v)}</button>`).join('')}</div>` : ''}
       <p class="hint">${t('dLevelNote_' + WD.level)}</p>
       <button type="button" class="btn pri big wide" data-act="dict-start" id="dStart" data-autofocus>${t('dStart')}</button></div></div>`;
   }
@@ -3462,6 +3517,70 @@ async function downloadWordQuiz() {
   catch (e) { const c = e && e.code; if (c === 'declined') return; toast(c === 'extension_not_enabled' || c === 'rejected_extension' ? t('noDocx') : t('wordFail')); }
 }
 
+
+/* ---------- ask a question: a patient tutor that answers from the student's material ---------- */
+function askPrompt(sid, history, q) {
+  const plan = subjectPlan(sid), s = subj(sid);
+  const past = history.slice(-4).map(x => `Student: ${x.q}\nTutor: ${x.a}`).join('\n\n');
+  return `You are a patient, excellent private tutor for ${AUDIENCE} who is preparing for a test in "${s ? s.name : plan.subject}". The student's study material is below. The student asks you something that is not clear to them.
+
+How to answer:
+- Answer in the language the student wrote in (usually Hebrew), addressing the student in the masculine, in simple words.
+- Start with the direct answer in 1 or 2 sentences. Then explain step by step, with one short, concrete example (in math, a fully solved example with every step on its own line; in a language, an example sentence; in history or Bible, the relevant event, verse or name from the material).
+- Base the answer on the material: when the material says it, say so and use its terms, names and numbers exactly. When the question goes beyond the material, answer correctly and briefly and say that this part is not in the material.
+- End with one line starting "**לזכור למבחן:**" (or "**For the test:**" in English) with the single most important point.
+- Never invent facts, quotes or numbers. If you are not sure, say so.
+- Keep it under about 250 words unless the student asks for more. Use short paragraphs or bullets; **bold** only for key terms. Write math in LaTeX between single dollar signs, for example $3x + 5 = 20$.
+- "followups": 2 or 3 short follow-up questions the student might want to ask next, in the student's language.
+${past ? `\nEarlier in this conversation:\n${past}\n` : ''}
+The student's question: ${q}
+
+Reply with JSON only: {"answer":"","followups":["",""]}
+
+<material>
+${subjectText(sid, 30000)}
+</material>`;
+}
+let ASK = null;
+const asksOf = sid => (S.asks[sid] = S.asks[sid] || []);
+async function askQuestion(sid, q) {
+  q = clip(q, 600); if (!q || (ASK && ASK.busy)) return;
+  ASK = {sid, busy: true, err: null, pending: q, ctl: new AbortController()};
+  const ctl = ASK.ctl;
+  render(false); scrollAskEnd();
+  try {
+    if (!(await getSample())) throw {code: 'unavailable'};
+    const d = await askJson(askPrompt(sid, asksOf(sid), q), {modelTier: 'default', cache: false, signal: ctl.signal});
+    const answer = String((d && d.answer) || '').replace(/\r/g, '').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim().slice(0, 4000); if (!answer) throw {code: 'invalid_json'};
+    asksOf(sid).push({q, a: answer, followups: arr(d.followups, 3, 160), at: Date.now()});
+    if (asksOf(sid).length > 40) asksOf(sid).splice(0, asksOf(sid).length - 40);
+    save();
+    if (ASK.ctl === ctl) ASK = {sid, busy: false, err: null};
+  } catch (e) { if (ASK && ASK.ctl === ctl) ASK = {sid, busy: false, err: (e && e.code) === 'cancelled' ? null : ((e && e.code) || 'upstream_error'), draft: q}; }
+  if (route.name === 'ask') { render(false); scrollAskEnd(); }
+}
+function scrollAskEnd() { setTimeout(() => { const el = $('#askEnd'); if (el) el.scrollIntoView({block: 'end', behavior: reduced() ? 'auto' : 'smooth'}); }, 30); }
+function askAbout(sid, q) { ASK = {sid, busy: false, err: null, draft: q}; go({name: 'ask', id: sid}); setTimeout(() => { const ta = $('#askIn'); if (ta) { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); } }, 60); }
+VIEWS.ask = () => {
+  const s = subj(route.id);
+  if (!s) { route = {name: 'home'}; return VIEWS.home(); }
+  if (!ASK || ASK.sid !== s.id) ASK = {sid: s.id, busy: false, err: null};
+  ensureKatex();
+  const list = asksOf(s.id), textDir = x => { const he = (x.match(/[\u0590-\u05FF\u0600-\u06FF]/g) || []).length, la = (x.match(/[A-Za-z]/g) || []).length; return he >= la / 2 ? 'rtl' : 'ltr'; };
+  const bubble = (x, i) => `<div class="qa"><p class="q-b" dir="auto">${esc(x.q)}</p><div class="a-b" dir="${textDir(x.a)}">${md(x.a, rich)}</div>
+    ${i === list.length - 1 && x.followups && x.followups.length && !ASK.busy ? `<div class="chips">${x.followups.map(f => `<button type="button" class="chip as-btn" data-act="ask-follow" data-q="${esc(f)}" dir="auto">${esc(f)}</button>`).join('')}</div>` : ''}</div>`;
+  return `<div class="stack ask">
+    <div>${backBtn(s.name)}</div>
+    <div class="stack" style="gap:6px"><h1 tabindex="-1">${t('askTitle')}</h1><p class="lead">${t('askLead')}</p></div>
+    ${list.length ? `<div class="stack" style="gap:18px">${list.map(bubble).join('')}</div>` : `<div class="panel stack" style="gap:8px"><p class="label">${t('askExamples')}</p><div class="chips">${[t('askEx1'), t('askEx2'), t('askEx3')].map(f => `<button type="button" class="chip as-btn" data-act="ask-follow" data-q="${esc(f)}">${esc(f)}</button>`).join('')}</div></div>`}
+    ${ASK.busy ? `<div class="qa"><p class="q-b" dir="auto">${esc(ASK.pending)}</p><div class="a-b row" style="gap:10px" aria-live="polite"><span class="spin"></span>${t('askThinking')}<button type="button" class="btn ghost" data-act="ask-stop">${t('stop')}</button></div></div>` : ''}
+    ${ASK.err ? `<p class="msg" role="alert">${errText(ASK.err)}</p>` : ''}
+    <form id="askForm" class="ask-form" novalidate><textarea class="input" id="askIn" dir="auto" rows="3" maxlength="600" placeholder="${esc(t('askPlaceholder'))}" aria-label="${esc(t('askTitle'))}" ${ASK.busy ? 'disabled' : ''}>${esc(ASK.draft || '')}</textarea>
+      <div class="row" style="justify-content:space-between"><button type="submit" class="btn pri big" id="askSend" ${ASK.busy ? 'disabled' : ''}>${t('askSend')}</button>${list.length ? `<button type="button" class="btn ghost" data-act="ask-clear">${t('askClear')}</button>` : ''}</div></form>
+    <span id="askEnd"></span>
+  </div>`;
+};
+const askBtnHtml = (sid, q) => `<div class="ask-cta"><span>${t('askCta')}</span><button type="button" class="btn" data-act="ask-about" data-id="${sid}" data-q="${esc(q || '')}">${I.chat}<span>${t('askTitle')}</span></button></div>`;
 /* ---------- Word file (.docx), written by hand: a ZIP of a few XML files ---------- */
 const CRC_T = (() => { const tb = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; tb[n] = c >>> 0; } return tb; })();
 function crc32(b) { let c = 0xFFFFFFFF; for (let i = 0; i < b.length; i++) c = CRC_T[(c ^ b[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
@@ -3597,7 +3716,7 @@ function deleteSubject(id) {
     S.subjects = S.subjects.filter(x => x.id !== id);
     S.materials = S.materials.filter(x => x.subjectId !== id);
     S.cards = S.cards.filter(x => x.subjectId !== id);
-    delete S.quizzes[id]; delete S.summaries[id]; delete S.exams[id]; delete S.checks[id]; ['attempts', 'review', 'planDone', 'examRuns', 'topicSets', 'words'].forEach(k => delete S[k][id]);
+    delete S.quizzes[id]; delete S.summaries[id]; delete S.exams[id]; delete S.checks[id]; ['attempts', 'review', 'planDone', 'examRuns', 'topicSets', 'words', 'asks'].forEach(k => delete S[k][id]);
     Object.keys(jobs).forEach(k => { if (jobs[k].sid === id) delete jobs[k]; });
     save(); go({name: 'home'});
   }});
@@ -3937,6 +4056,10 @@ const ACT = {
   copy: () => copySummary(),
   'save-file': () => saveSummaryFile(),
   words: el => go({name: 'words', id: el.dataset.id}),
+  'ask-about': el => askAbout(el.dataset.id || route.id, el.dataset.q || ''),
+  'ask-follow': el => askQuestion(route.id, el.dataset.q),
+  'ask-stop': () => { if (ASK && ASK.ctl) ASK.ctl.abort(); ASK = {sid: route.id, busy: false, err: null, draft: ASK && ASK.pending}; render(false); },
+  'ask-clear': () => ask({title: t('askClearQ'), ok: t('askClear'), danger: true, onOk: () => { S.asks[route.id] = []; save(); render(false); }}),
   'w-level': el => { wstate(route.id).level = el.dataset.v; if (WGEN && !WGEN.running) WGEN = null; save(); render(false); },
   'w-regen': () => { WGEN = null; makeDrills(route.id, wstate(route.id).level); },
   'w-today': () => startSession(route.id, 'today'),
@@ -3953,7 +4076,7 @@ const ACT = {
   'w-next': () => wNext(),
   speak: el => { speak(el.dataset.t, el.dataset.l, 0.85); },
   'dict-open': () => openDict(route.id),
-  'dict-scope': el => { const sid = WD.sid; WD.scope = el.dataset.v; WD.words = shuffle(el.dataset.v === 'all' ? wordsOf(sid) : todayWords(sid).length ? todayWords(sid) : wordsOf(sid)); render(false); },
+  'dict-scope': el => { const sid = WD.sid; WD.scope = el.dataset.v; WD.words = shuffle(el.dataset.v === 'hard' ? WD.hardList : el.dataset.v === 'all' ? wordsOf(sid) : todayWords(sid).length ? todayWords(sid) : wordsOf(sid)); render(false); },
   'dict-reveal': el => { WD.reveal = el.dataset.v; render(false); },
   'dict-mode': el => { WD.mode = el.dataset.v; render(false); },
   'dict-start': () => { WD.stage = 'play'; WD.pos = 0; WD.shown = false; render(true); setTimeout(dictPlay, 250); },
@@ -4000,11 +4123,13 @@ document.addEventListener('submit', e => {
   if (e.target.id === 'fillForm') { e.preventDefault(); submitFill(); }
   else if (e.target.id === 'openForm') { e.preventDefault(); submitOpen(); }
   else if (e.target.dataset.pform) { e.preventDefault(); submitPractice(e.target.dataset.pform); }
-  else if (e.target.id === 'wForm') { e.preventDefault(); wSubmit(); }
+  else if (e.target.id === 'wForm') { e.preventDefault(); if (WS && WS.answered) wNext(); else wSubmit(); }
+  else if (e.target.id === 'askForm') { e.preventDefault(); const v = ($('#askIn') || {}).value || ''; if (v.trim()) { ASK.draft = ''; askQuestion(route.id, v.trim()); } else $('#askIn').focus(); }
 });
 document.addEventListener('input', e => {
   const el = e.target;
-  if (el.id === 'wIn' && WS && !WS.answered) WS.draft = el.value;
+  if (el.id === 'askIn' && ASK) ASK.draft = el.value;
+  else if (el.id === 'wIn' && WS && !WS.answered) WS.draft = el.value;
   else if (el.id && el.id.startsWith('pin-')) (PS[el.id.slice(4)] = PS[el.id.slice(4)] || {}).draft = el.value;
   else if (el.id && el.id.startsWith('pta-')) (PS[el.id.slice(4)] = PS[el.id.slice(4)] || {}).draft = el.value;
   else if (el.dataset.mk) { const run = S.examRuns[route.id]; if (run && !run.finished) { run.ans[el.dataset.mk] = el.value; save(); } }
@@ -4021,6 +4146,7 @@ document.addEventListener('toggle', e => {
   if (d.open) openTopics.add(d.dataset.tid); else openTopics.delete(d.dataset.tid);
 }, true);
 document.addEventListener('keydown', e => {
+  if (e.target && e.target.id === 'askIn' && e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); const f = $('#askForm'); if (f) f.requestSubmit ? f.requestSubmit() : f.dispatchEvent(new Event('submit', {cancelable: true})); return; }
   if (e.defaultPrevented || e.ctrlKey || e.metaKey || e.altKey || $('#dlg').open) return;
   const tag = (e.target.tagName || '').toLowerCase();
   const typing = tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable;
@@ -4037,6 +4163,7 @@ document.addEventListener('keydown', e => {
   }
   if (['wsess', 'wquiz'].includes(route.name) && WS && !WS.done) {
     const x = WS.items[WS.pos];
+    if (!WS.answered && x && x.type === 'usage' && /^[12]$/.test(e.key)) { e.preventDefault(); ACT['w-tf']({dataset: {v: String(e.key === '1')}}); return; }
     if (!WS.answered && x && x.options && /^[1-5]$/.test(e.key) && Number(e.key) <= x.options.length) { e.preventDefault(); ACT['w-pick']({dataset: {i: String(Number(e.key) - 1)}}); return; }
     if (WS.answered && e.key === 'Enter' && $('#wNext')) { e.preventDefault(); wNext(); return; }
   }
