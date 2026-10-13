@@ -564,6 +564,7 @@ mark.dif-ok{background:var(--ok-soft);color:var(--ok);border-radius:4px;padding:
 @media print{.ask-cta{display:none}}
 
 .diff{unicode-bidi:isolate;display:inline-block}
+.form-hint:not(:empty){font-size:15px;font-weight:600;color:var(--warn);background:var(--warn-soft);border-radius:12px;padding:10px 14px}
 /* Dialog, toast */
 dialog{border:0;border-radius:24px;padding:24px;background:var(--card);color:var(--ink);width:min(440px,calc(100% - 32px));box-shadow:0 24px 64px rgba(0,0,0,.25)}
 dialog::backdrop{background:var(--scrim)}
@@ -623,7 +624,7 @@ dialog .field{margin-bottom:16px}
 /* ---------- constants ---------- */
 const KEY = 'studystudio.v1';
 const INTERVAL = {1: 0, 2: 1, 3: 3, 4: 7};
-const MAX_MATERIAL = 40000, CHUNK = 8000, MIN_CHARS = 200, MAX_MATERIALS = 20, MAX_CARDS_PER_MATERIAL = 200, ROUND = 20, SHEET_INPUT = 60000;
+const MAX_MATERIAL = 40000, CHUNK = 8000, MIN_CHARS = 15, MAX_MATERIALS = 20, MAX_CARDS_PER_MATERIAL = 200, ROUND = 20, SHEET_INPUT = 60000;
 const PDFJS = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/';
 const OFF_CODES = new Set(['unavailable', 'not_granted', 'sampling_disabled', 'not_declared', 'capability_disabled', 'capability_removed']);
 
@@ -647,7 +648,7 @@ he: {
   examDate: 'תאריך מבחן', optional: 'לא חובה', title: 'כותרת', titlePh: 'נלקחת מהשורה הראשונה',
   material: 'החומר שלך', materialPh: 'הדבק כאן סיכום, פרק, רשימת מילים או דף מהמורה…',
   upload: 'העלאת PDF או ‎.txt', dropHint: 'או גרור קובץ אל התיבה',
-  chars: '{n} תווים', need: 'הוסף עוד {n} תווים לפחות', tooLong: 'רק 40,000 התווים הראשונים ישמשו.',
+  chars: '{n} תווים', need: 'צריך עוד קצת חומר כדי להתחיל (לפחות {n} תווים נוספים).', tooLong: 'רק 40,000 התווים הראשונים ישמשו.',
   maxMats: 'בנושא הזה כבר יש 20 חומרים, המקסימום. מחק אחד קודם.', needName: 'תן שם לנושא.',
   build: 'בניית ערכת הלמידה', aiNote: 'משתמש בחשבון Claude שלך. בפעם הראשונה Claude יבקש את אישורך.',
   readingFile: 'קורא את {name}…', scan: 'נראה שה-PDF הזה סרוק. הדבק את הטקסט או העלה PDF עם טקסט.',
@@ -657,7 +658,7 @@ he: {
   cardsMade: '{n} כרטיסיות מוכנות', startNow: 'להתחיל עכשיו',
   buildHint: 'זה לוקח בערך דקה או שתיים, כי Claude גם בודק כל כרטיסייה. אפשר להתחיל ברגע ש-5 כרטיסיות מוכנות.',
   ready: 'ערכת הלמידה מוכנה', openSubject: 'לפתוח את הנושא', startCards: 'להתחיל כרטיסיות',
-  aiOff: 'ה-AI כבוי. החומר שלך נשמר.', retry: 'לנסות שוב',
+  aiOff: 'אין חיבור ל-Claude, אז הבנייה לא יכולה להתחיל. החומר שלך נשמר. לחץ „לנסות שוב” ואשר את הבקשה של Claude אם היא מופיעה. אם זה לא עוזר, פתח את הקישור באתר claude.ai או באפליקציה של Claude כשאתה מחובר לחשבון.', retry: 'לנסות שוב',
   err_busy: 'Claude עמוס כרגע. חכה דקה ואז לחץ „לנסות שוב”.',
   err_refused: 'Claude לא הסכים לעבוד עם החומר הזה. נסה חומר אחר.',
   err_read: 'לא הצלחנו לקרוא את התשובה של Claude. לחץ „לנסות שוב”.',
@@ -757,7 +758,7 @@ en: {
   examDate: 'Exam date', optional: 'optional', title: 'Title', titlePh: 'Taken from the first line',
   material: 'Your material', materialPh: 'Paste notes, a chapter, a word list or a sheet from your teacher…',
   upload: 'Upload PDF or .txt', dropHint: 'or drop a file on the box',
-  chars: '{n} characters', need: 'Add at least {n} more characters', tooLong: 'Only the first 40,000 characters will be used.',
+  chars: '{n} characters', need: 'A little more material is needed to start (at least {n} more characters).', tooLong: 'Only the first 40,000 characters will be used.',
   maxMats: 'This subject already has 20 materials, the most allowed. Delete one first.', needName: 'Give the subject a name.',
   build: 'Build my study set', aiNote: 'Uses your own Claude account. Claude asks for your permission the first time.',
   readingFile: 'Reading {name}…', scan: 'This PDF looks like a scan. Paste the text or upload a text-based PDF.',
@@ -767,7 +768,7 @@ en: {
   cardsMade: '{n} flashcards ready', startNow: 'Start now',
   buildHint: 'This takes a minute or two, because Claude also checks every card. You can start as soon as 5 cards are ready.',
   ready: 'Your study set is ready', openSubject: 'Open subject', startCards: 'Start flashcards',
-  aiOff: 'AI is off. Your material is saved.', retry: 'Retry',
+  aiOff: 'There is no connection to Claude, so the build cannot start. Your material is saved. Tap Retry and approve Claude’s request if it appears. If that does not help, open the link on claude.ai or in the Claude app while signed in.', retry: 'Retry',
   err_busy: 'Claude is busy right now. Wait a minute, then tap Retry.',
   err_refused: 'Claude would not work with this material. Try different material.',
   err_read: 'Claude’s answer could not be read. Tap Retry.',
@@ -1920,7 +1921,7 @@ function addForm() {
         <input type="file" id="f-file" accept=".pdf,.txt,application/pdf,text/plain" hidden>
       </div>
       ${msg}
-      <p class="hint" id="formHint" aria-live="polite">${formHint(len, full)}</p>
+      <p class="hint form-hint" id="formHint" aria-live="polite">${formHint(len, full)}</p>
       <div class="row">
         <button type="submit" class="btn pri big" id="buildBtn" ${len < MIN_CHARS || full || fileBusy ? 'disabled' : ''}>${t('build')}</button>
       </div>
