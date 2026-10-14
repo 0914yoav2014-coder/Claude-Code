@@ -1,7 +1,7 @@
 <title>Your AI Study Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Heebo:wght@400;500;700;800&family=Noto+Naskh+Arabic:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Heebo:wght@400;500;700;800&family=Noto+Naskh+Arabic:wght@400;600&family=Frank+Ruhl+Libre:wght@500;700&display=swap">
 <style>
 /* Layout: slim sticky header over one centered study column (max 880px). Each screen has one main action. */
 :root{
@@ -34,6 +34,13 @@
   --acc:#A5A1F7;--soft:#2A2C52;--btn:#5B55DB;--on-btn:#FFFFFF;--hover:#24273C;
   --ok:#6FD9A8;--ok-soft:#163528;--bad:#F28B82;--bad-soft:#3A1E22;--on-bad:#1E2033;--warn:#F0A15A;--warn-soft:#3A2814;--gold:#E9B949;--gold-soft:#352C14;
   --scrim:rgba(0,0,0,.6);color-scheme:dark}
+/* Design: "luxury" (chosen by the student): ivory, deep navy and gold */
+:root{--bg:#FBF8F2;--card:#FFFFFF;--line:#E8E0D0;--ink:#1B2236;--mut:#5F6475;--acc:#1F3A68;--soft:#EEF1F7;--btn:#1B2236;--on-btn:#F6E7C1;--hover:#F4EFE5;--ok:#2F6B4F;--ok-soft:#E7F1EA;--bad:#9E2A2B;--bad-soft:#F7E6E4;--warn:#8A5A12;--warn-soft:#F8EEDB;--gold:#7A5C18;--gold-soft:#F6EED9;--g1:#1B2236;--g2:#2C3A5E;--g3:#B08D3C;--t1:#1B2236;--t2:#1B2236;--t3:#1B2236;--t4:#1B2236;--t5:#1B2236;--on-tile:#E2C27A;--blob1:#F5EDDD;--blob2:#EDF0F6;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F121C;--card:#181C2A;--line:#2C3246;--ink:#F2EEE6;--mut:#B2AFA6;--acc:#E2C27A;--soft:#262B3D;--btn:#E2C27A;--on-btn:#10131D;--hover:#1E2333;--ok:#8ED1A8;--ok-soft:#18301F;--bad:#F19A92;--bad-soft:#3A1E1E;--warn:#F0C070;--warn-soft:#33281A;--gold:#E2C27A;--gold-soft:#2E2817;--g1:#E2C27A;--g2:#C9A65A;--g3:#E2C27A;--t1:#262B3D;--t2:#262B3D;--t3:#262B3D;--t4:#262B3D;--t5:#262B3D;--on-tile:#E2C27A;--blob1:#1A1E2C;--blob2:#221F18;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0F121C;--card:#181C2A;--line:#2C3246;--ink:#F2EEE6;--mut:#B2AFA6;--acc:#E2C27A;--soft:#262B3D;--btn:#E2C27A;--on-btn:#10131D;--hover:#1E2333;--ok:#8ED1A8;--ok-soft:#18301F;--bad:#F19A92;--bad-soft:#3A1E1E;--warn:#F0C070;--warn-soft:#33281A;--gold:#E2C27A;--gold-soft:#2E2817;--g1:#E2C27A;--g2:#C9A65A;--g3:#E2C27A;--t1:#262B3D;--t2:#262B3D;--t3:#262B3D;--t4:#262B3D;--t5:#262B3D;--on-tile:#E2C27A;--blob1:#1A1E2C;--blob2:#221F18;color-scheme:dark}
+:root[data-mode="light"]{--bg:#FBF8F2;--card:#FFFFFF;--line:#E8E0D0;--ink:#1B2236;--mut:#5F6475;--acc:#1F3A68;--soft:#EEF1F7;--btn:#1B2236;--on-btn:#F6E7C1;--hover:#F4EFE5;--ok:#2F6B4F;--ok-soft:#E7F1EA;--bad:#9E2A2B;--bad-soft:#F7E6E4;--warn:#8A5A12;--warn-soft:#F8EEDB;--gold:#7A5C18;--gold-soft:#F6EED9;--g1:#1B2236;--g2:#2C3A5E;--g3:#B08D3C;--t1:#1B2236;--t2:#1B2236;--t3:#1B2236;--t4:#1B2236;--t5:#1B2236;--on-tile:#E2C27A;--blob1:#F5EDDD;--blob2:#EDF0F6;color-scheme:light}
+:root[data-mode="dark"]{--bg:#0F121C;--card:#181C2A;--line:#2C3246;--ink:#F2EEE6;--mut:#B2AFA6;--acc:#E2C27A;--soft:#262B3D;--btn:#E2C27A;--on-btn:#10131D;--hover:#1E2333;--ok:#8ED1A8;--ok-soft:#18301F;--bad:#F19A92;--bad-soft:#3A1E1E;--warn:#F0C070;--warn-soft:#33281A;--gold:#E2C27A;--gold-soft:#2E2817;--g1:#E2C27A;--g2:#C9A65A;--g3:#E2C27A;--t1:#262B3D;--t2:#262B3D;--t3:#262B3D;--t4:#262B3D;--t5:#262B3D;--on-tile:#E2C27A;--blob1:#1A1E2C;--blob2:#221F18;color-scheme:dark}
+
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -587,6 +594,42 @@ dialog:has(.cal){width:min(400px,calc(100% - 24px))}
 .lvl-sm .lvl-btn span{font-size:13px}
 .tool>.btn{align-self:flex-start}
 @media (max-width:560px){.tool>.btn{align-self:stretch}.lvl-row.lvl-sm{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.lvl-sm .lvl-btn{min-height:48px;align-items:center;justify-content:center;padding:8px}.lvl-sm .lvl-btn span{display:none}}
+
+/* luxury decoration: soft light behind the page, a thin gold rule, serif headings */
+:root{--shadow:0 1px 2px color-mix(in srgb,var(--ink) 6%,transparent),0 10px 28px -12px color-mix(in srgb,var(--g2) 28%,transparent)}
+:root body{background:radial-gradient(900px 520px at 0% -8%,var(--blob1),transparent 70%),radial-gradient(820px 520px at 100% 4%,var(--blob2),transparent 70%),var(--bg);background-attachment:fixed}
+:root .top{background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:0}
+:root .top::after{content:"";position:absolute;inset:auto 0 0 0;height:3px;background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3))}
+:root .logo,:root .btn.pri,:root .tile.hot,:root .play-big,:root .part-h .pn,:root .q-b,:root .cal-day.sel{background:linear-gradient(135deg,var(--g1),var(--g2));border-color:transparent;color:var(--on-btn)}
+:root .btn.pri:hover{filter:brightness(1.07);background:linear-gradient(135deg,var(--g1),var(--g2))}
+:root .tile.hot .meta{color:var(--on-btn)}
+:root :is(.panel,.subj,.tile:not(.hot),.choice,.chap,.topic,.tool,.formulas,.must,.doc,.face,.opt,.lvl-btn,.dict-list>li,.a-b){box-shadow:var(--shadow)}
+:root :is(.panel,.subj,.tile,.choice,.chap,.topic,.face){border-radius:24px}
+:root #tileCards:not(.hot) .ic{background:var(--t1);color:var(--on-tile)}
+:root #tileQuiz:not(.hot) .ic,:root .tool:nth-of-type(1) .ic{background:var(--t2);color:var(--on-tile)}
+:root #tileSum:not(.hot) .ic,:root .tool:nth-of-type(2) .ic{background:var(--t3);color:var(--on-tile)}
+:root #tileWords:not(.hot) .ic,:root .tool:nth-of-type(3) .ic,:root .words .choice:nth-child(1) .ic{background:var(--t4);color:var(--on-tile)}
+:root .words .choice:nth-child(2) .ic{background:var(--t2);color:var(--on-tile)}
+:root .words .choice:nth-child(3) .ic{background:var(--t1);color:var(--on-tile)}
+:root .words .choice:nth-child(4) .ic{background:var(--t3);color:var(--on-tile)}
+:root .subj{border-top:6px solid var(--t1)}
+:root .subjects>li:nth-child(5n+2){border-top-color:var(--t2)}
+:root .subjects>li:nth-child(5n+3){border-top-color:var(--t3)}
+:root .subjects>li:nth-child(5n+4){border-top-color:var(--t4)}
+:root .subjects>li:nth-child(5n+5){border-top-color:var(--t5)}
+:root .ask-cta{background:linear-gradient(100deg,color-mix(in srgb,var(--t5) 16%,var(--card)),color-mix(in srgb,var(--t1) 12%,var(--card)))}
+:root .bar>span{background:linear-gradient(90deg,var(--g1),var(--g2))}
+:root .bar.ok>span{background:linear-gradient(90deg,var(--ok),color-mix(in srgb,var(--ok) 60%,var(--g3)))}
+:root .chap-h{border-image:linear-gradient(90deg,var(--g1),var(--g2),var(--g3)) 1}
+/* luxury: a serif face for headings, thin gold rules, quiet surfaces */
+:root :is(h1,h2,h3,.brand-name,.tile b,.subj-name,.chap-h){font-family:'Frank Ruhl Libre','David Libre',Georgia,serif;letter-spacing:0}
+:root h1{font-weight:700;font-size:44px}
+:root .top::after{height:1px;background:linear-gradient(90deg,transparent,var(--g3),transparent)}
+:root .subj{border-top:1px solid var(--g3)}
+:root :is(.panel,.subj,.tile:not(.hot),.choice,.chap,.topic,.tool){border-color:color-mix(in srgb,var(--g3) 30%,var(--line))}
+:root .tile .ic{border:1px solid color-mix(in srgb,var(--g3) 60%,transparent)}
+@media (max-width:760px){:root h1{font-size:34px}}
+@media print{:root body{background:#fff}:root .top::after{display:none}}
 
 /* Dialog, toast */
 dialog{border:0;border-radius:24px;padding:24px;background:var(--card);color:var(--ink);width:min(440px,calc(100% - 32px));box-shadow:0 24px 64px rgba(0,0,0,.25)}
