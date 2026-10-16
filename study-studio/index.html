@@ -1796,13 +1796,14 @@ function makeSheet(sid) {
   return sheetJobs[sid];
 }
 async function makeTopics(sid, signal, fresh) {
+  const level = levelOf(sid, 'topics'); // the level picked when the writing started
   const mats = matsOf(sid); if (!mats.length) return null;
   const plan = subjectPlan(sid), text = subjectText(sid, SHEET_INPUT), groups = sheetGroups(plan);
   const opts = {modelTier: 'default'}; if (signal) opts.signal = signal;
   const results = await Promise.all(groups.map(g => {
-    const key = sid + '|' + levelOf(sid, 'topics') + '|' + g.name + '|' + g.units.map(u => u.title).join('|') + '|' + text.length;
+    const key = sid + '|' + level + '|' + g.name + '|' + g.units.map(u => u.title).join('|') + '|' + text.length;
     if (!fresh && sheetPartCache[key]) return sheetPartCache[key];
-    return askJson(withLevel(sheetPartPrompt(plan, g.name, g.units, text), levelOf(sid, 'topics')), opts).then(cleanSheetPart).then(r => (sheetPartCache[key] = r));
+    return askJson(withLevel(sheetPartPrompt(plan, g.name, g.units, text), level), opts).then(cleanSheetPart).then(r => (sheetPartCache[key] = r));
   }));
   if (!subj(sid)) return null;
   const parts = [];
@@ -1812,7 +1813,7 @@ async function makeTopics(sid, signal, fresh) {
   const must = [], how = [];
   results.forEach(r => { r.must.slice(0, 3).forEach(x => must.push(x)); r.howToCheck.forEach(x => { if (!how.some(h => norm(h) === norm(x))) how.push(x); }); });
   uniqIds(parts.flatMap(p => p.topics)); uniqIds(parts.flatMap(p => p.topics.flatMap(tp => tp.practice)));
-  S.topicSets[sid] = {sheet: {v: 4, title: plan.subject || subj(sid).name, must: must.slice(0, 8), order: parts.map(p => p.name), parts, howToCheck: how.slice(0, 5)}, mids: mats.map(m => m.id), level: levelOf(sid, 'topics'), builtAt: Date.now()};
+  S.topicSets[sid] = {sheet: {v: 4, title: plan.subject || subj(sid).name, must: must.slice(0, 8), order: parts.map(p => p.name), parts, howToCheck: how.slice(0, 5)}, mids: mats.map(m => m.id), level: level, builtAt: Date.now()};
   prunePractice(sid); save();
   return S.topicSets[sid];
 }
@@ -3362,8 +3363,8 @@ function wMark(sid, w, res) {
 }
 function wPlan(sid) {
   const s = subj(sid), td = todayStr(), ws = wstate(sid), list = wordsOf(sid);
-  if (!(s && s.examDate) && daysBetween(ws.start, td) >= 7) ws.start = td; // no date: a new week starts
   const left = s && s.examDate ? daysBetween(td, s.examDate) : null, noDate = left == null || left < 0;
+  if (noDate && !(daysBetween(ws.start, td) < 7)) ws.start = td; // no date (or the test is over): a new week starts
   const daysLeft = noDate ? Math.max(1, 7 - daysBetween(ws.start, td)) : Math.max(1, left);
   const learnDays = daysLeft - 1, unseen = list.filter(w => !wStat(sid, w));
   const final = learnDays < 1;
@@ -4411,7 +4412,7 @@ const ACT = {
   again: () => answerCurrent(false),
   got: () => answerCurrent(true),
   'repeat-missed': () => { startRound(R.sid, [...R.missed]); render(true); },
-  quiz: el => { const sid = el.dataset.id, qz = S.quizzes[sid], same = qz && qz.questions && qz.questions.length && (qz.level || 'medium') === levelOf(sid, 'quiz'); startQuiz(sid, same ? qz.questions.slice() : [], 'full'); go({name: 'quiz', id: sid}); if (!same) newQuiz(); },
+  quiz: el => { const sid = el.dataset.id; if (Q && Q.sid === sid && Q.stage === 'gen') return go({name: 'quiz', id: sid}); const qz = S.quizzes[sid], same = qz && qz.questions && qz.questions.length && (qz.level || 'medium') === levelOf(sid, 'quiz'); startQuiz(sid, same ? qz.questions.slice() : [], 'full'); go({name: 'quiz', id: sid}); if (!same) newQuiz(); },
   practice: el => go({name: 'practice', id: el.dataset.id}),
   exam: el => { if (!(EX && EX.stage === 'gen' && EX.sid === el.dataset.id)) EX = null; go({name: 'exam', id: el.dataset.id}); },
   topics: el => { if (!(TP && TP.stage === 'gen' && TP.sid === el.dataset.id)) TP = null; go({name: 'topics', id: el.dataset.id}); },
