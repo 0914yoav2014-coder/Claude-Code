@@ -662,6 +662,20 @@ dialog .field{margin-bottom:16px}
 @media (max-width:560px){.vt .ex{display:none}.vt{min-width:0}}
 @media (max-width:420px){.brand-name{display:none}.must,.sec-card,.brief{padding:18px}}
 @media (pointer:coarse){.keys{display:none}}
+/* QA pass: one style for chosen options, a light test paper in dark mode, open/close arrows, phone touch sizes */
+.btn.seg{background:var(--card);color:var(--ink);border:2px solid var(--line)}
+.btn.seg.on{border-color:var(--acc);background:var(--soft);color:var(--acc)}
+.paper{--bg:#FBF8F2;--card:#FFFFFF;--line:#E3DDCF;--ink:#1B2236;--mut:#5F6475;--acc:#1F3A68;--soft:#EEF1F7;--btn:#1B2236;--on-btn:#F6E7C1;--hover:#F4EFE5;--ok:#2F6B4F;--ok-soft:#E7F1EA;--bad:#9E2A2B;--bad-soft:#F7E6E4;--warn:#8A5A12;--warn-soft:#F8EEDB;--gold:#7A5C18;--gold-soft:#F6EED9;color-scheme:light}
+.pts-io{display:inline-flex;align-items:center;gap:6px}
+details>summary.label{list-style:none}
+details>summary.label::-webkit-details-marker{display:none}
+details>summary.label::after{content:"▾";margin-inline-start:auto;padding-inline-start:12px;color:var(--mut);font-size:16px}
+details[open]>summary.label::after{content:"▴"}
+.lvl-btn b{overflow-wrap:anywhere}
+:root .subj{border-top:1px solid color-mix(in srgb,var(--g3) 30%,var(--line))}
+@media (min-width:761px){.tiles:has(>:nth-child(4):last-child),.choices:has(>:nth-child(4):last-child){grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.add-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;width:100%}.add-row .pri{grid-column:1/-1}.add-row .btn:not(.pri){font-size:14px;padding-inline:10px}}
+@media (hover:none),(pointer:coarse){.kbd{display:none}.drop-hint{display:none}.chip.as-btn{height:auto;min-height:40px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
@@ -702,7 +716,7 @@ he: {
   appName: 'סטודיו הלמידה שלך', lang: 'שפה', home: 'דף הבית',
   theme: 'ערכת צבעים: {m}. לחץ להחלפה.', themeSystem: 'לפי המערכת', themeLight: 'בהירה', themeDark: 'כהה',
   mySubjects: 'הנושאים שלי', addMaterial: 'הוספת חומר',
-  emptyHome: 'הדבק סיכום, פרק, רשימת מילים או דף מהמורה, וקבל כרטיסיות, בוחן ודף סיכום למבחן.',
+  emptyHome: 'אפשר להדביק סיכום, פרק, רשימת מילים או דף מהמורה, ולקבל כרטיסיות, בוחן ודף סיכום למבחן.',
   tryExample: 'לנסות נושאים לדוגמה', example: 'דוגמה',
   examIn: 'מבחן בעוד {n} ימים', examTomorrow: 'המבחן מחר', examToday: 'המבחן היום', examPassed: 'תאריך המבחן עבר', noExam: 'אין תאריך מבחן',
   knownShort: '{k} מתוך {n} כרטיסיות ידועות טוב', dueToday: '{n} לחזרה היום', building: 'בבנייה…',
@@ -711,7 +725,7 @@ he: {
   dateTitle: 'תאריך מבחן', clearDate: 'בלי תאריך מבחן',
   delSubjectTitle: 'למחוק את הנושא?', delSubjectBody: '„{name}” יימחק יחד עם החומר, הכרטיסיות, הבוחן ודף הסיכום. אי אפשר לבטל את זה.',
   delMatTitle: 'למחוק את החומר?', delMatBody: '„{name}” והכרטיסיות שנוצרו ממנו יימחקו. דף הסיכום ייכתב מחדש בלעדיו.',
-  back: 'חזרה',
+  back: 'חזרה', backSubj: 'חזרה לנושא', dFinish: 'סיום',
   addTitle: 'הוספת חומר', subject: 'נושא', newSubject: 'נושא חדש…', subjectName: 'שם הנושא', subjectPh: 'למשל: אנגלית – Past simple',
   examDate: 'תאריך מבחן', optional: 'לא חובה', title: 'כותרת', titlePh: 'נלקחת מהשורה הראשונה',
   material: 'החומר שלך', materialPh: 'הדבק כאן סיכום, פרק, רשימת מילים או דף מהמורה…',
@@ -721,11 +735,11 @@ he: {
   build: 'בניית ערכת הלמידה', aiNote: 'משתמש בחשבון Claude שלך. בפעם הראשונה Claude יבקש את אישורך.',
   readingFile: 'קורא את {name}…', scan: 'נראה שה-PDF הזה סרוק. הדבק את הטקסט או העלה PDF עם טקסט.',
   pdfFail: 'לא הצלחנו לקרוא את ה-PDF כאן. הדבק את הטקסט או העלה קובץ ‎.txt.', fileType: 'בחר קובץ PDF או ‎.txt.',
-  buildingTitle: 'בונה את ערכת הלמידה',
+  buildingTitle: 'לראות את ההתקדמות',
   stepPlan: 'קורא את החומר ומחליט מה ללמוד', stepCards: 'מכין כרטיסיות', stepCheck: 'בודק שהכרטיסיות על החומר עצמו', stepQuiz: 'כותב בוחן', stepSheet: 'כותב דף סיכום למבחן',
   cardsMade: '{n} כרטיסיות מוכנות', startNow: 'להתחיל עכשיו',
   buildHint: 'זה לוקח בערך דקה או שתיים, כי Claude גם בודק כל כרטיסייה. אפשר להתחיל ברגע ש-5 כרטיסיות מוכנות.',
-  ready: 'ערכת הלמידה מוכנה', openSubject: 'לפתוח את הנושא', startCards: 'להתחיל כרטיסיות',
+  ready: 'ערכת הלמידה מוכנה', openSubject: 'לפתוח את הנושא', startCards: 'להתחיל כרטיסיות', startTeacher: 'לתרגל שאלות בסגנון המורה',
   aiOff: 'אין חיבור ל-Claude, אז הבנייה לא יכולה להתחיל. החומר שלך נשמר. לחץ „לנסות שוב” ואשר את הבקשה של Claude אם היא מופיעה. אם זה לא עוזר, פתח את הקישור באתר claude.ai או באפליקציה של Claude כשאתה מחובר לחשבון.', retry: 'לנסות שוב',
   err_busy: 'Claude עמוס כרגע. חכה דקה ואז לחץ „לנסות שוב”.',
   err_refused: 'Claude לא הסכים לעבוד עם החומר הזה. נסה חומר אחר.',
@@ -740,32 +754,32 @@ he: {
   nCards: '{n} כרטיסיות', allCaught: 'הכול מעודכן', noCardsYet: 'עוד אין כרטיסיות',
   quizInfo: '{n} שאלות', lastScore: 'ציון אחרון {s}', notTaken: 'עוד לא נבחנת', notBuilt: 'עוד לא נבנה', writing: 'בכתיבה…',
   builtOn: 'נכתב ב-{d}',
-  progress: 'את {k} מתוך {n} כרטיסיות אתה כבר יודע טוב.',
+  progress: '{k} מתוך {n} כרטיסיות כבר ידועות לך טוב.',
   progressHint: 'כרטיסייה נחשבת „ידועה טוב” אחרי שענית עליה נכון פעמיים ברצף. מה שאתה עוד לא יודע חוזר מהר יותר.',
-  materials: 'חומרים', text: 'טקסט', pdf: 'PDF', words: '{n} מילים', deleteMat: 'מחיקת {name}',
+  materials: 'חומרים', text: 'טקסט', pdf: 'PDF', words: 'אורך: {n} מילים', deleteMat: 'מחיקת {name}',
   showAnswer: 'הצגת התשובה', again: 'עוד פעם', gotIt: 'ידעתי',
-  roundDone: 'הסבב הסתיים', roundResult: '{g} ידעתי, {r} לחזור עליהן', repeatMissed: 'חזרה על הטעויות',
+  roundDone: 'הסבב הסתיים', roundResult: '{g} ידעתי, {r} לחזור עליהן', repeatMissed: 'לתרגל שוב את הטעויות',
   nothingDue: 'אין מה לחזור עליו כרגע', nextDue: 'החזרה הבאה: {d}', noCards: 'עוד אין כרטיסיות', cardsComing: 'הכרטיסיות שלך עדיין בהכנה.',
   keysCards: 'רווח מציג תשובה · 1 עוד פעם · 2 ידעתי · Esc חזרה',
   question: 'שאלה', answer: 'תשובה', vocab: 'אוצר מילים', dirTm: 'מילה ← תרגום', dirMt: 'תרגום ← מילה',
   qOf: 'שאלה {i} מתוך {n}', cont: 'המשך', correct: 'נכון!', wrong: 'לא בדיוק', partialRes: 'חלקית', yourAnswer: 'התשובה שלך', rightAnswer: 'התשובה הנכונה',
   tMc: 'בחירה', tFill: 'השלמה', tTf: 'נכון או לא', tOpen: 'שאלה פתוחה', tfTrue: 'נכון', tfFalse: 'לא נכון',
-  check: 'בדיקה', typeHere: 'כתוב את התשובה', writeHere: 'כתוב תשובה של משפט עד שלושה', grading: 'Claude בודק את התשובה…',
+  check: 'בדיקה', typeHere: 'כתוב את התשובה', writeHere: 'כתבו את התשובה או ההוכחה המלאה', grading: 'Claude בודק את התשובה…',
   acceptedIs: 'התשובה הנכונה: {a}', iWasRight: 'התשובה שלי נכונה', modelAnswer: 'תשובה לדוגמה', selfGrade: 'השווה לתשובה לדוגמה. צדקת?', iGotIt: 'צדקתי', iMissed: 'טעיתי',
-  quizDone: 'הבוחן הסתיים', missedQs: 'שאלות שכדאי לחזור עליהן', retryMissed: 'שוב על הטעויות', newQuiz: 'בוחן חדש', allRight: 'ענית נכון על כל השאלות.',
+  quizDone: 'הבוחן הסתיים', missedQs: 'שאלות שכדאי לחזור עליהן', retryMissed: 'לתרגל שוב את הטעויות', newQuiz: 'בוחן חדש', allRight: 'ענית נכון על כל השאלות.',
   writingQuiz: 'כותב 10 שאלות חדשות ובודק אותן…', stop: 'עצירה', noQuiz: 'עוד אין בוחן', makeQuiz: 'לכתוב בוחן', tryAgain: 'לנסות שוב',
   keysQuiz: '1–4 בוחר תשובה · Enter ממשיך · Esc חזרה',
-  copy: 'העתקה', copied: 'הועתק', saveFile: 'שמירה כקובץ', saved: 'נשמר',
+  copy: 'העתקה', copied: 'הועתק', saveFile: 'הורדה להדפסה', saved: 'נשמר',
   sheetEyebrow: 'דף סיכום למבחן', mustKnow: 'חובה לדעת', exampleLbl: 'דוגמה', mistakeLbl: 'טעות נפוצה', wordsTitle: 'מילים', term: 'מילה', meaning: 'תרגום', exCol: 'משפט לדוגמה', brief: 'תקציר למבחן',
   noSummary: 'עוד אין דף סיכום', makeSummary: 'לכתוב דף סיכום', oldSheet: 'זה דף סיכום בפורמט הישן.', newSheet: 'לכתוב בפורמט החדש',
   copyFail: 'ההעתקה לא עבדה כאן. סמן את הטקסט והעתק בעצמך.',
   notSaved: 'לא נשמר: האחסון מלא. מחק חומר ישן כדי לפנות מקום.',
   almostFull: 'האחסון כמעט מלא. מחק חומר ישן כדי לפנות מקום.',
   noStorage: 'הדפדפן הזה לא שומר. העבודה שלך נשמרת רק עד שתסגור את הדף.',
-  practiceTitle: 'בוחן ומבחן', quickQuiz: 'בוחן קצר', quickQuizDesc: '10 שאלות על החומר, עם בדיקה מיידית אחרי כל שאלה.',
-  realExam: 'מבחן אמיתי', realExamDesc: 'כמו מבחן בבית הספר: חלקים, שאלות עם סעיפים וניקוד. מקבלים קובץ Word לפתרון, עם פתרון מלא ומחוון בסוף הקובץ.',
+  practiceTitle: 'תרגול ומבחנים', quickQuiz: 'בוחן קצר', quickQuizDesc: '10 שאלות על החומר, עם בדיקה מיידית אחרי כל שאלה.',
+  realExam: 'מבחן כמו בכיתה', realExamDesc: 'כמו מבחן בבית הספר: חלקים, שאלות עם סעיפים וניקוד. מקבלים קובץ Word לפתרון, עם פתרון מלא ומחוון בסוף הקובץ.',
   lastExam: 'מבחן אחרון: {d}', examLength: 'אורך המבחן', len45: 'שיעור אחד (45 דקות)', len90: 'שיעור כפול (90 דקות)',
-  makeExam: 'לכתוב מבחן', newExam: 'לכתוב מבחן חדש', writingExam: 'כותב מבחן אמיתי… זה לוקח כדקה או שתיים.', examReady: 'המבחן מוכן',
+  makeExam: 'להכין לי מבחן', newExam: 'לכתוב מבחן חדש', writingExam: 'כותב מבחן אמיתי… זה לוקח כדקה או שתיים.', examReady: 'המבחן מוכן',
   examHint: 'הורד את הקובץ, פתח אותו ב-Word או ב-Google Docs וכתוב את התשובות על השורות. הפתרון המלא בעמודים האחרונים, אז אל תציץ לפני שסיימת.',
   examNote: 'Claude כותב את המבחן לפי החומר שלך, במבנה של מבחן אמיתי בבית הספר.',
   downloadWord: 'הורדה כקובץ Word', wordSaved: 'הקובץ נשמר', wordFail: 'לא הצלחנו ליצור את הקובץ. נסה שוב.',
@@ -777,23 +791,23 @@ he: {
   roundOf: '{n} כרטיסיות בסבב',
   conclusionTitle: 'לסיכום', topicPractice: 'תרגול לפי נושאים', topicPracticeDesc: 'כל נושא עם הכלל, טעות נפוצה ותרגילים בשלוש רמות עם רמזים ופתרון מלא. כולל תוכנית לימוד לפי הימים שנשארו.', topicsReady: 'מוכן', makeTopics: 'להכין תרגול', newTopics: 'להכין תרגול חדש', writingTopics: 'מכין תרגול לפי נושאים… זה לוקח כדקה או שתיים.', topicsNote: 'התרגול נכתב לפי החומר שלך.', topicsStale: 'הוספת חומר מאז שהתרגול נכתב.', oldSheet5: 'הסיכום הזה נכתב בגרסה הקודמת, עם תרגילים בתוכו. התרגילים עברו למסך התרגול. אפשר לכתוב עכשיו סיכום נקי של החומר.',
   wTile: 'מילים', wTileAr: 'מילים והכתבה', wKnownShort: '{k} מתוך {n} מילים', wTileToday: 'יש תרגול להיום', listen: 'להשמיע',
-  wTitle: 'מילים', wTitleAr: 'מילים והכתבה בערבית', wTitleEn: 'אוצר מילים באנגלית', wKnownLine: 'אתה יודע {k} מתוך {n} מילים', wAllKnown: 'אתה יודע את כל המילים. מכאן רק שומרים עליהן.', wLeft: 'נשארו {n}.',
-  wToday: 'התרגול של היום', wTodayAgain: 'עוד סבב להיום', wTodayMeta: '{n} מילים חדשות, {r} לחזרה', wTodayMeta1: 'מילה חדשה אחת, {r} לחזרה', wDayNew1: 'מילה חדשה אחת וחזרה', wTodayExtra: 'אין מה לחזור היום. סבב חיזוק על המילים הקשות.', wFinalToday: 'היום האחרון לפני הבוחן: חזרה על הכל, ואחריה הכתבה או בוחן מלא.',
-  wLevel: 'רמה', wl_basic: 'מתחיל', wl_basic_d: 'משפטים פשוטים ובחירה מתוך אפשרויות', wl_medium: 'מתקדם', wl_medium_d: 'ברמה של רוב המבחנים', wl_hard: 'מאתגר', wl_hard_d: 'קצת יותר קשה מהמבחנים',
+  wTitle: 'מילים', wTitleAr: 'מילים והכתבה בערבית', wTitleEn: 'אוצר מילים באנגלית', wKnownLine: 'ידועות לך {k} מתוך {n} מילים', wAllKnown: 'אתה יודע את כל המילים. מכאן רק שומרים עליהן.', wLeft: 'נשארו {n}.',
+  wToday: 'התרגול של היום', wTodayAgain: 'עוד סבב להיום', wTodayMeta: '{n} מילים חדשות, {r} לחזרה', wTodayNew: '{n} מילים חדשות', wTodayNew1: 'מילה חדשה אחת', wTodayMeta1: 'מילה חדשה אחת, {r} לחזרה', wDayNew1: 'מילה חדשה אחת וחזרה', wTodayExtra: 'אין מה לחזור היום. סבב חיזוק על המילים הקשות.', wFinalToday: 'היום האחרון לפני הבוחן: חזרה על הכל, ואחריה הכתבה או בוחן מלא.',
+  wLevel: 'רמה', wl_basic: 'מתחיל', wl_basic_d: 'משפטים פשוטים ובחירה מתוך אפשרויות', wl_medium: 'מתקדם', wl_medium_d: 'ברמה של רוב המבחנים', wl_hard: 'מאתגר', wl_hard_d: 'קצת יותר קשה מהמבחנים', lv_basic_d: 'שאלות ישירות, עם רמזים', lv_medium_d: 'ברמה של רוב המבחנים', lv_hard_d: 'קצת יותר קשה מהמבחן',
   wGen: 'מכין משפטים ותרגילים לרמה הזו… בינתיים אפשר כבר לתרגל.', wGenFail: 'לא הצלחתי להכין משפטים לרמה הזו. התרגילים הבסיסיים עובדים.',
   wDictation: 'הכתבה', wDictDescAr: 'האתר אומר מילה בערבית, ואתה כותב על דף את המילה ואת התרגום. אחר כך בודקים.', wDictDesc: 'האתר אומר מילה, ואתה כותב על דף את המילה ואת התרגום. אחר כך בודקים.',
   wQuiz: 'בוחן מילים', wQuizDesc: 'בוחן כמו בכיתה, עם ציון בסוף.', wQuizWord: 'בוחן מילים כקובץ Word', wCards: 'כרטיסיות מילים', wCardsDesc: 'מילה ותרגום, בשני הכיוונים.', wAll: 'תרגול על כל המילים', wAllDesc: 'כל {n} המילים ברמה שבחרת.',
-  wHardTitle: 'מילים שעוד קשות לי', wHardPractice: 'לתרגל את המילים הקשות', wPlanTitle: 'תוכנית עד הבוחן', wPlanNoDate: 'אין תאריך לבוחן, אז זו תוכנית לשבוע. אפשר להוסיף תאריך בתפריט של המקצוע.',
+  wHardTitle: 'מילים שעוד קשות לי', wHardPractice: 'לתרגל את המילים הקשות', wPlanTitle: 'תוכנית עד המבחן', wPlanNoDate: 'אין תאריך מבחן, אז זו תוכנית לשבוע. אפשר להוסיף תאריך בתפריט של הנושא.',
   wDayNew: '{n} מילים חדשות וחזרה', wDayReview: 'חזרה על מילים', wDayFinal: 'חזרה על הכל ובוחן מלא', wDayFinalAr: 'חזרה על הכל והכתבה מלאה',
   wListTitle: 'רשימת המילים ({n})', wStatus: 'מצב', wNew: 'חדשה', wKnownTag: 'יודע', wHardTag: 'קשה', wLearning: 'בלמידה', wFilled: 'הושלם', wFilledTip: 'התרגום לא היה בחומר והושלם. כדאי לבדוק מול הדף של המורה.',
   wBack: 'למילים', wNothing: 'אין מילים לתרגל כאן.', wFinish: 'לסיום', wProgress: 'התקדמות בסבב', wRoundDone: '{k} מתוך {n} נכון', wQuizScore: 'הציון שלך: {s}', wToRepeat: 'מילים לחזור עליהן', wAllRight: 'הכל נכון. כל הכבוד!',
   xWhatMeans: 'מה התרגום?', xWhichWord: 'איזו מילה זו?', xSpell: 'איך כותבים נכון?', xGapType: 'כתוב את המילה החסרה', xGapPick: 'בחר את המילה החסרה', xUsage: 'האם המילה "{w}" משמשת כאן נכון?', xConfuse: 'בחר את המילה שמתאימה', xForm: 'כתוב את הצורה הנכונה של "{w}"', xTranslate: 'תרגם לאנגלית, עם המילה "{w}"', xMatch: 'התאם לכל מילה את התרגום', xPick: 'בחר תרגום', xTrue: 'נכון', xFalse: 'לא נכון',
   xHeNote: 'כדאי לכתוב:', xWrongForm: 'צורה לא נכונה של המילה:', xAlmost: 'כמעט!', xSpellSlip: 'טעות כתיב:', xSpellTrap: 'שים לב לכתיב: האות שונה ממה שבחרת.',
-  dReady: 'הכתבה של {n} מילים', dHowAr: 'קח דף ועט. האתר יגיד מילה בערבית. כתוב את המילה בערבית ולידה את התרגום לעברית.', dHow: 'קח דף ועט. האתר יגיד מילה. כתוב את המילה ולידה את התרגום.', dHowReverse: 'קח דף ועט. יופיע תרגום, ואתה כותב את המילה.',
+  dReady: 'הכתבה של {n} מילים', dHowAr: 'קח דף ועט. האתר יגיד מילה בערבית. כתוב את המילה בערבית ולידה את התרגום לעברית.', dHow: 'מכינים דף ועט. האתר אומר מילה, וכותבים אותה ולידה את התרגום.', dHowReverse: 'קח דף ועט. יופיע תרגום, ואתה כותב את המילה.',
   dNoVoice: 'במכשיר הזה אין קול להקראה, אז ההכתבה הפוכה: מופיע התרגום ואתה כותב את המילה.', dNoVoiceAr: 'במכשיר הזה אין קול בערבית, אז ההכתבה הפוכה: מופיע התרגום בעברית ואתה כותב את המילה בערבית.',
-  dWhich: 'אילו מילים?', dHowLbl: 'איך לקבל את המילה', dToday: 'של היום ({n})', dMistakes: 'הטעויות ({n})', dAll: 'כל המילים ({n})', dWhen: 'מתי לראות את התשובה?', dReveal_each: 'אחרי כל מילה', dReveal_end: 'בסוף, כמו בכיתה', dMode_audio: 'לשמוע את המילה', dMode_reverse: 'לראות את התרגום',
+  dWhich: 'אילו מילים?', dHowLbl: 'איך לקבל את המילה?', dToday: 'של היום ({n})', dMistakes: 'הטעויות ({n})', dAll: 'כל המילים ({n})', dWhen: 'מתי לראות את התשובה?', dReveal_each: 'אחרי כל מילה', dReveal_end: 'בסוף, כמו בכיתה', dMode_audio: 'לשמוע את המילה', dMode_reverse: 'לראות את התרגום',
   dLevelNote_basic: 'מתחיל: קצב איטי, ואפשר לשמוע שוב כמה שרוצים.', dLevelNote_medium: 'מתקדם: קצב כמו בכיתה, ואפשר לשמוע שוב פעם אחת.', dLevelNote_hard: 'מאתגר: קצב מהיר, שומעים פעם אחת, ובסוף משפט קצר.',
-  dStart: 'להתחיל', dSentence: 'משפט לסיום', dPlaysFree: 'אפשר לשמוע שוב כמה שרוצים', dPlaysLeft: 'אפשר לשמוע עוד {n} פעמים', dWrite: 'כתוב את המילה ואת התרגום', dWriteAr: 'כתוב את המילה בערבית ואת התרגום לעברית', dWriteSentence: 'כתוב את המשפט', dWriteWordFor: 'כתוב את המילה שפירושה:',
+  dStart: 'להתחיל', dSentence: 'משפט לסיום', dPlaysFree: 'אפשר לשמוע שוב כמה שרוצים', dPlaysLeft: 'אפשר לשמוע עוד {n} פעמים', dPlaysOne: 'אפשר לשמוע עוד פעם אחת', dWrite: 'כתוב את המילה ואת התרגום', dWriteAr: 'כתוב את המילה בערבית ואת התרגום לעברית', dWriteSentence: 'כתוב את המשפט', dWriteWordFor: 'כתוב את המילה שפירושה:',
   dShowWord: 'לראות את התשובה', dNextWord: 'למילה הבאה', dToCheck: 'סיימתי, לבדיקה', dToScore: 'לציון', dCheckTitle: 'בדיקה', dCheckHow: 'השווה למה שכתבת על הדף, וסמן לכל מילה.', dCheckHowReverse: 'השווה את הכתיב שלך, וסמן לכל מילה.', dMarkAll: 'סמן את כל המילים כדי לראות ציון.',
   dMark_ok: 'כתבתי נכון', dMark_spell: 'טעות בכתיב', dMark_trans: 'טעות בתרגום', dScoreTitle: 'הציון בהכתבה', dAgainWrong: 'הכתבה חוזרת על הטעויות',
   wqA: 'תרגם לעברית:', wqB: 'כתוב את המילה באנגלית:', wqC: 'השלם את המילה החסרה:', wqI1: 'ענה על כל השאלות.', wqI2: 'הקפד על כתיב נכון.',
@@ -802,17 +816,17 @@ he: {
   needWords: 'כתוב לפחות מילה אחת ותרגום.', buildWords: 'להכין את המילים', addWordsTitle: 'רשימת מילים או הכתבה', addWordsLead: 'כתוב או הדבק את המילים מהמורה, מילה ותרגום בכל שורה. אחר כך תקבל תרגול לפי רמה, הכתבה ותוכנית עד הבוחן.', wordsLbl: 'המילים', wordsPh: 'מילה – תרגום בכל שורה, למשל:\njourney – מסע\nكتاب – ספר', pickDate: 'לבחור תאריך', startWords: 'להתחיל ללמוד את המילים', addWordsBtn: 'רשימת מילים / הכתבה', wTileAdd: 'להוסיף רשימת מילים או הכתבה', wPlanNoDate2: 'אין תאריך לבוחן, אז זו תוכנית לשבוע.',
   startQuiz: 'להתחיל בוחן', makeQuizLvl: 'לכתוב בוחן ברמה הזו', topicsReadyLvl: 'מוכן ברמה {l}', openTopics: 'לפתוח את התרגול', openExam: 'לפתוח את המבחן', topicsOtherLevel: 'התרגול הזה הוכן ברמה {a}, ובחרת עכשיו {b}.',
   calTomorrow: 'מחר', calIn3: 'בעוד 3 ימים', calWeek: 'בעוד שבוע', calTwoWeeks: 'בעוד שבועיים', calPrev: 'החודש הקודם', calNext: 'החודש הבא', dateSaved: 'המבחן נקבע ל{d}', dateCleared: 'תאריך המבחן נמחק',
-  addTeacherBtn: 'דף תרגול / מבחן קודם', addTeacherTitle: 'דף תרגול מהמורה או מבחן קודם', addTeacherLead: 'הדבק את השאלות, העלה PDF או צלם את הדפים. האתר יבנה את הסיכום לפי מה שהשאלות בודקות, יכין שאלות דומות וימבחן אותך בסגנון של המורה.', teacherLbl: 'השאלות', teacherPh: 'הדבק כאן את השאלות מהדף של המורה או מהמבחן הקודם…', buildTeacher: 'להכין לפי התרגול',
-  uploadImg: 'העלאת PDF, תמונה או ‎.txt', readingPhotos: 'קורא את הדפים מהתמונות ({k} מתוך {n})…', noImages: 'כאן אי אפשר לקרוא תמונות. הדבק את הטקסט או העלה PDF עם טקסט.', imgFail: 'לא הצלחתי לקרוא את התמונה. נסה צילום חד יותר, או הדבק את הטקסט.', imgEmpty: 'לא מצאתי טקסט בתמונה. נסה צילום חד וישר יותר.',
+  addTeacherBtn: 'הוספת דף מהמורה', addTeacherTitle: 'דף תרגול מהמורה או מבחן קודם', addTeacherLead: 'אפשר להדביק את השאלות, להעלות PDF או לצלם את הדפים. האתר יבנה את הסיכום לפי מה שהשאלות בודקות, יכין שאלות דומות ויבחן אותך בסגנון של המורה.', teacherLbl: 'השאלות', teacherPh: 'מדביקים כאן את השאלות מהדף של המורה או מהמבחן הקודם…', buildTeacher: 'להכין לפי התרגול',
+  uploadImg: 'לצלם או להעלות דף', readingPhotos: 'קורא את הדפים מהתמונות ({k} מתוך {n})…', noImages: 'כאן אי אפשר לקרוא תמונות. הדבק את הטקסט או העלה PDF עם טקסט.', imgFail: 'לא הצלחתי לקרוא את התמונה. נסה צילום חד יותר, או הדבק את הטקסט.', imgEmpty: 'לא מצאתי טקסט בתמונה. כדאי לנסות צילום חד וישר יותר.', imgPartial: 'חלק מהדפים נקראו והוכנסו לתיבה.', imgTooMany: 'קראתי את 20 הצילומים הראשונים. את השאר אפשר להעלות בפעם נוספת.', photoTitle: 'צילום דף · {d}',
   askedTag: 'נשאל בתרגול של המורה', examTeacherStyle: 'המבחן ייכתב בסגנון של המורה שלך, לפי דפי התרגול והמבחנים שהעלית.', teacherTitle: 'שאלות בסגנון המורה', teacherH1: 'שאלות בסגנון המורה', teacherDesc: 'שאלות חדשות כמו {n} השאלות מהדפים של המורה, עם רמזים ופתרון מלא.', teacherLead: 'שאלות חדשות שבודקות את אותם דברים כמו {n} השאלות של המורה, באותו סגנון, עם מספרים והקשר אחרים.', teacherNone: 'עוד אין כאן שאלות מהמורה. הוסף דף תרגול או מבחן קודם.', makeTeacher: 'להכין שאלות', newTeacher: 'להכין שאלות חדשות', writingTeacher: 'כותב שאלות בסגנון המורה… זה לוקח כדקה או שתיים.', teacherOriginal: 'השאלות המקוריות של המורה ({n})', nQuestions: '{n} שאלות', teacherStale: 'הוספת עוד דפים מהמורה מאז שהשאלות נכתבו.',
   orderHint: 'לחץ על השורות לפי הסדר הנכון.', reset: 'להתחיל מחדש', pickReason: 'בחר נימוק', criteriaLbl: 'בדוק את עצמך: מה צריך להופיע בתשובה?', doneChecking: 'סיימתי לבדוק', showModel: 'להראות תשובה לדוגמה',
-  likelyMistake: 'כנראה:', lvlBasic: 'בסיסי', lvlMedium: 'בינוני', lvlExam: 'ברמת מבחן', orderScore: '{k} מתוך {n} שורות במקום הנכון.', tryHint: 'נסה שוב, או פתח רמז.', hintLbl: 'רמז:', hintBtn: 'רמז', nextStep: 'צעד {k} מתוך {n}', fullSolution: 'פתרון מלא',
-  topicScore: 'בנושא הזה: {k} מתוך {n} נכון.', reviewThese: 'נוסף לרשימת „לחזור על זה”: {list}.', conclusionLbl: 'מסקנה:', practiceStatic: 'תרגול', practiceLive: 'תרגל עכשיו: בסיסי, בינוני, ברמת מבחן', moreLbl: 'הסבר מלא, דוגמה ותרגול',
-  today: 'היום', tomorrow: 'מחר', planTitle: 'תוכנית לימוד', planNoDate: 'אין תאריך מבחן, אז זו תוכנית לשבוע. בחר תאריך והיא תסתדר לפי הימים שנשארו.', planReview: 'חזרה על הטעויות ({n})', planMock: 'מבחן מדומה', planExtra: 'חזרה על הנושאים החשובים',
-  dayDone: 'בוצע', markDone: 'סמן שבוצע', planTarget: 'יעד: {n} תרגילים', openMock: 'למבחן המדומה', reviewTitle: 'לחזור על זה', reviewHint: 'כאן נאספים תרגילים שטעית בהם. ביום האחרון של התוכנית עוברים עליהם.', practiceAgain: 'לתרגל שוב', fromMock: 'מהמבחן המדומה', tocLbl: 'ניווט בדף',
+  likelyMistake: 'מה כנראה קרה:', lvlBasic: 'קל', lvlMedium: 'בינוני', lvlExam: 'קשה', orderScore: '{k} מתוך {n} שורות במקום הנכון.', tryHint: 'נסה שוב, או פתח רמז.', hintLbl: 'רמז:', hintBtn: 'רמז', nextStep: 'לצעד הבא ({k} מתוך {n})', fullSolution: 'פתרון מלא',
+  topicScore: 'בנושא הזה: {k} מתוך {n} נכון.', topicSoFar: 'ענית על {a} מתוך {n} שאלות, {k} נכון.', reviewThese: 'השאלות שטעית בהן נוספו לרשימה „לחזור על זה”.', conclusionLbl: 'מסקנה:', practiceStatic: 'תרגול', practiceLive: 'לתרגל עכשיו: קל, בינוני, קשה', moreLbl: 'הסבר מלא, דוגמה ותרגול',
+  today: 'היום', tomorrow: 'מחר', planTitle: 'תוכנית לימוד', planAll: 'כל התוכנית ({n} ימים)', planNoDate: 'אין תאריך מבחן, אז זו תוכנית לשבוע. בחר תאריך והיא תסתדר לפי הימים שנשארו.', planReview: 'לתרגל שוב את הטעויות ({n})', planMock: 'מבחן כמו בכיתה', planExtra: 'חזרה על הנושאים החשובים',
+  dayDone: 'בוצע', markDone: 'סיימתי ✓', planTarget: 'יעד: {n} תרגילים', openMock: 'למבחן המדומה', reviewTitle: 'לחזור על זה', reviewHint: 'כאן נאספים תרגילים שטעית בהם. ביום האחרון של התוכנית עוברים עליהם.', practiceAgain: 'לתרגל שוב', fromMock: 'מהמבחן המדומה', tocLbl: 'ניווט בדף',
   checklistHint2: 'מתעדכן לבד לפי התרגול. אפשר גם לסמן בעצמך.', len60: 'שעה (60 דקות)', examHint2: 'אפשר לפתור כאן עם טיימר של {m} דקות, או להוריד קובץ Word ולכתוב בו.', mockContinue: 'להמשיך את המבחן', mockStart: 'לפתור כאן עם טיימר',
   mockLast: 'בפעם האחרונה: {s} נקודות.', mockResults: 'לתוצאות', previewExam: 'להציץ במבחן', pointsGot: 'קיבלתי:', mockResultTitle: 'הציון שלך', mockMarkHint: 'שאלות אמריקאיות נבדקו לבד. בשאר השאלות השווה לפתרון ותן לעצמך נקודות לפי המחוון.', topicCol: 'נושא', pointsCol: 'נקודות',
-  notMarked: '{n} לא נבדקו', mockDone: 'המבחן הסתיים', timeLeft: 'זמן שנשאר:', mockFinish: 'להגיש', mockFinishQ: 'להגיש את המבחן? אחרי ההגשה תראה את הפתרונות.',
+  notMarked: '{n} לא נבדקו', mockDone: 'המבחן הסתיים', timeLeft: 'זמן שנשאר:', mockFinish: 'להגיש', mockFinishQ: 'להגיש את המבחן? אחרי ההגשה יופיעו הפתרונות.', mockBlank: 'ענית על {k} מתוך {n} סעיפים. אפשר להגיש בכל זאת.', mockPending: 'נבדק אוטומטית: {x} נק׳. עוד {y} נק׳ מחכות לבדיקה שלך: השווה כל תשובה לפתרון ותן לעצמך נקודות.',
 },
 en: {
   appName: 'Your AI Study Studio', lang: 'Language', home: 'Home',
@@ -827,7 +841,7 @@ en: {
   dateTitle: 'Exam date', clearDate: 'No exam date',
   delSubjectTitle: 'Delete this subject?', delSubjectBody: '“{name}” and its material, flashcards, quiz and summary sheet will be deleted. This cannot be undone.',
   delMatTitle: 'Delete this material?', delMatBody: '“{name}” and the flashcards made from it will be deleted. The summary sheet is rewritten without it.',
-  back: 'Back',
+  back: 'Back', backSubj: 'Back to the subject', dFinish: 'Finish',
   addTitle: 'Add material', subject: 'Subject', newSubject: 'New subject…', subjectName: 'Subject name', subjectPh: 'e.g. English: Past simple',
   examDate: 'Exam date', optional: 'optional', title: 'Title', titlePh: 'Taken from the first line',
   material: 'Your material', materialPh: 'Paste notes, a chapter, a word list or a sheet from your teacher…',
@@ -841,7 +855,7 @@ en: {
   stepPlan: 'Reading the material and deciding what to learn', stepCards: 'Making flashcards', stepCheck: 'Checking the cards are about the material', stepQuiz: 'Writing a quiz', stepSheet: 'Writing the exam summary sheet',
   cardsMade: '{n} flashcards ready', startNow: 'Start now',
   buildHint: 'This takes a minute or two, because Claude also checks every card. You can start as soon as 5 cards are ready.',
-  ready: 'Your study set is ready', openSubject: 'Open subject', startCards: 'Start flashcards',
+  ready: 'Your study set is ready', openSubject: 'Open subject', startCards: 'Start flashcards', startTeacher: 'Practise questions in your teacher’s style',
   aiOff: 'There is no connection to Claude, so the build cannot start. Your material is saved. Tap Retry and approve Claude’s request if it appears. If that does not help, open the link on claude.ai or in the Claude app while signed in.', retry: 'Retry',
   err_busy: 'Claude is busy right now. Wait a minute, then tap Retry.',
   err_refused: 'Claude would not work with this material. Try different material.',
@@ -858,7 +872,7 @@ en: {
   builtOn: 'Written {d}',
   progress: 'You already know {k} of {n} cards well.',
   progressHint: 'A card counts as “known well” after you get it right twice in a row. Cards you don’t know yet come back sooner.',
-  materials: 'Material', text: 'Text', pdf: 'PDF', words: '{n} words', deleteMat: 'Delete {name}',
+  materials: 'Material', text: 'Text', pdf: 'PDF', words: 'Length: {n} words', deleteMat: 'Delete {name}',
   showAnswer: 'Show answer', again: 'Again', gotIt: 'Got it',
   roundDone: 'Round complete', roundResult: '{g} got it, {r} to repeat', repeatMissed: 'Repeat missed',
   nothingDue: 'Nothing to review right now', nextDue: 'Next review: {d}', noCards: 'No flashcards yet', cardsComing: 'Your flashcards are still being made.',
@@ -894,8 +908,8 @@ en: {
   conclusionTitle: 'In short', topicPractice: 'Practice by topic', topicPracticeDesc: 'Each topic with its rule, a common mistake and exercises at three levels, with hints and full solutions. Includes a study plan for the days left.', topicsReady: 'Ready', makeTopics: 'Prepare practice', newTopics: 'Prepare new practice', writingTopics: 'Preparing practice by topic… this takes a minute or two.', topicsNote: 'The practice is written from your material.', topicsStale: 'You added material since this practice was written.', oldSheet5: 'This summary was written by the previous version, with exercises inside it. The exercises moved to the practice screen. You can now write a clean summary of the material.',
   wTile: 'Words', wTileAr: 'Words and dictation', wKnownShort: '{k} of {n} words', wTileToday: 'practice ready for today', listen: 'Listen',
   wTitle: 'Words', wTitleAr: 'Arabic words and dictation', wTitleEn: 'English vocabulary', wKnownLine: 'You know {k} of {n} words', wAllKnown: 'You know all the words. From here you just keep them fresh.', wLeft: '{n} to go.',
-  wToday: "Today's practice", wTodayAgain: 'Another round for today', wTodayMeta: '{n} new words, {r} to review', wTodayMeta1: 'One new word, {r} to review', wDayNew1: 'One new word and review', wTodayExtra: 'Nothing to review today. A booster round on the hard words.', wFinalToday: 'Last day before the test: review everything, then a full dictation or quiz.',
-  wLevel: 'Level', wl_basic: 'Beginner', wl_basic_d: 'Simple sentences and multiple choice', wl_medium: 'Intermediate', wl_medium_d: 'The level of most tests', wl_hard: 'Challenging', wl_hard_d: 'A little harder than the tests',
+  wToday: "Today's practice", wTodayAgain: 'Another round for today', wTodayMeta: '{n} new words, {r} to review', wTodayNew: '{n} new words', wTodayNew1: 'One new word', wTodayMeta1: 'One new word, {r} to review', wDayNew1: 'One new word and review', wTodayExtra: 'Nothing to review today. A booster round on the hard words.', wFinalToday: 'Last day before the test: review everything, then a full dictation or quiz.',
+  wLevel: 'Level', wl_basic: 'Beginner', wl_basic_d: 'Simple sentences and multiple choice', wl_medium: 'Intermediate', wl_medium_d: 'The level of most tests', wl_hard: 'Challenging', wl_hard_d: 'A little harder than the tests', lv_basic_d: 'Direct questions, with hints', lv_medium_d: 'Like most tests', lv_hard_d: 'A little harder than the test',
   wGen: 'Preparing sentences and exercises for this level… you can already practise.', wGenFail: 'Could not prepare sentences for this level. The basic exercises work.',
   wDictation: 'Dictation', wDictDescAr: 'The site says an Arabic word; you write the word and its translation on paper, then check.', wDictDesc: 'The site says a word; you write the word and its translation on paper, then check.',
   wQuiz: 'Word quiz', wQuizDesc: 'A quiz like in class, with a score at the end.', wQuizWord: 'Word quiz as a Word file', wCards: 'Word cards', wCardsDesc: 'Word and meaning, both ways.', wAll: 'Practise all the words', wAllDesc: 'All {n} words at your level.',
@@ -909,7 +923,7 @@ en: {
   dNoVoice: 'This device has no voice for reading aloud, so the dictation is reversed: the meaning appears and you write the word.', dNoVoiceAr: 'This device has no Arabic voice, so the dictation is reversed: the meaning appears and you write the word in Arabic.',
   dWhich: 'Which words?', dHowLbl: 'How to get the word', dToday: "Today's ({n})", dMistakes: 'Mistakes ({n})', dAll: 'All words ({n})', dWhen: 'When to see the answer?', dReveal_each: 'After each word', dReveal_end: 'At the end, like in class', dMode_audio: 'Hear the word', dMode_reverse: 'See the meaning',
   dLevelNote_basic: 'Beginner: slow, and you can listen again as often as you like.', dLevelNote_medium: 'Intermediate: class pace, and you can listen once more.', dLevelNote_hard: 'Challenging: fast, you hear each word once, and a short sentence at the end.',
-  dStart: 'Start', dSentence: 'Final sentence', dPlaysFree: 'You can listen again as often as you like', dPlaysLeft: 'You can listen {n} more times', dWrite: 'Write the word and its meaning', dWriteAr: 'Write the word in Arabic and its meaning', dWriteSentence: 'Write the sentence', dWriteWordFor: 'Write the word that means:',
+  dStart: 'Start', dSentence: 'Final sentence', dPlaysFree: 'You can listen again as often as you like', dPlaysOne: 'You can listen once more', dPlaysLeft: 'You can listen {n} more times', dWrite: 'Write the word and its meaning', dWriteAr: 'Write the word in Arabic and its meaning', dWriteSentence: 'Write the sentence', dWriteWordFor: 'Write the word that means:',
   dShowWord: 'See the answer', dNextWord: 'Next word', dToCheck: 'Done, check it', dToScore: 'See score', dCheckTitle: 'Check', dCheckHow: 'Compare with what you wrote and mark each word.', dCheckHowReverse: 'Compare your spelling and mark each word.', dMarkAll: 'Mark every word to see the score.',
   dMark_ok: 'Right', dMark_spell: 'Spelling mistake', dMark_trans: 'Meaning mistake', dScoreTitle: 'Dictation score', dAgainWrong: 'Dictation of the mistakes',
   wqA: 'Translate:', wqB: 'Write the English word:', wqC: 'Fill in the missing word:', wqI1: 'Answer all the questions.', wqI2: 'Spelling counts.',
@@ -918,17 +932,17 @@ en: {
   needWords: 'Write at least one word and its meaning.', buildWords: 'Prepare the words', addWordsTitle: 'Word list or dictation', addWordsLead: 'Type or paste the words from your teacher, one word and its meaning per line. You then get practice by level, dictation and a plan until the test.', wordsLbl: 'Words', wordsPh: 'One word – meaning per line, for example:\njourney – מסע\nكتاب – ספר', pickDate: 'Pick a date', startWords: 'Start learning the words', addWordsBtn: 'Word list / dictation', wTileAdd: 'Add a word list or dictation', wPlanNoDate2: 'No test date, so this is a one-week plan.',
   startQuiz: 'Start the quiz', makeQuizLvl: 'Write a quiz at this level', topicsReadyLvl: 'Ready at level {l}', openTopics: 'Open the practice', openExam: 'Open the test', topicsOtherLevel: 'This practice was prepared at {a}; you chose {b} now.',
   calTomorrow: 'Tomorrow', calIn3: 'In 3 days', calWeek: 'In a week', calTwoWeeks: 'In two weeks', calPrev: 'Previous month', calNext: 'Next month', dateSaved: 'Test set for {d}', dateCleared: 'Test date removed',
-  addTeacherBtn: 'Practice sheet / past test', addTeacherTitle: 'Teacher practice sheet or past test', addTeacherLead: 'Paste the questions, upload a PDF or take photos of the pages. The summary will cover what the questions test, you get similar questions, and the mock test follows your teacher’s style.', teacherLbl: 'Questions', teacherPh: 'Paste the questions from your teacher’s sheet or past test…', buildTeacher: 'Prepare from the practice',
-  uploadImg: 'Upload PDF, photo or .txt', readingPhotos: 'Reading the pages from the photos ({k} of {n})…', noImages: 'Photos cannot be read here. Paste the text or upload a PDF with text.', imgFail: 'Could not read the photo. Try a sharper picture, or paste the text.', imgEmpty: 'No text found in the photo. Try a sharper, straighter picture.',
+  addTeacherBtn: 'Add a sheet from your teacher', addTeacherTitle: 'Teacher practice sheet or past test', addTeacherLead: 'Paste the questions, upload a PDF or take photos of the pages. The summary will cover what the questions test, you get similar questions, and the mock test follows your teacher’s style.', teacherLbl: 'Questions', teacherPh: 'Paste the questions from your teacher’s sheet or past test…', buildTeacher: 'Prepare from the practice',
+  uploadImg: 'Take a photo or upload a page', readingPhotos: 'Reading the pages from the photos ({k} of {n})…', noImages: 'Photos cannot be read here. Paste the text or upload a PDF with text.', imgFail: 'Could not read the photo. Try a sharper picture, or paste the text.', imgEmpty: 'No text found in the photo. Try a sharper, straighter picture.', imgPartial: 'Some pages were read and added to the box.', imgTooMany: 'I read the first 20 photos. Upload the rest in another go.', photoTitle: 'Photo of a page · {d}',
   askedTag: 'Asked in the teacher’s practice', examTeacherStyle: 'The test will follow your teacher’s style, from the practice sheets and past tests you added.', teacherTitle: 'Questions in your teacher’s style', teacherH1: 'Questions in your teacher’s style', teacherDesc: 'New questions like the {n} on your teacher’s sheets, with hints and full solutions.', teacherLead: 'New questions that test the same things as your teacher’s {n} questions, in the same style, with other numbers and context.', teacherNone: 'No teacher questions yet. Add a practice sheet or past test.', makeTeacher: 'Prepare questions', newTeacher: 'Prepare new questions', writingTeacher: 'Writing questions in your teacher’s style… this takes a minute or two.', teacherOriginal: 'Your teacher’s original questions ({n})', nQuestions: '{n} questions', teacherStale: 'You added more teacher sheets since these questions were written.',
   orderHint: 'Tap the lines in the right order.', reset: 'Start over', pickReason: 'Pick a reason', criteriaLbl: 'Check yourself: what must your answer include?', doneChecking: 'Done checking', showModel: 'Show a model answer',
-  likelyMistake: 'Likely mistake:', lvlBasic: 'Basic', lvlMedium: 'Medium', lvlExam: 'Test level', orderScore: '{k} of {n} lines are in the right place.', tryHint: 'Try again, or open a hint.', hintLbl: 'Hint:', hintBtn: 'Hint', nextStep: 'Step {k} of {n}', fullSolution: 'Full solution',
-  topicScore: 'This topic: {k} of {n} right.', reviewThese: 'Added to “Go over again”: {list}.', conclusionLbl: 'Conclusion:', practiceStatic: 'Practice', practiceLive: 'Practice now: basic, medium, test level', moreLbl: 'Full explanation, example and practice',
-  today: 'Today', tomorrow: 'Tomorrow', planTitle: 'Study plan', planNoDate: 'No test date, so this is a one-week plan. Pick a date and it fits the days left.', planReview: 'Go over your mistakes ({n})', planMock: 'Mock test', planExtra: 'Go over the key topics',
-  dayDone: 'Done', markDone: 'Mark done', planTarget: 'Goal: {n} exercises', openMock: 'Open the mock test', reviewTitle: 'Go over again', reviewHint: 'Exercises you got wrong collect here. Go over them on the last day of the plan.', practiceAgain: 'Practise again', fromMock: 'From the mock test', tocLbl: 'Page navigation',
+  likelyMistake: 'Likely mistake:', lvlBasic: 'Easy', lvlMedium: 'Medium', lvlExam: 'Hard', orderScore: '{k} of {n} lines are in the right place.', tryHint: 'Try again, or open a hint.', hintLbl: 'Hint:', hintBtn: 'Hint', nextStep: 'Next step ({k} of {n})', fullSolution: 'Full solution',
+  topicScore: 'This topic: {k} of {n} right.', topicSoFar: 'You answered {a} of {n} questions, {k} right.', reviewThese: 'The ones you missed were added to “Go over again”.', conclusionLbl: 'Conclusion:', practiceStatic: 'Practice', practiceLive: 'Practice now: easy, medium, hard', moreLbl: 'Full explanation, example and practice',
+  today: 'Today', tomorrow: 'Tomorrow', planTitle: 'Study plan', planAll: 'The whole plan ({n} days)', planNoDate: 'No test date, so this is a one-week plan. Pick a date and it fits the days left.', planReview: 'Go over your mistakes ({n})', planMock: 'Mock test', planExtra: 'Go over the key topics',
+  dayDone: 'Done', markDone: 'Done ✓', planTarget: 'Goal: {n} exercises', openMock: 'Open the mock test', reviewTitle: 'Go over again', reviewHint: 'Exercises you got wrong collect here. Go over them on the last day of the plan.', practiceAgain: 'Practise again', fromMock: 'From the mock test', tocLbl: 'Page navigation',
   checklistHint2: 'Updates by itself from your practice. You can also mark it yourself.', len60: 'One hour (60 minutes)', examHint2: 'Solve it here with a {m}-minute timer, or download a Word file and write in it.', mockContinue: 'Continue the test', mockStart: 'Solve here with a timer',
   mockLast: 'Last time: {s} points.', mockResults: 'See results', previewExam: 'Peek at the test', pointsGot: 'I got:', mockResultTitle: 'Your score', mockMarkHint: 'Multiple-choice questions were marked for you. For the rest, compare with the solution and give yourself points by the marking guide.', topicCol: 'Topic', pointsCol: 'Points',
-  notMarked: '{n} not marked', mockDone: 'Test finished', timeLeft: 'Time left:', mockFinish: 'Hand in', mockFinishQ: 'Hand in the test? You will see the solutions after.',
+  notMarked: '{n} not marked', mockDone: 'Test finished', timeLeft: 'Time left:', mockFinish: 'Hand in', mockFinishQ: 'Hand in the test? You will see the solutions after.', mockBlank: 'You answered {k} of {n} parts. You can still hand it in.', mockPending: 'Marked automatically: {x} points. {y} more points wait for your marking: compare each answer with the solution and give yourself points.',
 }};
 
 /* ---------- icons ---------- */
@@ -1003,8 +1017,14 @@ function load() {
   ['quizzes', 'summaries', 'exams', 'checks', 'attempts', 'review', 'planDone', 'examRuns', 'topicSets', 'words', 'asks', 'levels', 'teacherSets'].forEach(k => { if (!out[k] || typeof out[k] !== 'object') out[k] = {}; });
   // summaries from v3/v4 held topic cards with practice: that practice now lives on the practice screen
   Object.entries(out.summaries).forEach(([sid, sum]) => { if (sum && sum.sheet && (sum.sheet.v === 3 || sum.sheet.v === 4) && !out.topicSets[sid]) out.topicSets[sid] = {sheet: sum.sheet, mids: sum.mids || [], builtAt: sum.builtAt}; });
-  out.materials.forEach(m => { m.cardChunks = m.cardChunks || []; });
-  Object.values(out.quizzes).forEach(q => { (q.questions || []).forEach(x => { if (!x.type) x.type = 'mc'; }); q.asked = q.asked || []; });
+  // anything broken (a half-written save, an edit by hand) is dropped instead of breaking the page
+  out.subjects = out.subjects.filter(x => x && typeof x === 'object' && x.id && typeof x.name === 'string');
+  out.materials = out.materials.filter(m => m && typeof m === 'object' && m.id && typeof m.text === 'string');
+  out.cards = out.cards.filter(c => c && typeof c === 'object' && c.id);
+  out.materials.forEach(m => { m.cardChunks = Array.isArray(m.cardChunks) ? m.cardChunks : []; if (m.title == null) m.title = ''; });
+  Object.keys(out.quizzes).forEach(k => { const q = out.quizzes[k]; if (!q || typeof q !== 'object' || !Array.isArray(q.questions)) { delete out.quizzes[k]; return; } q.questions = q.questions.filter(x => x && typeof x === 'object'); q.questions.forEach(x => { if (!x.type) x.type = 'mc'; }); q.asked = Array.isArray(q.asked) ? q.asked : []; });
+  ['summaries', 'topicSets', 'teacherSets', 'exams'].forEach(k => Object.keys(out[k]).forEach(sid => { if (!out[k][sid] || typeof out[k][sid] !== 'object') delete out[k][sid]; }));
+  Object.keys(out.teacherSets).forEach(sid => { if (!Array.isArray(out.teacherSets[sid].topics)) delete out.teacherSets[sid]; });
   return out;
 }
 const S = load();
@@ -1059,7 +1079,7 @@ function subjectPlan(sid) {
     for (const x of p.studyOrder || []) if (!out.studyOrder.includes(x)) out.studyOrder.push(x);
     for (const x of p.ignored || []) if (!out.ignored.includes(x)) out.ignored.push(x);
     for (const v of p.vocab || []) { const k = norm(v.term); if (!seenV.has(k)) { seenV.add(k); out.vocab.push(v); } }
-    for (const u of p.units || []) { const k = norm(u.title); if (!seenU.has(k)) { seenU.add(k); out.units.push(u); } else if (u.asked) { const x = out.units.find(y => norm(y.title) === k); if (x) x.asked = true; } }
+    for (const u of p.units || []) { const k = norm(u.title); if (!seenU.has(k)) { seenU.add(k); out.units.push({...u}); } else if (u.asked) { const x = out.units.find(y => norm(y.title) === k); if (x) x.asked = true; } }
     for (const q of p.teacherQs || []) if (out.teacherQs.length < 60) out.teacherQs.push(q);
   }
   return out;
@@ -1548,15 +1568,26 @@ function cleanTable(tb) {
 const stripNum = s => String(s || '').replace(/^\s*(?:\(?\d{1,2}[.)]|[א-ת][.)]|[a-h][.)])\s+/, '');
 const arrN = (a, n, len) => arr(a, n, len).map(stripNum).filter(Boolean);
 const LEVELS = ['basic', 'medium', 'exam'];
+const okId = v => typeof v === 'string' && /^[a-z0-9]{8,16}$/.test(v);
+const okPerm = (v, n) => Array.isArray(v) && v.length === n && range(n).every(i => v.includes(i)) ? v : shuffle(range(n));
+/* Drops empty options and keeps "correct" pointing at the same option. */
+function optsCorrect(raw, c, max, len) {
+  const src = Array.isArray(raw) ? raw : [], options = [];
+  let correct = null;
+  src.forEach((o, i) => { const x = clip(o, len); if (x && options.length < max) { if (i === c) correct = options.length; options.push(x); } });
+  return {options, correct: Number.isInteger(c) ? correct : null};
+}
+/* AI ids are kept only when they look like ours and are unique; repeats get a fresh id. */
+function uniqIds(list) { const seen = new Set(); list.forEach(x => { if (!x) return; if (seen.has(x.id)) x.id = uid(); seen.add(x.id); }); return list; }
 function cleanPractice(p, i) {
   if (!p || typeof p !== 'object') return null;
   const q = clip(p.q, 700); if (!q) return null;
   let type = ['numeric', 'text', 'mc', 'order', 'match', 'open'].includes(p.type) ? p.type : (p.a || p.answer ? 'text' : 'open');
-  const base = {id: p.id || uid(), level: LEVELS.includes(p.level) ? p.level : LEVELS[Math.min(i, 2)], q, answer: clip(p.answer != null ? p.answer : p.a, 500), accept: arr(p.accept, 6, 160), hint: clip(p.hint, 300), steps: arrN(p.steps, 16, 320),
+  const base = {id: okId(p.id) ? p.id : uid(), level: LEVELS.includes(p.level) ? p.level : LEVELS[Math.min(i | 0, 2)], q, answer: clip(typeof p.answer === 'string' || typeof p.answer === 'number' ? p.answer : typeof p.a === 'string' || typeof p.a === 'number' ? p.a : '', 500), accept: arr(p.accept, 6, 160), hint: clip(p.hint, 300), steps: arrN(p.steps, 16, 320),
     traps: (Array.isArray(p.traps) ? p.traps : []).map(x => ({answer: clip(x && x.answer, 160), why: clip(x && x.why, 260)})).filter(x => x.answer && x.why).slice(0, 4)};
-  if (type === 'mc') { const options = arr(p.options, 5, 260), c = Number(p.correct); if (options.length >= 3 && c >= 0 && c < options.length) Object.assign(base, {options, correct: c, answer: base.answer || options[c]}); else type = base.answer ? 'text' : 'open'; }
-  if (type === 'order') { const lines = arrN(p.lines, 10, 260); if (lines.length >= 3) Object.assign(base, {lines, shuf: p.shuf || shuffle(range(lines.length))}); else type = 'open'; }
-  if (type === 'match') { const pairs = (Array.isArray(p.pairs) ? p.pairs : []).map(x => ({claim: clip(x && x.claim, 220), reason: clip(x && x.reason, 220)})).filter(x => x.claim && x.reason).slice(0, 8); if (pairs.length >= 2) Object.assign(base, {pairs, shuf: p.shuf || shuffle(range(pairs.length))}); else type = 'open'; }
+  if (type === 'mc') { const {options, correct: c} = optsCorrect(p.options, Number(p.correct), 5, 260); if (options.length >= 3 && c != null) Object.assign(base, {options, correct: c, answer: base.answer || options[c]}); else type = base.answer ? 'text' : 'open'; }
+  if (type === 'order') { const lines = arrN(p.lines, 10, 260); if (lines.length >= 3) Object.assign(base, {lines, shuf: okPerm(p.shuf, lines.length)}); else type = 'open'; }
+  if (type === 'match') { const pairs = (Array.isArray(p.pairs) ? p.pairs : []).map(x => ({claim: clip(x && x.claim, 220), reason: clip(x && x.reason, 220)})).filter(x => x.claim && x.reason).slice(0, 8); if (pairs.length >= 2) Object.assign(base, {pairs, shuf: okPerm(p.shuf, pairs.length)}); else type = 'open'; }
   if (type === 'open') { base.model = clip(p.model || base.answer || base.steps.join(' '), 1500); base.criteria = arr(p.criteria, 5, 220); if (!base.model) return null; }
   if ((type === 'numeric' || type === 'text') && !base.answer) return null;
   base.type = type;
@@ -1569,7 +1600,7 @@ function cleanTopic(x) {
   const example = e ? {problem: clip(e.problem, 600), lines: arrN(e.lines, 18, 300), answer: clip(e.answer, 300), proof: !!e.proof} : null;
   const mk = x.mistake && typeof x.mistake === 'object' ? x.mistake : null;
   return {
-    id: x.id || uid(), title, star: !!x.star, starWhy: clip(x.starWhy, 220), what: clip(x.what, 600),
+    id: okId(x.id) ? x.id : uid(), title, star: !!x.star, starWhy: clip(x.starWhy, 220), what: clip(x.what, 600),
     terms: (Array.isArray(x.terms) ? x.terms : []).map(tm => ({term: clip(tm && tm.term, 60), def: clip(tm && tm.def, 260)})).filter(tm => tm.term && tm.def).slice(0, 10),
     rules: arrN(x.rules, 8, 340), steps: arrN(x.steps, 6, 280), table: cleanTable(x.table), diagram: cleanDiagram(x.diagram),
     example: example && (example.problem || example.lines.length) ? example : null,
@@ -1605,7 +1636,7 @@ function topicsToChapters(sh) {
 }
 function cleanSheetPart(d) {
   if (!d || typeof d !== 'object' || !Array.isArray(d.topics)) throw {code: 'invalid_json'};
-  const topics = d.topics.map(cleanTopic).filter(Boolean).slice(0, 12);
+  const topics = uniqIds(d.topics.map(cleanTopic).filter(Boolean).slice(0, 12));
   if (!topics.length) throw {code: 'invalid_json'};
   return {topics, must: arr(d.mustKnow, 3, 260), howToCheck: arr(d.howToCheck, 3, 260)};
 }
@@ -1615,7 +1646,7 @@ function cleanExam(d, minutes) {
   const parts = d.parts.map(p => ({
     title: clip(p && p.title, 160), instructions: clip(p && p.instructions, 300),
     questions: (Array.isArray(p && p.questions) ? p.questions : []).map(q => {
-      const items = (Array.isArray(q && q.items) ? q.items : []).map(it => { const options = arr(it && it.options, 5, 200), c = Number(it && it.correct); return {text: clip(it && it.text, 700), points: num(it && it.points, 0, 100), lines: Math.round(num(it && it.lines, 0, 14) ?? 3), options, correct: options.length && c >= 0 && c < options.length ? c : null}; }).filter(it => it.text);
+      const items = (Array.isArray(q && q.items) ? q.items : []).map(it => { const {options, correct} = optsCorrect(it && it.options, it && it.correct != null && it.correct !== '' ? Number(it.correct) : NaN, 5, 200); return {text: clip(it && it.text, 700), points: num(it && it.points, 0, 100), lines: Math.round(num(it && it.lines, 0, 14) ?? 3), options, correct: options.length ? correct : null}; }).filter(it => it.text);
       return {n: 0, topic: clip(q && q.topic, 120), points: num(q && q.points, 0, 100), text: String((q && q.text) || '').trim().slice(0, 1500), diagram: cleanDiagram(q && q.diagram), items, lines: Math.round(num(q && q.lines, 0, 14) ?? (items.length ? 0 : 4))};
     }).filter(q => q.text || q.items.length)
   })).filter(p => p.questions.length);
@@ -1740,7 +1771,8 @@ function subjectText(sid, limit) {
 }
 const sheetPartCache = {}, summaryCache = {};
 function makeSheet(sid) {
-  if (sheetJobs[sid]) return sheetJobs[sid];
+  // a material added while a sheet is being written gets its own run after this one
+  if (sheetJobs[sid]) return sheetJobs[sid].then(() => sheetMissing(sid) ? makeSheet(sid) : null);
   const run = async () => {
     const mats = matsOf(sid);
     if (!mats.length) return;
@@ -1752,21 +1784,23 @@ function makeSheet(sid) {
       return askJson(summaryPartPrompt(plan, g.name, g.units, text, cont), {modelTier: 'default'}).then(cleanSummaryPart).then(r => (summaryCache[key] = r));
     }));
     if (!subj(sid)) return;
+    const used = mats.map(m => m.id).filter(id => matById(id)); // a material deleted meanwhile is left out; one added meanwhile keeps the sheet "missing"
+    if (!used.length) return;
     const chapters = [];
     groups.forEach((g, i) => { const r = results[i], prev = chapters[chapters.length - 1]; if (g.cont && prev && prev.part === g.name) { prev.sections.push(...r.sections); prev.conclusion.push(...r.conclusion); } else chapters.push(Object.assign({part: g.name}, r, {title: r.title || g.name, sections: r.sections.slice(), conclusion: r.conclusion.slice()})); });
-    S.summaries[sid] = {subjectId: sid, sheet: {v: 5, title: plan.subject || subj(sid).name, chapters}, mids: mats.map(m => m.id), builtAt: Date.now()};
+    S.summaries[sid] = {subjectId: sid, sheet: {v: 5, title: plan.subject || subj(sid).name, chapters}, mids: used, builtAt: Date.now()};
     save(); refresh();
   };
   sheetJobs[sid] = run().finally(() => { delete sheetJobs[sid]; });
   return sheetJobs[sid];
 }
-async function makeTopics(sid, signal) {
+async function makeTopics(sid, signal, fresh) {
   const mats = matsOf(sid); if (!mats.length) return null;
   const plan = subjectPlan(sid), text = subjectText(sid, SHEET_INPUT), groups = sheetGroups(plan);
   const opts = {modelTier: 'default'}; if (signal) opts.signal = signal;
   const results = await Promise.all(groups.map(g => {
     const key = sid + '|' + levelOf(sid, 'topics') + '|' + g.name + '|' + g.units.map(u => u.title).join('|') + '|' + text.length;
-    if (sheetPartCache[key]) return sheetPartCache[key];
+    if (!fresh && sheetPartCache[key]) return sheetPartCache[key];
     return askJson(withLevel(sheetPartPrompt(plan, g.name, g.units, text), levelOf(sid, 'topics')), opts).then(cleanSheetPart).then(r => (sheetPartCache[key] = r));
   }));
   if (!subj(sid)) return null;
@@ -1776,8 +1810,9 @@ async function makeTopics(sid, signal) {
   groups.forEach((g, i) => { const prev = parts[parts.length - 1]; if (g.cont && prev && prev.name === g.name) prev.topics.push(...results[i].topics); else parts.push({name: g.name, topics: results[i].topics.slice()}); });
   const must = [], how = [];
   results.forEach(r => { r.must.slice(0, 3).forEach(x => must.push(x)); r.howToCheck.forEach(x => { if (!how.some(h => norm(h) === norm(x))) how.push(x); }); });
+  uniqIds(parts.flatMap(p => p.topics)); uniqIds(parts.flatMap(p => p.topics.flatMap(tp => tp.practice)));
   S.topicSets[sid] = {sheet: {v: 4, title: plan.subject || subj(sid).name, must: must.slice(0, 8), order: parts.map(p => p.name), parts, howToCheck: how.slice(0, 5)}, mids: mats.map(m => m.id), level: levelOf(sid, 'topics'), builtAt: Date.now()};
-  save();
+  prunePractice(sid); save();
   return S.topicSets[sid];
 }
 async function makeExam(sid, minutes, signal) {
@@ -1846,7 +1881,7 @@ async function build(mid) {
   save(); refresh();
 }
 async function finishSubject(sid) {
-  const ms = matsOf(sid).filter(hasMissing);
+  const ms = matsOf(sid).filter(m => hasMissing(m) && !(jobs[m.id] && jobs[m.id].running));
   ms.forEach(m => delete jobs[m.id]);
   for (const m of ms) await build(m.id);
   if (sheetMissing(sid) && !runningJob(sid)) {
@@ -1925,7 +1960,7 @@ function goBack() {
   if (r.name === 'subject' || (r.name === 'add' && !r.from)) return go({name: 'home'});
   if (r.name === 'add' && r.from) return go({name: 'subject', id: r.from});
   if (r.name === 'teacher') { if (TG && TG.ctl && TG.stage === 'gen') { TG.ctl.abort(); TG.stage = 'idle'; } return go({name: 'practice', id: r.id}); }
-  if (['quiz', 'exam', 'topics'].includes(r.name)) { if (r.name === 'quiz' && Q && Q.ctl) Q.ctl.abort(); if (r.name === 'topics' && TP && TP.ctl && TP.stage === 'gen') { TP.ctl.abort(); TP.stage = 'idle'; } if (r.name === 'exam' && EX && EX.ctl && EX.stage === 'gen') { EX.ctl.abort(); EX.stage = 'idle'; } return go({name: 'practice', id: r.id}); }
+  if (['quiz', 'exam', 'topics', 'teacher'].includes(r.name)) { if (r.name === 'teacher' && TG && TG.ctl && TG.stage === 'gen') { TG.ctl.abort(); TG.stage = 'idle'; } if (r.name === 'quiz' && Q && Q.ctl) Q.ctl.abort(); if (r.name === 'topics' && TP && TP.ctl && TP.stage === 'gen') { TP.ctl.abort(); TP.stage = 'idle'; } if (r.name === 'exam' && EX && EX.ctl && EX.stage === 'gen') { EX.ctl.abort(); EX.stage = 'idle'; } return go({name: 'practice', id: r.id}); }
   if (['wsess', 'wquiz', 'dict'].includes(r.name)) { if (window.speechSynthesis) try { speechSynthesis.cancel(); } catch (e) {} return go({name: 'words', id: r.id}); }
   if (r.name === 'words' || r.name === 'ask') { if (ASK && ASK.ctl && ASK.busy) ASK.ctl.abort(); return go({name: 'subject', id: r.id}); }
   if (r.name === 'cards' && R && R.fromWords) return go({name: 'words', id: r.id});
@@ -1956,7 +1991,7 @@ VIEWS.home = () => {
     </div></div>`;
   return `<div class="stack">
     <div class="head-row"><h1 tabindex="-1">${t('mySubjects')}</h1>
-      <div class="row"><button type="button" class="btn big" data-act="add-teacher" id="addTeacherBtn">${I.chat}<span>${t('addTeacherBtn')}</span></button><button type="button" class="btn big" data-act="add-words" id="addWordsBtn">${I.sound}<span>${t('addWordsBtn')}</span></button><button type="button" class="btn pri big" data-act="add" id="addBtn">${I.plus}<span>${t('addMaterial')}</span></button></div></div>
+      <div class="row add-row"><button type="button" class="btn pri big" data-act="add" id="addBtn">${I.plus}<span>${t('addMaterial')}</span></button><button type="button" class="btn big" data-act="add-teacher" id="addTeacherBtn">${I.chat}<span>${t('addTeacherBtn')}</span></button><button type="button" class="btn big" data-act="add-words" id="addWordsBtn">${I.sound}<span>${t('addWordsBtn')}</span></button></div></div>
     <ul class="subjects">${list.map(subjectCard).join('')}</ul></div>`;
 };
 function emptyArt() {
@@ -2018,7 +2053,7 @@ function addForm() {
         <label class="label" for="f-text">${d.mode === 'words' ? t('wordsLbl') : d.mode === 'teacher' ? t('teacherLbl') : t('material')}</label>
         <div class="drop" id="dropZone"><textarea class="input" id="f-text" dir="auto" placeholder="${esc(d.mode === 'words' ? t('wordsPh') : d.mode === 'teacher' ? t('teacherPh') : t('materialPh'))}">${esc(d.text)}</textarea></div>
         <div class="meta-row">
-          <span class="row" style="gap:8px"><button type="button" class="btn" data-act="pick-file" id="pickBtn">${I.upload}<span>${imgCaps ? t('uploadImg') : t('upload')}</span></button><span class="hint">${t('dropHint')}</span></span>
+          <span class="row" style="gap:8px"><button type="button" class="btn" data-act="pick-file" id="pickBtn">${I.upload}<span>${imgCaps ? t('uploadImg') : t('upload')}</span></button><span class="hint drop-hint">${t('dropHint')}</span></span>
           <span class="num" id="charCount">${t('chars', {n: fmtNum(len)})}</span>
         </div>
         <input type="file" id="f-file" accept=".pdf,.txt,application/pdf,text/plain${imgCaps ? ',' + imgCaps.mediaTypes.join(',') : ''}" ${imgCaps ? 'multiple' : ''} hidden>
@@ -2084,48 +2119,74 @@ async function pdfPagesToImages(file, max) {
 }
 const TRANSCRIBE = `These images are photos or scans of a school page: study material, a teacher's worksheet or a past test. Copy ALL the text into plain text, in reading order, exactly as written: keep question numbers and sub-question letters, every number, name and formula (write math in plain text such as 3x + 5 = 20 or x^2), and the original language (Hebrew, Arabic or English). Put each question on its own line. Describe every figure, diagram or table in one bracketed line, for example [שרטוט: משולש ABC שבו AB = AC]. Do not solve, explain, translate or add anything. If a part cannot be read, write [לא קריא].
 Reply with JSON only: {"text":""}`;
-async function transcribe(blobs) {
+/* A file being read belongs to the form it was dropped on: leaving the form (or starting another one) drops the result. */
+const onForm = d => draft === d && route.name === 'add' && !route.buildId;
+const formRender = d => { if (onForm(d)) render(false); };
+async function transcribe(blobs, d) {
   const sample = await getSample(); if (!sample || !imgCaps) throw {code: 'images_unavailable'};
   const per = Math.max(1, imgCaps.maxCount || 1), parts = [];
   for (let i = 0; i < blobs.length; i += per) {
-    fileBusy = t('readingPhotos', {k: Math.min(i + per, blobs.length), n: blobs.length}); render(false);
-    const d = await slot(() => sample.json(TRANSCRIBE, {images: blobs.slice(i, i + per), modelTier: 'default', cache: false}));
-    const txt = String((d && d.text) || '').trim(); if (txt) parts.push(txt);
+    if (!onForm(d)) throw {code: 'cancelled'};
+    fileBusy = t('readingPhotos', {k: Math.min(i + per, blobs.length), n: blobs.length}); formRender(d);
+    let r;
+    try { r = await slot(() => sample.json(TRANSCRIBE, {images: blobs.slice(i, i + per), modelTier: 'default', cache: false})); }
+    catch (e) { if (parts.length) { e = Object.assign({}, e); e.partial = parts.join('\n\n'); } throw e; }
+    const txt = String((r && typeof r.text === 'string' && r.text) || '').trim(); if (txt) parts.push(txt);
   }
   return parts.join('\n\n');
 }
+function imgError(e, d) {
+  if (!onForm(d)) return;
+  fileBusy = false;
+  if (e && e.code === 'cancelled') return render(false);
+  const code = e && e.code;
+  fileMsg = code === 'images_unavailable' ? t('noImages') : code === 'invalid_json' || code === 'empty_completion' || !code ? t('imgFail') : errText(code);
+  if (e && e.partial) { setDraftText(e.partial, 'photo', '', false); fileMsg = t('imgPartial') + ' ' + fileMsg; }
+  render(false);
+}
 async function readFiles(files) {
+  const d = draft; if (!d) return;
   const imgs = files.filter(isImage);
   if (imgs.length) {
     fileMsg = null;
-    if (!imgCaps) { fileMsg = t('noImages'); return render(false); }
-    try { const text = await transcribe(imgs.slice(0, 20)); fileBusy = false; if (text.replace(/\s/g, '').length < 10) { fileMsg = t('imgEmpty'); return render(false); } setDraftText(text, 'photo', imgs[0].name, imgs.length > 1); }
-    catch (e) { fileBusy = false; fileMsg = OFF_CODES.has(e && e.code) ? t('aiOff') : t('imgFail'); render(false); }
+    if (!imgCaps) { fileMsg = t('noImages'); return formRender(d); }
+    if (fileBusy) return;
+    try {
+      const text = await transcribe(imgs.slice(0, 20), d);
+      if (!onForm(d)) return; fileBusy = false;
+      if (text.replace(/\s/g, '').length < 10) { fileMsg = t('imgEmpty'); return render(false); }
+      setDraftText(text, 'photo', imgs.length > 1 ? '' : imgs[0].name, imgs.length > 1);
+      if (imgs.length > 20) { fileMsg = t('imgTooMany'); render(false); }
+    } catch (e) { imgError(e, d); }
     return;
   }
-  return readFile(files[0]);
+  return readFile(files[0], d);
 }
 function setDraftText(text, type, name, more) {
   const add = text.replace(/\r\n?/g, '\n').trim();
   draft.text = draft.text.trim() && type === 'photo' ? draft.text.trim() + '\n\n' + add : add;
   draft.type = type === 'photo' ? 'pdf' : type;
-  if (!draft.titleTouched && name) { draft.title = clip(name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' '), 80) + (more ? ' …' : ''); draft.titleTouched = true; }
+  if (!draft.titleTouched) { draft.title = type === 'photo' && (!name || more || /^(img|image|photo|scan|page|dsc|pxl|whatsapp|screenshot)[\W_\d]*/i.test(name)) ? t('photoTitle', {d: fmtDate(todayStr())}) : clip((name || '').replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' '), 80); draft.titleTouched = !!draft.title; }
   render(false);
 }
-async function readFile(f) {
+async function readFile(f, d) {
+  d = d || draft; if (!d) return;
   const isPdf = /\.pdf$/i.test(f.name) || f.type === 'application/pdf';
   const isTxt = /\.(txt|md|text)$/i.test(f.name) || f.type === 'text/plain';
   fileMsg = null;
-  if (!isPdf && !isTxt) { fileMsg = t('fileType'); return render(false); }
-  fileBusy = t('readingFile', {name: f.name}); render(false);
+  if (!isPdf && !isTxt) { fileMsg = t('fileType'); return formRender(d); }
+  if (fileBusy) return;
+  fileBusy = t('readingFile', {name: f.name}); formRender(d);
   let text = '';
   try { text = isPdf ? await pdfToText(f) : await f.text(); }
-  catch (e) { fileBusy = false; fileMsg = isPdf ? t('pdfFail') : t('fileType'); return render(false); }
+  catch (e) { if (onForm(d)) { fileBusy = false; fileMsg = isPdf ? t('pdfFail') : t('fileType'); render(false); } return; }
+  if (!onForm(d)) return;
   if (isPdf && text.replace(/\s/g, '').length < 40) {
     // a scanned PDF has no text layer: read its pages as images when possible
     if (!imgCaps) { fileBusy = false; fileMsg = t('scan'); return render(false); }
-    try { const pages = await pdfPagesToImages(f, 10); text = await transcribe(pages); }
-    catch (e) { fileBusy = false; fileMsg = OFF_CODES.has(e && e.code) ? t('aiOff') : t('imgFail'); return render(false); }
+    try { const pages = await pdfPagesToImages(f, 10); text = await transcribe(pages, d); }
+    catch (e) { return imgError(e, d); }
+    if (!onForm(d)) return;
     if (text.replace(/\s/g, '').length < 10) { fileBusy = false; fileMsg = t('imgEmpty'); return render(false); }
   }
   fileBusy = false;
@@ -2170,6 +2231,7 @@ function buildView() {
   if (job && job.off && !running) foot = `<p class="msg" role="alert">${t('aiOff')}</p><div class="row"><button type="button" class="btn pri big" data-act="retry-build" data-id="${m.id}" id="retryBtn">${t('retry')}</button><button type="button" class="btn big" data-act="open-subject" data-id="${s.id}" id="openSubjBtn">${t('openSubject')}</button></div>`;
   else if (job && job.error && !running) foot = `<p class="msg" role="alert">${errText(job.error)}</p><div class="row"><button type="button" class="btn pri big" data-act="retry-build" data-id="${m.id}" id="retryBtn">${t('retry')}</button>${made ? `<button type="button" class="btn big" data-act="cards" data-id="${s.id}" id="startBtn">${t('startCards')}</button>` : ''}<button type="button" class="btn big" data-act="open-subject" data-id="${s.id}" id="openSubjBtn">${t('openSubject')}</button></div>`;
   else if (done && !running && m.words && wordsOf(s.id).length) foot = `<div class="row"><button type="button" class="btn pri big" data-act="words" data-id="${s.id}" id="startBtn">${t('startWords')}</button><button type="button" class="btn big" data-act="open-subject" data-id="${s.id}" id="openSubjBtn">${t('openSubject')}</button></div>`;
+  else if (done && !running && m.teacher && hasTeacher(s.id)) foot = `<div class="row"><button type="button" class="btn pri big" data-act="teacher" data-id="${s.id}" id="startTeacherBtn">${t('startTeacher')}</button><button type="button" class="btn big" data-act="open-subject" data-id="${s.id}" id="openSubjBtn">${t('openSubject')}</button></div>`;
   else if (done && !running) foot = `<div class="row"><button type="button" class="btn pri big" data-act="cards" data-id="${s.id}" id="startBtn">${t('startCards')}</button><button type="button" class="btn big" data-act="open-subject" data-id="${s.id}" id="openSubjBtn">${t('openSubject')}</button></div>`;
   else foot = `<div class="row">${made >= 5 ? `<button type="button" class="btn pri big" data-act="cards" data-id="${s.id}" id="startBtn">${t('startNow')}</button>` : ''}<button type="button" class="btn big" data-act="open-subject" data-id="${s.id}" id="openSubjBtn">${t('openSubject')}</button></div><p class="hint">${t('buildHint')}</p>`;
   return `<div class="stack">
@@ -2240,7 +2302,7 @@ VIEWS.cards = () => {
   if (R.empty) {
     const nd = nextDueDate(s.id);
     return `<div class="stack">${head}<div class="panel result"><h1 tabindex="-1">${t('nothingDue')}</h1>${nd ? `<p class="lead">${t('nextDue', {d: esc(fmtDate(nd, {weekday: 'long', day: 'numeric', month: 'long'}))})}</p>` : ''}
-      ${progress}<button type="button" class="btn big" data-act="back" id="doneBack">${t('back')}</button></div></div>`;
+      ${progress}<button type="button" class="btn big" data-act="back" id="doneBack">${t('backSubj')}</button></div></div>`;
   }
   if (R.done) {
     const r = R.missed.size, g = new Set(R.queue).size - r;
@@ -2323,7 +2385,7 @@ VIEWS.quiz = () => {
       <h1 tabindex="-1" class="sr">${t('quizDone')}: ${sc} / ${n}</h1>
       ${missed.length ? '' : `<p class="lead">${t('allRight')}</p>`}
       ${Q.err ? `<p class="msg" role="alert">${errText(Q.err)}</p>` : ''}
-      <div class="row" style="justify-content:center">${missed.length ? `<button type="button" class="btn pri big" data-act="retry-missed" id="retryMissedBtn" data-autofocus>${t('retryMissed')}</button>` : ''}<button type="button" class="btn big ${missed.length ? '' : 'pri'}" data-act="new-quiz" id="newQuizBtn" ${missed.length ? '' : 'data-autofocus'}>${t('newQuiz')}</button><button type="button" class="btn big" data-act="back" id="doneBack">${t('back')}</button></div></div>
+      <div class="row" style="justify-content:center">${missed.length ? `<button type="button" class="btn pri big" data-act="retry-missed" id="retryMissedBtn" data-autofocus>${t('retryMissed')}</button>` : ''}<button type="button" class="btn big ${missed.length ? '' : 'pri'}" data-act="new-quiz" id="newQuizBtn" ${missed.length ? '' : 'data-autofocus'}>${t('newQuiz')}</button><button type="button" class="btn big" data-act="back" id="doneBack">${t('backSubj')}</button></div></div>
       ${missed.length ? `<section><h2 style="margin-bottom:12px">${t('missedQs')}</h2><ul class="missed" dir="${cd}">${missed.map(q => `<li><span style="font-weight:700">${tx(q.q)}</span><span class="a row" style="gap:6px">${I.check}<span>${tx(rightText(q))}</span></span>${q.why ? `<span class="hint">${tx(q.why)}</span>` : ''}</li>`).join('')}</ul></section>` : ''}
     </div>`;
   }
@@ -2675,6 +2737,14 @@ function upgradeSheet(sum) {
 }
 const openTopics = new Set(), PS = {};
 const attemptsOf = sid => (S.attempts[sid] = S.attempts[sid] || {});
+/* After new questions replace old ones, answers and "go over again" items of the old questions are dropped. */
+function prunePractice(sid) {
+  const ids = new Set();
+  const ts = S.teacherSets[sid]; if (ts) ts.topics.forEach(tp => tp.practice.forEach(q => ids.add(q.id)));
+  const sh = S.topicSets[sid] && S.topicSets[sid].sheet; if (sh && sh.parts) sh.parts.forEach(p => p.topics.forEach(tp => tp.practice.forEach(q => ids.add(q.id))));
+  const at = S.attempts[sid]; if (at) Object.keys(at).forEach(k => { if (!ids.has(k)) delete at[k]; });
+  const rv = S.review[sid]; if (rv) Object.keys(rv).forEach(k => { if (rv[k] && rv[k].kind === 'practice' && !ids.has(k)) delete rv[k]; });
+}
 function findPractice(sid, pid) {
   const ts = S.teacherSets[sid];
   if (ts) for (const tp of ts.topics) for (const q of tp.practice) if (q.id === pid) return {tp, p: q, src: 'teacher'};
@@ -2723,7 +2793,7 @@ function topicSummary(tp, ctx) {
   const at = attemptsOf(ctx.sid), tried = tp.practice.filter(p => at[p.id]);
   if (!tried.length) return '';
   const right = tried.filter(p => at[p.id].ok).length, wrong = tried.filter(p => !at[p.id].ok);
-  return `<p class="tsum ${wrong.length ? 'bad' : 'ok'}">${t('topicScore', {k: right, n: tp.practice.length})}${wrong.length ? ` ${t('reviewThese', {list: wrong.map(p => levelLbl(p.level)).join(', ')})}` : ''}</p>`;
+  return `<p class="tsum ${wrong.length ? 'bad' : 'ok'}">${tried.length < tp.practice.length ? t('topicSoFar', {a: tried.length, k: right, n: tp.practice.length}) : t('topicScore', {k: right, n: tp.practice.length})}${wrong.length ? ` ${t('reviewThese')}` : ''}</p>`;
 }
 function topicHtml(tp, ctx) {
   const ex = tp.example, mk = tp.mistake, num = ++ctx.topicN;
@@ -2767,14 +2837,17 @@ function planHtml(s, sh, isStatic) {
   const dayName = d => d === td ? t('today') : d === addDays(td, 1) ? t('tomorrow') : fmtDate(d, {weekday: 'long', day: 'numeric', month: 'short'});
   return `<section class="plan panel stack" id="sec-plan" style="gap:12px"><div class="sec-head" style="margin:0"><h2>${t('planTitle')}</h2>${s.examDate && !noDate ? `<span class="chip warn">${esc(examInfo(s).text)}</span>` : ''}</div>
     ${noDate && !isStatic ? `<div class="row"><p class="hint" style="flex:1;min-width:200px">${t('planNoDate')}</p><button type="button" class="btn" data-act="cal-open" data-for="subject" data-id="${s.id}" id="planDate">${I.cal}<span>${t('pickDate')}</span></button></div>` : ''}
-    <ol class="days">${days.map((d, i) => {
+    ${(() => { const dayHtml = (d, i) => {
       const target = d.topics.reduce((a, x) => a + x.practice.length, 0) + (d.extra ? 2 : 0);
       const what = d.review ? `${t('planReview', {n: reviewN})}${d.mock ? ` · ${t('planMock')}` : ''}` : d.extra ? t('planExtra') : '';
       const isDone = !!doneMap[d.date];
       return `<li class="day ${d.date === td ? 'today' : ''} ${isDone ? 'done' : ''}"><div class="day-h"><b>${esc(dayName(d.date))}</b>${!isStatic ? `<button type="button" class="yn ${isDone ? 'on yes' : ''}" data-act="plan-done" data-d="${d.date}" aria-pressed="${isDone}">${isDone ? '✓ ' + t('dayDone') : t('markDone')}</button>` : ''}</div>
         <div class="chips">${d.topics.map(x => isStatic ? `<span class="chip" dir="auto">${x.star ? '★ ' : ''}${esc(plainMath(x.title))}</span>` : `<button type="button" class="chip as-btn" data-act="goto" data-t="tp-${x.id}" dir="auto">${x.star ? '★ ' : ''}${esc(plainMath(x.title))}</button>`).join('')}${what ? `<span class="chip ${d.review ? 'warn' : 'plain'}">${esc(what)}</span>` : ''}</div>
         ${target && !d.review ? `<p class="hint">${t('planTarget', {n: target})}</p>` : ''}${d.mock && !isStatic ? `<button type="button" class="btn" data-act="exam" data-id="${s.id}">${t('openMock')}</button>` : ''}</li>`;
-    }).join('')}</ol></section>`;
+    };
+      if (isStatic || days.length <= 2) return `<ol class="days">${days.map(dayHtml).join('')}</ol>`;
+      // the student sees today first; the rest of the plan opens on request
+      return `<ol class="days">${dayHtml(days[0], 0)}</ol><details class="plan-rest"><summary class="label" style="cursor:pointer;min-height:44px;display:flex;align-items:center">${t('planAll', {n: days.length})}</summary><ol class="days" start="2" style="margin-top:10px">${days.slice(1).map((d, k) => dayHtml(d, k + 1)).join('')}</ol></details>`; })()}</section>`;
 }
 function reviewHtml(s) {
   const items = Object.entries((S.review && S.review[s.id]) || {});
@@ -2976,16 +3049,17 @@ VIEWS.practice = () => {
   if (!s) { route = {name: 'home'}; return VIEWS.home(); }
   const quiz = S.quizzes[s.id], exam = S.exams && S.exams[s.id], set = S.topicSets[s.id];
   const card = (ic, title, desc, chip, kind, btn) => `<section class="panel stack tool" style="gap:12px"><div class="row" style="gap:12px;flex-wrap:nowrap"><span class="ic">${ic}</span><div class="stack" style="gap:2px"><h2>${title}</h2><p class="hint">${desc}</p></div></div>${chip}${levelPicker(s.id, kind)}${btn}</section>`;
+  const chipOf = x => x ? `<span class="chip" style="align-self:flex-start">${x}</span>` : '';
+  const btnOf = (act, id, label, first) => `<button type="button" class="btn ${first ? 'pri' : ''} big" data-act="${act}" data-id="${s.id}" id="${id}">${label}</button>`;
+  const tools = [
+    hasTeacher(s.id) && (f => card(I.chat, t('teacherTitle'), t('teacherDesc', {n: subjectPlan(s.id).teacherQs.length}), chipOf(S.teacherSets[s.id] && t('topicsReadyLvl', {l: t('wl_' + (S.teacherSets[s.id].level || 'medium'))})), 'teacher', btnOf('teacher', 'choiceTeacher', S.teacherSets[s.id] ? t('openTopics') : t('makeTeacher'), f))),
+    f => card(I.quiz, t('quickQuiz'), t('quickQuizDesc'), chipOf(quiz && quiz.lastScore && t('lastScore', {s: iso(quiz.lastScore)})), 'quiz', btnOf('quiz', 'choiceQuiz', quiz && quiz.questions && quiz.questions.length && (quiz.level || 'medium') === levelOf(s.id, 'quiz') ? t('startQuiz') : t('makeQuizLvl'), f)),
+    (set || subjectPlan(s.id).units.length > 0) && (f => card(I.edit, t('topicPractice'), t('topicPracticeDesc'), chipOf(set && t('topicsReadyLvl', {l: t('wl_' + (set.level || 'medium'))})), 'topics', btnOf('topics', 'choiceTopics', set ? t('openTopics') : t('makeTopics'), f))),
+    f => card(I.doc, t('realExam'), t('realExamDesc'), chipOf(exam && t('lastExam', {d: esc(fmtDate(todayStr(new Date(exam.builtAt))))})), 'exam', btnOf('exam', 'choiceExam', exam ? t('openExam') : t('makeExam'), f))
+  ].filter(Boolean);
   return `<div class="stack">${'<div>' + backBtn(s.name) + '</div>'}
     <h1 tabindex="-1">${t('practiceTitle')}</h1>
-    ${card(I.quiz, t('quickQuiz'), t('quickQuizDesc'), quiz && quiz.lastScore ? `<span class="chip" style="align-self:flex-start">${t('lastScore', {s: iso(quiz.lastScore)})}</span>` : '', 'quiz',
-      `<button type="button" class="btn pri big" data-act="quiz" data-id="${s.id}" id="choiceQuiz">${quiz && quiz.questions && quiz.questions.length && (quiz.level || 'medium') === levelOf(s.id, 'quiz') ? t('startQuiz') : t('makeQuizLvl')}</button>`)}
-    ${card(I.edit, t('topicPractice'), t('topicPracticeDesc'), set ? `<span class="chip" style="align-self:flex-start">${t('topicsReadyLvl', {l: t('wl_' + (set.level || 'medium'))})}</span>` : '', 'topics',
-      `<button type="button" class="btn pri big" data-act="topics" data-id="${s.id}" id="choiceTopics">${set ? t('openTopics') : t('makeTopics')}</button>`)}
-    ${hasTeacher(s.id) ? card(I.chat, t('teacherTitle'), t('teacherDesc', {n: subjectPlan(s.id).teacherQs.length}), S.teacherSets[s.id] ? `<span class="chip" style="align-self:flex-start">${t('topicsReadyLvl', {l: t('wl_' + (S.teacherSets[s.id].level || 'medium'))})}</span>` : '', 'teacher',
-      `<button type="button" class="btn pri big" data-act="teacher" data-id="${s.id}" id="choiceTeacher">${S.teacherSets[s.id] ? t('openTopics') : t('makeTeacher')}</button>`) : ''}
-    ${card(I.doc, t('realExam'), t('realExamDesc'), exam ? `<span class="chip" style="align-self:flex-start">${t('lastExam', {d: esc(fmtDate(todayStr(new Date(exam.builtAt))))})}</span>` : '', 'exam',
-      `<button type="button" class="btn pri big" data-act="exam" data-id="${s.id}" id="choiceExam">${exam ? t('openExam') : t('makeExam')}</button>`)}
+    ${tools.map((f, i) => f(i === 0)).join('')}
   </div>`;
 };
 let TP = null;
@@ -2998,7 +3072,7 @@ VIEWS.topics = () => {
   if (TP.stage === 'gen') return `<div class="stack">${head}<div class="panel result" aria-live="polite"><span class="spin" style="width:32px;height:32px"></span><h1 tabindex="-1">${t('writingTopics')}</h1><button type="button" class="btn big" data-act="stop-topics">${t('stop')}</button></div></div>`;
   const err = TP.err ? `<p class="msg" role="alert">${errText(TP.err)}</p>` : '';
   if (!set) return `<div class="stack">${head}<h1 tabindex="-1">${t('topicPractice')}</h1><p class="lead">${t('topicPracticeDesc')}</p>${err}<div class="row"><button type="button" class="btn pri big" data-act="make-topics" id="makeTopicsBtn">${t('makeTopics')}</button></div><p class="hint">${t('topicsNote')}</p></div>`;
-  const stale = matsOf(s.id).some(m => !(set.mids || []).includes(m.id));
+  const stale = !!set.stale || matsOf(s.id).some(m => !(set.mids || []).includes(m.id));
   return `<div class="stack sheet">${head}
     <div class="stack" style="gap:8px"><p class="eyebrow">${t('topicPractice')}</p><h1 tabindex="-1" dir="${cd}">${esc(plainMath(set.sheet.title || s.name))}</h1></div>
     ${(set.level || 'medium') !== levelOf(s.id, 'topics') ? `<div class="panel status"><p>${t('topicsOtherLevel', {a: t('wl_' + (set.level || 'medium')), b: t('wl_' + levelOf(s.id, 'topics'))})}</p><button type="button" class="btn pri" data-act="make-topics">${t('newTopics')}</button></div>` : ''}
@@ -3011,7 +3085,7 @@ async function generateTopics() {
   TP.stage = 'gen'; TP.err = null; TP.ctl = new AbortController();
   const ctl = TP.ctl;
   render(true);
-  try { if (!(await getSample())) throw {code: 'unavailable'}; Object.keys(sheetPartCache).forEach(k => { if (k.startsWith(sid + '|')) delete sheetPartCache[k]; }); await makeTopics(sid, ctl.signal); }
+  try { if (!(await getSample())) throw {code: 'unavailable'}; await makeTopics(sid, ctl.signal, true); }
   catch (e) { if (TP.ctl === ctl) TP.err = (e && e.code) === 'cancelled' ? null : ((e && e.code) || 'upstream_error'); }
   if (TP.ctl !== ctl) return;
   TP.stage = 'idle';
@@ -3043,11 +3117,11 @@ VIEWS.exam = () => {
   if (!s) { route = {name: 'home'}; return VIEWS.home(); }
   if (!EX || EX.sid !== s.id) EX = {sid: s.id, stage: 'idle', minutes: 60, err: null, ctl: null};
   const rec = S.exams && S.exams[s.id];
-  const head = `<div>${backBtn(s.name)}</div>`;
+  const head = `<div>${backBtn(t('practiceTitle'))}</div>`;
   if (EX.stage === 'gen') return `<div class="stack">${head}<div class="panel result" aria-live="polite"><span class="spin" style="width:32px;height:32px"></span><h1 tabindex="-1">${t('writingExam')}</h1><button type="button" class="btn big" data-act="stop-exam" id="stopExamBtn">${t('stop')}</button></div></div>`;
   const teacherNote = subjectPlan(s.id).teacherQs.length ? `<p class="msg info">${t('examTeacherStyle')}</p>` : '';
   const form = `<div class="panel stack" style="gap:14px">${teacherNote}<p class="label">${t('wLevel')}</p>${levelPicker(s.id, 'exam')}<p class="label">${t('examLength')}</p><div class="row" role="radiogroup">
-      ${[45, 60, 90].map(m => `<button type="button" class="btn ${EX.minutes === m ? 'pri' : ''}" role="radio" aria-checked="${EX.minutes === m}" data-act="exam-len" data-v="${m}" id="len${m}">${t('len' + m)}</button>`).join('')}</div>
+      ${[45, 60, 90].map(m => `<button type="button" class="btn seg ${EX.minutes === m ? 'on' : ''}" role="radio" aria-checked="${EX.minutes === m}" data-act="exam-len" data-v="${m}" id="len${m}">${t('len' + m)}</button>`).join('')}</div>
       ${EX.err ? `<p class="msg" role="alert">${errText(EX.err)}</p>` : ''}
       <div class="row"><button type="button" class="btn pri big" data-act="make-exam" id="makeExamBtn">${rec ? t('newExam') : t('makeExam')}</button></div><p class="hint">${t('examNote')}</p></div>`;
   if (!rec) return `<div class="stack">${head}<h1 tabindex="-1">${t('realExam')}</h1><p class="lead">${t('realExamDesc')}</p>${form}</div>`;
@@ -3078,13 +3152,13 @@ function examItems(rec) {
   return rec.exam.parts.flatMap(p => p.questions).flatMap(q => (q.items.length ? q.items : [{text: '', points: q.points, lines: q.lines, options: [], correct: null}]).map((it, i) => ({q, it, i, key: itemKey(q, i), max: it.points != null ? it.points : (q.points || 0) / Math.max(1, q.items.length)})));
 }
 function mockScore(rec, run) {
-  let got = 0, max = 0; const byTopic = {};
+  let got = 0, max = 0, pending = 0; const byTopic = {};
   for (const x of examItems(rec)) {
     const v = run.pts[x.key] != null ? Number(run.pts[x.key]) : (x.it.correct != null ? (run.mc[x.key] === x.it.correct ? x.max : 0) : null);
-    max += x.max; got += v || 0;
+    max += x.max; got += v || 0; if (v == null) pending += x.max;
     const tp = x.q.topic || '—'; byTopic[tp] = byTopic[tp] || {got: 0, max: 0, open: 0}; byTopic[tp].max += x.max; byTopic[tp].got += v || 0; if (v == null) byTopic[tp].open++;
   }
-  return {got, max, byTopic};
+  return {got, max, pending, byTopic};
 }
 function startMock() {
   const sid = route.id, rec = S.exams[sid];
@@ -3123,13 +3197,13 @@ VIEWS.mock = () => {
           const sl = solBy.get(q.n), it2 = sl && sl.items[x.i];
           const auto = x.it.correct != null;
           marking = `<div class="solbox">${it2 ? `${it2.steps.map(st => `<p dir="auto">${inline(st)}</p>`).join('')}${it2.answer ? `<p><b>${Lb.answer}</b> <span dir="auto">${inline(it2.answer)}</span></p>` : ''}${it2.grading ? `<p class="hint">${Lb.grading} ${inline(it2.grading)}</p>` : ''}` : ''}
-            <label class="pts-row"><span>${t('pointsGot')}</span>${auto ? `<b class="num">${run.mc[x.key] === x.it.correct ? fmtScore(x.max) : 0} / ${fmtScore(x.max)}</b>` : `<input class="input num" type="number" min="0" max="${x.max}" step="0.5" data-mpts="${x.key}" value="${run.pts[x.key] != null ? run.pts[x.key] : ''}" placeholder="0–${fmtScore(x.max)}" style="max-width:110px"> <span class="hint">/ ${fmtScore(x.max)}</span>`}</label></div>`;
+            <label class="pts-row"><span>${t('pointsGot')}</span>${auto ? `<b class="num" dir="ltr">${run.mc[x.key] === x.it.correct ? fmtScore(x.max) : 0} / ${fmtScore(x.max)}</b>` : `<span dir="ltr" class="pts-io"><input class="input num" dir="ltr" type="number" min="0" max="${x.max}" step="0.5" data-mpts="${x.key}" value="${run.pts[x.key] != null ? run.pts[x.key] : ''}" placeholder="0–${fmtScore(x.max)}" style="max-width:110px"> <span class="hint">/ ${fmtScore(x.max)}</span></span>`}</label></div>`;
         }
         return `<div class="mock-it">${label}${answerUi}${marking}</div>`;
       }).join('')}</div>`;
   };
   const sc = mockScore(rec, run);
-  const result = run.finished ? `<section class="panel stack" style="gap:12px"><h2>${t('mockResultTitle')}</h2><p class="big-num">${ltr(`${fmtScore(sc.got)} / ${fmtScore(sc.max)}`)}</p><p class="hint">${t('mockMarkHint')}</p>
+  const result = run.finished ? `<section class="panel stack" style="gap:12px"><h2>${t('mockResultTitle')}</h2>${sc.pending ? `<p class="lead">${t('mockPending', {x: ltr(fmtScore(sc.got)), y: ltr(fmtScore(sc.pending))})}</p>` : `<p class="big-num">${ltr(`${fmtScore(sc.got)} / ${fmtScore(sc.max)}`)}</p>`}<p class="hint">${t('mockMarkHint')}</p>
     <div class="tw"><table class="vt"><thead><tr><th>${t('topicCol')}</th><th>${t('pointsCol')}</th><th>%</th></tr></thead><tbody>${Object.entries(sc.byTopic).map(([k, v]) => `<tr><td dir="auto">${esc(k)}</td><td class="num">${fmtScore(v.got)} / ${fmtScore(v.max)}${v.open ? ` <span class="hint">(${t('notMarked', {n: v.open})})</span>` : ''}</td><td class="num"><b class="${v.max && v.got / v.max < 0.6 ? 'lowp' : ''}">${v.max ? Math.round(100 * v.got / v.max) : 0}%</b></td></tr>`).join('')}</tbody></table></div></section>` : '';
   return `<div class="stack"><div>${backBtn(t('realExam'))}</div>
     <div class="mockbar"><div class="row" style="justify-content:space-between;width:100%">${run.finished ? `<b>${t('mockDone')}</b>` : `<span class="row" style="gap:8px">${t('timeLeft')} <b id="mockTimer" class="num timer">${(l => `${Math.floor(l / 60)}:${pad(l % 60)}`)(Math.max(0, rec.exam.duration * 60 - Math.floor((Date.now() - run.start) / 1000)))}</b></span>`}${run.finished ? '' : `<button type="button" class="btn pri" data-act="mock-finish" id="mockFinish">${t('mockFinish')}</button>`}</div></div>
@@ -3159,7 +3233,7 @@ const LEVEL_GEN = {
 };
 const levelOf = (sid, kind) => { const l = (S.levels[sid] || {})[kind]; return WLEVELS.includes(l) ? l : 'medium'; };
 const withLevel = (prompt, level) => prompt.replace('<material>', `Difficulty: ${LEVEL_GEN[level] || LEVEL_GEN.medium}\n\n<material>`);
-const levelPicker = (sid, kind) => `<div class="lvl-row lvl-sm" role="radiogroup" aria-label="${esc(t('wLevel'))}">${WLEVELS.map(l => `<button type="button" class="lvl-btn ${levelOf(sid, kind) === l ? 'on' : ''}" role="radio" aria-checked="${levelOf(sid, kind) === l}" data-act="lvl-set" data-k="${kind}" data-v="${l}" id="lv-${kind}-${l}"><b>${t('wl_' + l)}</b><span>${t('wl_' + l + '_d')}</span></button>`).join('')}</div>`;
+const levelPicker = (sid, kind) => `<div class="lvl-row lvl-sm" role="radiogroup" aria-label="${esc(t('wLevel'))}">${WLEVELS.map(l => `<button type="button" class="lvl-btn ${levelOf(sid, kind) === l ? 'on' : ''}" role="radio" aria-checked="${levelOf(sid, kind) === l}" data-act="lvl-set" data-k="${kind}" data-v="${l}" id="lv-${kind}-${l}"><b>${t('wl_' + l)}</b><span>${t('lv_' + l + '_d')}</span></button>`).join('')}</div>`;
 
 /* ---------- practice in the teacher's style: new questions like the teacher's own ---------- */
 const hasTeacher = sid => subjectPlan(sid).teacherQs.length > 0;
@@ -3211,8 +3285,9 @@ async function makeTeacherSet(sid, signal) {
   if (!subj(sid)) return null;
   const merged = [];
   results.flat().forEach(tp => { const same = merged.find(x => norm(x.title) === norm(tp.title)); if (same) same.practice.push(...tp.practice); else merged.push(tp); });
+  uniqIds(merged); uniqIds(merged.flatMap(tp => tp.practice));
   S.teacherSets[sid] = {topics: merged, level, mids: matsOf(sid).filter(m => m.teacher).map(m => m.id), builtAt: Date.now()};
-  save();
+  prunePractice(sid); save();
   return S.teacherSets[sid];
 }
 let TG = null;
@@ -3230,7 +3305,7 @@ VIEWS.teacher = () => {
   if (!set) return `<div class="stack">${head}${intro}${err}<div class="panel stack" style="gap:12px"><p class="label">${t('wLevel')}</p>${levelPicker(s.id, 'teacher')}<div class="row"><button type="button" class="btn pri big" data-act="make-teacher" id="makeTeacherBtn">${t('makeTeacher')}</button></div></div>${original}</div>`;
   const ctx = {cd, sid: s.id, static: false, answers: [], topicN: 0};
   const otherLevel = (set.level || 'medium') !== levelOf(s.id, 'teacher');
-  const stale = matsOf(s.id).some(m => m.teacher && !(set.mids || []).includes(m.id));
+  const stale = !!set.stale || matsOf(s.id).some(m => m.teacher && !(set.mids || []).includes(m.id));
   return `<div class="stack sheet">${head}${intro}${err}
     <div class="panel stack" style="gap:12px"><p class="label">${t('wLevel')}</p>${levelPicker(s.id, 'teacher')}${stale ? `<p class="hint">${t('teacherStale')}</p>` : ''}${otherLevel ? `<p class="hint">${t('topicsOtherLevel', {a: t('wl_' + (set.level || 'medium')), b: t('wl_' + levelOf(s.id, 'teacher'))})}</p>` : ''}<div class="row"><button type="button" class="btn ${otherLevel || stale ? 'pri' : ''}" data-act="make-teacher" id="makeTeacherBtn">${t('newTeacher')}</button></div></div>
     ${set.topics.map(tp => `<article class="topic" id="tp-${tp.id}" dir="${cd}"><h3 class="tp-h"><span>${rich(tp.title)}</span><span class="chip plain">${t('nQuestions', {n: tp.practice.length})}</span></h3><div class="blk prac-blk">${tp.practice.map(p => practiceHtml(p, tp, ctx)).join('')}${topicSummary(tp, ctx)}</div></article>`).join('')}
@@ -3533,7 +3608,7 @@ VIEWS.words = () => {
   ensureDrills(s.id);
   const gen = WGEN && WGEN.sid === s.id && WGEN.level === ws.level ? WGEN : null;
   const todayN = todayWords(s.id).length;
-  const todayMeta = p.final ? t('wFinalToday') : todayN ? t(p.newWords.length === 1 ? 'wTodayMeta1' : 'wTodayMeta', {n: p.newWords.length, r: p.due.filter(w => !p.newWords.includes(w)).length}) : t('wTodayExtra');
+  const todayMeta = p.final ? t('wFinalToday') : todayN ? (r0 => t((p.newWords.length === 1 ? 'wToday' + (r0 ? 'Meta1' : 'New1') : r0 ? 'wTodayMeta' : 'wTodayNew'), {n: p.newWords.length, r: r0}))(p.due.filter(w => !p.newWords.includes(w)).length) : t('wTodayExtra');
   const doneToday = !!ws.done[td];
   const levelBtns = WLEVELS.map(l => `<button type="button" class="lvl-btn ${ws.level === l ? 'on' : ''}" role="radio" aria-checked="${ws.level === l}" data-act="w-level" data-v="${l}" id="wl-${l}"><b>${t('wl_' + l)}</b><span>${t('wl_' + l + '_d')}</span></button>`).join('');
   const dayName = d => d === td ? t('today') : d === addDays(td, 1) ? t('tomorrow') : fmtDate(d, {weekday: 'long', day: 'numeric', month: 'short'});
@@ -3702,9 +3777,9 @@ VIEWS.dict = () => {
       <h1 tabindex="-1">${t('dReady', {n: WD.words.length})}</h1>
       <p class="lead">${WD.mode === 'audio' ? (L === 'ar' ? t('dHowAr') : t('dHow')) : t('dHowReverse')}</p>
       ${hasVoice ? '' : `<p class="msg" role="status">${L === 'ar' ? t('dNoVoiceAr') : t('dNoVoice')}</p>`}
-      <div class="stack" style="gap:8px"><p class="label">${t('dWhich')}</p><div class="row" role="radiogroup">${[WD.scope === 'hard' ? 'hard' : null, todayWords(s.id).length ? 'today' : null, 'all'].filter(Boolean).map(v => `<button type="button" class="btn ${WD.scope === v ? 'pri' : ''}" role="radio" aria-checked="${WD.scope === v}" data-act="dict-scope" data-v="${v}">${v === 'hard' ? t('dMistakes', {n: WD.hardList.length}) : v === 'today' ? t('dToday', {n: todayWords(s.id).length}) : t('dAll', {n: wordsOf(s.id).length})}</button>`).join('')}</div></div>
-      <div class="stack" style="gap:8px"><p class="label">${t('dWhen')}</p><div class="row" role="radiogroup">${['each', 'end'].map(v => `<button type="button" class="btn ${WD.reveal === v ? 'pri' : ''}" role="radio" aria-checked="${WD.reveal === v}" data-act="dict-reveal" data-v="${v}">${t('dReveal_' + v)}</button>`).join('')}</div></div>
-      ${hasVoice ? `<div class="row" role="radiogroup" aria-label="${esc(t('dHowLbl'))}">${['audio', 'reverse'].map(v => `<button type="button" class="btn ${WD.mode === v ? 'pri' : ''}" role="radio" aria-checked="${WD.mode === v}" data-act="dict-mode" data-v="${v}">${t('dMode_' + v)}</button>`).join('')}</div>` : ''}
+      <div class="stack" style="gap:8px"><p class="label">${t('dWhich')}</p><div class="row" role="radiogroup">${[WD.scope === 'hard' ? 'hard' : null, todayWords(s.id).length ? 'today' : null, 'all'].filter(Boolean).map(v => `<button type="button" class="btn seg ${WD.scope === v ? 'on' : ''}" role="radio" aria-checked="${WD.scope === v}" data-act="dict-scope" data-v="${v}">${v === 'hard' ? t('dMistakes', {n: WD.hardList.length}) : v === 'today' ? t('dToday', {n: todayWords(s.id).length}) : t('dAll', {n: wordsOf(s.id).length})}</button>`).join('')}</div></div>
+      <div class="stack" style="gap:8px"><p class="label">${t('dWhen')}</p><div class="row" role="radiogroup">${['each', 'end'].map(v => `<button type="button" class="btn seg ${WD.reveal === v ? 'on' : ''}" role="radio" aria-checked="${WD.reveal === v}" data-act="dict-reveal" data-v="${v}">${t('dReveal_' + v)}</button>`).join('')}</div></div>
+      ${hasVoice ? `<div class="stack" style="gap:8px"><p class="label" id="dHowL">${t('dHowLbl')}</p><div class="row" role="radiogroup" aria-labelledby="dHowL">${['audio', 'reverse'].map(v => `<button type="button" class="btn seg ${WD.mode === v ? 'on' : ''}" role="radio" aria-checked="${WD.mode === v}" data-act="dict-mode" data-v="${v}">${t('dMode_' + v)}</button>`).join('')}</div></div>` : ''}
       <p class="hint">${t('dLevelNote_' + WD.level)}</p>
       <button type="button" class="btn pri big wide" data-act="dict-start" id="dStart" data-autofocus>${t('dStart')}</button></div></div>`;
   }
@@ -3716,7 +3791,7 @@ VIEWS.dict = () => {
       <div class="panel result stack dict" style="gap:16px">
         ${isSentence ? `<p class="label">${t('dSentence')}</p>` : ''}
         ${WD.mode === 'audio' ? `<button type="button" class="play-big" data-act="dict-play" id="dPlay" ${used >= max ? 'disabled' : ''} aria-label="${esc(t('listen'))}">${I.sound}</button>
-          <p class="hint">${max >= 99 ? t('dPlaysFree') : t('dPlaysLeft', {n: Math.max(0, max - used)})}</p>
+          <p class="hint">${max >= 99 ? t('dPlaysFree') : (max - used === 1 ? t('dPlaysOne') : t('dPlaysLeft', {n: Math.max(0, max - used)}))}</p>
           <p class="lead">${isSentence ? t('dWriteSentence') : L === 'ar' ? t('dWriteAr') : t('dWrite')}</p>`
           : `<p class="label">${t('dWriteWordFor')}</p><p class="qtext" dir="auto">${esc(w.meaning)}</p>`}
         ${reveal ? dictCheckRow(WD.pos) : ''}
@@ -3735,7 +3810,7 @@ VIEWS.dict = () => {
   return `<div class="stack">${head}<div class="panel result stack" style="gap:14px"><p class="label">${t('dScoreTitle')}</p><p class="big-num num">${sc}</p>
     <p class="lead">${t('wKnownLine', {k: wKnown(s.id), n: wordsOf(s.id).length})}</p>
     ${wrong.length ? `<div class="stack" style="gap:8px"><p class="label">${t('wToRepeat')}</p><div class="chips">${wrong.map(w => `<span class="chip warn" dir="auto">${esc(w.term)} = ${esc(w.meaning)}</span>`).join('')}</div></div>` : `<p class="msg info">${t('wAllRight')}</p>`}
-    <div class="row" style="justify-content:center">${wrong.length ? `<button type="button" class="btn pri big" data-act="dict-again" data-autofocus>${t('dAgainWrong')}</button><button type="button" class="btn big" data-act="w-hard">${t('wHardPractice')}</button>` : ''}<button type="button" class="btn big" data-act="back">${t('wBack')}</button></div></div></div>`;
+    <div class="row" style="justify-content:center">${wrong.length ? `<button type="button" class="btn pri big" data-act="dict-again" data-autofocus>${t('dAgainWrong')}</button><button type="button" class="btn big" data-act="w-hard">${t('wHardPractice')}</button>` : ''}<button type="button" class="btn big" data-act="back">${t('dFinish')}</button></div></div></div>`;
 };
 function dictCheckRow(i) {
   const w = WD.words[i], m = WD.marks[i], L = WD.lang;
@@ -3806,7 +3881,7 @@ ${subjectText(sid, 30000)}
 let ASK = null;
 const asksOf = sid => (S.asks[sid] = S.asks[sid] || []);
 async function askQuestion(sid, q) {
-  q = clip(q, 600); if (!q || (ASK && ASK.busy)) return;
+  q = clip(q, 600); if (!q || !subj(sid) || (ASK && ASK.busy)) return;
   ASK = {sid, busy: true, err: null, pending: q, ctl: new AbortController()};
   const ctl = ASK.ctl;
   render(false); scrollAskEnd();
@@ -4025,8 +4100,12 @@ function deleteMaterial(mid) {
     S.materials = S.materials.filter(x => x.id !== mid);
     S.cards = S.cards.filter(x => x.materialId !== mid);
     delete jobs[mid];
-    if (!matsOf(sid).length) { delete S.summaries[sid]; delete S.quizzes[sid]; }
-    else if (S.summaries[sid]) S.summaries[sid].stale = true;
+    if (!matsOf(sid).length) { delete S.summaries[sid]; delete S.quizzes[sid]; delete S.topicSets[sid]; delete S.teacherSets[sid]; }
+    else {
+      if (S.summaries[sid]) S.summaries[sid].stale = true;
+      if (S.topicSets[sid] && (S.topicSets[sid].mids || []).includes(mid)) S.topicSets[sid].stale = true;
+      if (m.teacher && S.teacherSets[sid]) { if (matsOf(sid).some(x => x.teacher)) S.teacherSets[sid].stale = true; else delete S.teacherSets[sid]; }
+    }
     save(); render(false);
     const b = $('#addMatBtn'); if (b) b.focus();
   }});
@@ -4333,8 +4412,8 @@ const ACT = {
   'repeat-missed': () => { startRound(R.sid, [...R.missed]); render(true); },
   quiz: el => { const sid = el.dataset.id, qz = S.quizzes[sid], same = qz && qz.questions && qz.questions.length && (qz.level || 'medium') === levelOf(sid, 'quiz'); startQuiz(sid, same ? qz.questions.slice() : [], 'full'); go({name: 'quiz', id: sid}); if (!same) newQuiz(); },
   practice: el => go({name: 'practice', id: el.dataset.id}),
-  exam: el => { EX = null; go({name: 'exam', id: el.dataset.id}); },
-  topics: el => { TP = null; go({name: 'topics', id: el.dataset.id}); },
+  exam: el => { if (!(EX && EX.stage === 'gen' && EX.sid === el.dataset.id)) EX = null; go({name: 'exam', id: el.dataset.id}); },
+  topics: el => { if (!(TP && TP.stage === 'gen' && TP.sid === el.dataset.id)) TP = null; go({name: 'topics', id: el.dataset.id}); },
   'make-topics': () => generateTopics(),
   'stop-topics': () => { if (TP && TP.ctl) TP.ctl.abort(); TP.stage = 'idle'; render(true); },
   'exam-len': el => { EX.minutes = Number(el.dataset.v); render(false); },
@@ -4354,7 +4433,7 @@ const ACT = {
   copy: () => copySummary(),
   'save-file': () => saveSummaryFile(),
   words: el => go({name: 'words', id: el.dataset.id}),
-  teacher: el => { TG = null; go({name: 'teacher', id: el.dataset.id || route.id}); },
+  teacher: el => { const id = el.dataset.id || route.id; if (!(TG && TG.stage === 'gen' && TG.sid === id)) TG = null; go({name: 'teacher', id}); },
   'make-teacher': () => generateTeacher(),
   'stop-teacher': () => { if (TG && TG.ctl) TG.ctl.abort(); TG.stage = 'idle'; render(true); },
   'add-teacher': el => { const sid = el.dataset.id || (route.name === 'subject' ? route.id : null); draft = newDraft(sid); draft.mode = 'teacher'; fileMsg = null; fileBusy = false; go({name: 'add', from: sid || null}); },
@@ -4418,7 +4497,11 @@ const ACT = {
   'plan-done': el => { const sid = route.id; S.planDone[sid] = S.planDone[sid] || {}; if (S.planDone[sid][el.dataset.d]) delete S.planDone[sid][el.dataset.d]; else S.planDone[sid][el.dataset.d] = true; save(); render(false); },
   'mock-start': () => startMock(),
   'mock-mc': el => { const run = S.examRuns[route.id]; if (!run || run.finished) return; run.mc[el.dataset.k] = Number(el.dataset.i); save(); render(false); },
-  'mock-finish': () => ask({title: t('mockFinishQ'), ok: t('mockFinish'), onOk: () => finishMock()})
+  'mock-finish': () => {
+    const rec = S.exams[route.id], run = S.examRuns[route.id]; if (!rec || !run) return;
+    const its = examItems(rec), k = its.filter(x => run.mc[x.key] != null || String(run.ans[x.key] || '').trim()).length;
+    ask({title: t('mockFinishQ'), body: k < its.length ? t('mockBlank', {k, n: its.length}) : '', ok: t('mockFinish'), onOk: () => finishMock()});
+  }
 };
 document.addEventListener('click', e => {
   const el = e.target.closest('[data-act]');

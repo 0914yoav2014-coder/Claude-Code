@@ -1,13 +1,17 @@
 # Your AI Study Studio (סטודיו הלמידה שלך)
 
-A study app for students in grades 7–9. The student pastes notes, a chapter, a word list or a sheet from the teacher, or uploads a PDF. The app turns it into flashcards, a summary of the material and practice: a 10-question quiz, practice by topic and a real test.
+A study app for students in grades 7–9. The student pastes notes, a chapter, a word list or a sheet from the teacher, uploads a PDF, or takes photos of the pages. The app turns it into flashcards, a summary of the material and practice: a 10-question quiz, practice by topic and a real test.
 
 `index.html` is the entire app: one self-contained page with no backend and no accounts, published as a claude.ai artifact.
 
-- **Language**: the interface is Hebrew by default and addresses the student in the masculine. English is still available. Explanations are written in the language of the material.
+- **Language**: the interface is Hebrew by default and uses neutral wording ("אפשר להדביק…") where it can. English is still available. Explanations are written in the language of the material.
 - **AI**: the page asks Claude through the artifact `sample` capability, on the student's own Claude account. If the AI is off or the student declines permission, the material stays saved and a Retry button appears.
 - **Storage**: one `localStorage` key, `studystudio.v1`.
 - **PDF**: pdf.js 3.11.174 loads from cdnjs only when a PDF is uploaded.
+- **Photos and scanned PDFs**: when the viewer lets the page send images to Claude (`sample.limits().images`), photos (JPG, PNG, WebP) and the pages of a scanned PDF (first 10 pages, drawn to images by pdf.js) are copied to text by Claude in batches, without solving anything. When images are not available, the old messages stay ("paste the text"). A read that is still running is dropped if the student leaves the form, and pages already read are kept when a later batch fails.
+- **Design**: the "luxury" design: ivory, navy and gold, with Frank Ruhl Libre for headings, in light and dark. The test paper always stays light.
+- **Test date**: a small Hebrew calendar opens from the date field, with quick picks (in a week, in two weeks).
+- **Levels**: מתחיל / מתקדם / מאתגר, chosen separately in every tool (quiz, practice by topic, teacher-style questions, test, words) and saved per subject. Questions inside a set are marked קל / בינוני / קשה.
 
 ## How a study set is built
 
@@ -33,20 +37,28 @@ A study app for students in grades 7–9. The student pastes notes, a chapter, a
 
    **Practice inside each topic**: three exercises (basic, medium, test level). Types: a number, a short answer, multiple choice whose wrong options are real mistakes, ordering proof lines, matching a claim to its reason, and open questions with a model answer and self-check criteria. A wrong answer names the likely mistake. Help comes in order: a hint (yellow), then step by step, then the full solution. Wrong exercises go to a "לחזור על זה" (go over again) list, and the pre-test checklist updates itself from the results.
 
-   **Study plan**: the topics are spread over the days left until the test (one week when there is no date). The last day is for the mistakes list and a mock test. Days can be marked done.
+   **Study plan**: the topics are spread over the days left until the test (one week when there is no date). The last day is for the mistakes list and a mock test. Only the first day shows; the whole plan opens on request. Days can be marked done ("סיימתי ✓").
 
    The page ends with a review sheet (rules and formulas only, each once), how to check an answer and the checklist. When material is added after the practice was written, a note offers to write it again.
 
    Diagrams are drawn by code from small JSON descriptions: number line, axes with lines, triangles with equal marks and medians or heights, parallel lines with a transversal.
 7. **Real test** (strong model, on request: 45, 60 or 90 minutes). It is built like an Israeli school test: header, instructions, parts A and B, questions with sub-questions and points that add up to 100, and figures. The one-hour test has 8–10 mixed questions, including a proof and a word problem when the material allows.
-   - **Solve it here**: a timer, answer fields and multiple choice. After handing in, the solutions and marking guide appear; multiple choice is marked automatically and the student gives themselves points for the rest. The result shows the score and a table by topic, and partly-wrong items join the review list.
+   - **Solve it here**: a timer, answer fields and multiple choice. After handing in, the solutions and marking guide appear; multiple choice is marked automatically and the student gives themselves points for the rest. Handing in with blank parts asks first, and until the self-marking is done the result says how many points still wait for it instead of showing a low score. The result shows the score and a table by topic, and partly-wrong items join the review list.
    - **Word file**: the app writes it itself (a ZIP of WordprocessingML, RTL, figures as PNG), with the full solution and marking guide on the last pages.
+
+## Practice from the teacher
+
+"Add a sheet from your teacher" takes the teacher's practice sheets and past tests (pasted, PDF or photos; 40 characters are enough).
+- **Planner**: it lists the teacher's questions (question, topic, kind, points) and the knowledge needed to answer them. Units the questions test are marked as asked.
+- **Summary**: it is written to cover every fact, rule and method the questions need, even when no study material was added, and does not solve the questions. Sections the questions test carry a gold "נשאל בתרגול של המורה" tag.
+- **Teacher-style questions**: a card on the practice screen (first when there is teacher material, and the main button after building a teacher sheet) writes one or two new questions per teacher question, with the same kind, topic and wording but other numbers and context, in the same practice format as practice by topic. Batches of 10, then a checker pass. A note offers new questions after more teacher material is added.
+- **Test**: the mock test is written in the teacher's structure, kinds of questions, points and difficulty, without copying questions, and says so on screen.
 
 ## Words and dictation
 
 When the material holds a word list (English vocabulary or Arabic words), the subject gets a **Words** tile ("מילים", or "מילים והכתבה" for Arabic). Subjects without a word list do not show it. The words always come from the student's list: the AI writes sentences and exercises around them but never adds words to learn.
 
-- **Hub**: one progress sentence ("אתה יודע 3 מתוך 20 מילים"), today's practice, the level, dictation, the word quiz (English), word cards, practice on all the words, a "hard words" box and the plan until the test. A word counts as known when its last answer was right.
+- **Hub**: one progress sentence ("ידועות לך 3 מתוך 20 מילים"), today's practice, the level, dictation, the word quiz (English), word cards, practice on all the words, a "hard words" box and the plan until the test. A word counts as known when its last answer was right.
 - **Levels**: basic (choosing from options, short simple sentences, matching), medium (the level of most tests: typing the meaning or the word, gaps, "is the word used correctly here?") and hard (a little harder than most tests: words that look or mean alike, word forms, translating a sentence). Arabic never asks the student to type Arabic; it uses spelling choices and gap choices instead. The level is saved per subject.
 - **AI sentences** (fast model, per level): a writer pass and then a checker pass that fixes or drops wrong items. The basic exercises work while the sentences are being written, and if writing fails a note with Retry appears and the local exercises still work.
 - **Daily plan and spaced repetition** (plain code, not AI): new words are spread over the days left until the test (one week when there is no date), and the last day is a full review with a dictation or quiz. A word answered right on a new day comes back later (tomorrow, in 3 days, then the day before the test); a wrong answer brings it back tomorrow. None of this is shown as boxes.
