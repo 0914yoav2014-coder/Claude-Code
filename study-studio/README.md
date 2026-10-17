@@ -8,28 +8,30 @@ A study app for students in grades 7–9. The student pastes notes, a chapter, a
 - **AI**: the page asks Claude through the artifact `sample` capability, on the student's own Claude account. If the AI is off or the student declines permission, the material stays saved and a Retry button appears.
 - **Storage**: one `localStorage` key, `studystudio.v1`.
 - **PDF**: pdf.js 3.11.174 loads from cdnjs only when a PDF is uploaded.
-- **Photos and scanned PDFs**: when the viewer lets the page send images to Claude (`sample.limits().images`), photos (JPG, PNG, WebP) and the pages of a scanned PDF (first 10 pages, drawn to images by pdf.js) are copied to text by Claude in batches, without solving anything. When images are not available, the old messages stay ("paste the text"). A read that is still running is dropped if the student leaves the form, and pages already read are kept when a later batch fails.
+- **PDF text**: pieces of a line that are apart get a space, Hebrew stored backwards (lines in visual order) is turned around, and text that still looks broken gets a note asking the student to check it or upload a photo.
+- **Photos and scanned PDFs**: when the viewer lets the page send images to Claude (`sample.limits().images`), photos (JPG, PNG, WebP) and the pages of a scanned PDF (first 6 pages, drawn at 1100 px as JPEG) are copied to text by Claude in batches, without solving anything. When images are not available, the old messages stay ("paste the text"). A read that is still running is dropped if the student leaves the form, and pages already read are kept when a later batch fails.
 - **Design**: the "luxury" design: ivory, navy and gold, with Frank Ruhl Libre for headings, in light and dark. The test paper always stays light.
 - **Test date**: a small Hebrew calendar opens from the date field, with quick picks (in a week, in two weeks).
 - **Levels**: מתחיל / מתקדם / מאתגר, chosen separately in every tool (quiz, practice by topic, teacher-style questions, test, words) and saved per subject. Questions inside a set are marked קל / בינוני / קשה.
 
 ## How a study set is built
 
-1. **Planner** (strong model). Claude reads the whole material and decides what the student must learn:
-   - It sorts the topics into parts (for example algebra, linear function, geometry) and suggests a study order.
-   - It stars the topics that are stressed or usually worth many points.
-   - When the material says the test includes prior knowledge ("ידע קודם"), it adds those topics.
-   - It skips test logistics. When the material only names a topic, it teaches that topic and marks it as extra.
-2. **Word cards** are made by code from the word list, in both directions.
-3. **Card writer and checker** (fast model). The cards make the student use the content, and the checker drops cards about the document itself.
-4. **Short quiz** (fast model): 10 mixed questions, checked when each is answered.
-5. **Summary sheet** (strong model, one call per part). It holds only the material, summarised, with no exercises. Each part is a chapter:
+Building is kept cheap, because every call to Claude counts against the student's own usage. When material is added, only the summary is written; everything else is written the first time the student opens it.
+
+1. **Summary sheet** (strong model, built right away). It is written straight from the material in **one call** for a normal page. Material longer than about 14,000 characters is cut into pieces, and each call gets only its own piece. A teacher sheet is marked so the summary teaches what its questions test (gold "נשאל בתרגול של המורה" tags) without answering them. Pieces already written are saved, so when one piece fails the rest of the summary still shows and "להשלים את הסיכום" writes only what is missing. Big calls are never repeated automatically. The summary holds only the material, summarised, with no exercises. Each part is a chapter:
    - a title and a short intro
    - numbered sections with bullets and sub-bullets (bold labels where they help), comparison tables and quotes from the source
    - rules and formulas in a blue box for math and grammar; math is written as `$LaTeX$` and shown with KaTeX (0.16.9 from cdnjs, MathML output) in a left-to-right block, so equations read correctly inside Hebrew text
    - a short conclusion ("לסיכום")
 
-   The length follows the material: a short sheet gives a short summary. The page numbers the sections itself, so numbers the model writes ("1. ", "א. ") are removed from headings, list items and rules. A word list adds a word table at the end. Copy gives clean text, and Save as file gives the same summary as a page.
+   The length follows the material. The page numbers the sections itself, so numbers the model writes ("1. ", "א. ") are removed. A word list adds a word table at the end (made by code, no call). Copy gives clean text, and "הורדה להדפסה" gives the same summary as a page.
+2. **Planner** (strong model, on request). The first time a tool needs it (flashcards, practice by topic, teacher-style questions, the test), Claude reads each material once and decides what the student must learn: topics in parts with a study order, starred topics, prior knowledge, and the teacher's questions. A word list is planned during the build, because that is where its words come from.
+3. **Word cards** are made by code from the word list, in both directions.
+4. **Flashcards** (fast model, on request): "להכין כרטיסיות" on the cards screen. Cards make the student use the content.
+5. **Short quiz** (fast model, on request): 10 mixed questions, checked when each is answered. It needs no plan.
+
+Cards, quiz, practice and tests have no separate checker passes; each writer is asked to check its own answer (the word sentences, below, keep theirs).
+
 6. **Practice by topic** (strong model, on request). The practice screen offers three choices: the short quiz, practice by topic and a real test. Practice by topic is written only when the student asks for it, and can be stopped while it is being written. It opens with a sticky bar of links to each topic, a study plan and a "must know" box. Every topic follows the same template:
    - what it is, and why it is starred (⭐ with a reason) when it is
    - rules and formulas in a blue box, and the common mistake in a red box (both always visible)
@@ -51,7 +53,7 @@ A study app for students in grades 7–9. The student pastes notes, a chapter, a
 "Add a sheet from your teacher" takes the teacher's practice sheets and past tests (pasted, PDF or photos; 40 characters are enough).
 - **Planner**: it lists the teacher's questions (question, topic, kind, points) and the knowledge needed to answer them. Units the questions test are marked as asked.
 - **Summary**: it is written to cover every fact, rule and method the questions need, even when no study material was added, and does not solve the questions. Sections the questions test carry a gold "נשאל בתרגול של המורה" tag.
-- **Teacher-style questions**: a card on the practice screen (first when there is teacher material, and the main button after building a teacher sheet) writes one or two new questions per teacher question, with the same kind, topic and wording but other numbers and context, in the same practice format as practice by topic. Batches of 10, then a checker pass. A note offers new questions after more teacher material is added.
+- **Teacher-style questions**: a card on the practice screen (first when there is teacher material, and a button after building a teacher sheet) writes one or two new questions per teacher question, with the same kind, topic and wording but other numbers and context, in the same practice format as practice by topic. Batches of 10, one call each. A note offers new questions after more teacher material is added.
 - **Test**: the mock test is written in the teacher's structure, kinds of questions, points and difficulty, without copying questions, and says so on screen.
 
 ## Words and dictation
@@ -72,7 +74,7 @@ When the material holds a word list (English vocabulary or Arabic words), the su
 | --- | --- | --- |
 | English first | Hebrew first | Asked by the product owner |
 | AI uses only the student's material | It also teaches topics the material only names, marked as extra | Asked by the product owner |
-| One AI call per job | Planner, writer and checker passes | Quality over speed, as asked. A build takes about a minute or two |
+| One AI call per job | Building writes only the summary (one call for a normal page); every other tool is written when opened | The student pays for each call; one page used to cost 8 calls |
 | Quiz is multiple choice only | A choice between a short mixed quiz, practice by topic and a real test as a Word file | Asked by the product owner |
 | Summary in Markdown with Copy and Print | Structured summary in chapters with Copy and Save as file; the practice and study plan are on the practice screen | The viewer blocks printing; the summary design follows the owner's reference page |
 | Mastery % and Leitner boxes on screen | One progress sentence | The percentage and the boxes were confusing |
