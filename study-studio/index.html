@@ -1733,7 +1733,7 @@ function cardsMissing(m) {
 const planJobs = {};
 async function ensurePlan(sid, signal) {
   for (const m of matsOf(sid).filter(x => !x.plan)) {
-    if (!planJobs[m.id]) planJobs[m.id] = askJson(planPrompt(m.text, m.teacher), Object.assign({modelTier: 'default', big: true}, signal ? {signal} : {})).then(d => { if (matById(m.id)) { m.plan = cleanPlan(d); if (!m.plan.units.length) m.cardChunks = range(chunkText(m.text).length); save(); } }).finally(() => { delete planJobs[m.id]; });
+    if (!planJobs[m.id]) planJobs[m.id] = askJson(planPrompt(m.text, m.teacher), Object.assign({modelTier: 'default', big: true}, signal ? {signal} : {})).then(d => { if (matById(m.id)) { m.plan = cleanPlan(d); if (!m.plan.units.length) m.cardChunks = range(chunkText(m.text).length); if (!m.vocabDone) { S.cards.push(...vocabCards(m, m.plan.vocab)); m.vocabDone = true; } save(); } }).finally(() => { delete planJobs[m.id]; });
     await planJobs[m.id];
   }
 }
