@@ -2302,7 +2302,7 @@ function startBuild() {
   const text = clipMaterial(d.text.trim());
   const m = {id: uid(), subjectId: s.id, title: clip(d.title, 120) || clip(text.split('\n')[0], 80), type: d.type, words: d.mode === 'words', teacher: d.mode === 'teacher', text, addedAt: Date.now(), plan: null, vocabDone: false, cardChunks: [], quizDone: false};
   S.materials.push(m);
-  save();
+  flush(); // the new subject and material are written at once, before any call to Claude
   draft = null; fileMsg = null;
   route = {name: 'add', buildId: m.id, from: route.from};
   render(true);
