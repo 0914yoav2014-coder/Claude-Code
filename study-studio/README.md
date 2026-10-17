@@ -1,0 +1,86 @@
+# Your AI Study Studio (סטודיו הלמידה שלך)
+
+A study app for students in grades 7–9. The student pastes notes, a chapter, a word list or a sheet from the teacher, uploads a PDF, or takes photos of the pages. The app turns it into flashcards, a summary of the material and practice: a 10-question quiz, practice by topic and a real test.
+
+`index.html` is the entire app: one self-contained page with no backend and no accounts, published as a claude.ai artifact.
+
+- **Language**: the interface is Hebrew by default and uses neutral wording ("אפשר להדביק…") where it can. English is still available. Explanations are written in the language of the material.
+- **AI**: the page asks Claude through the artifact `sample` capability, on the student's own Claude account. If the AI is off or the student declines permission, the material stays saved and a Retry button appears.
+- **Storage**: one `localStorage` key, `studystudio.v1`.
+- **PDF**: pdf.js 3.11.174 loads from cdnjs only when a PDF is uploaded.
+- **PDF text**: pieces of a line that are apart get a space, Hebrew stored backwards (lines in visual order) is turned around, and text that still looks broken gets a note asking the student to check it or upload a photo.
+- **Photos and scanned PDFs**: when the viewer lets the page send images to Claude (`sample.limits().images`), photos (JPG, PNG, WebP) and the pages of a scanned PDF (first 6 pages, drawn at 1100 px as JPEG) are copied to text by Claude in batches, without solving anything. When images are not available, the old messages stay ("paste the text"). A read that is still running is dropped if the student leaves the form, and pages already read are kept when a later batch fails.
+- **Design**: the "luxury" design: ivory, navy and gold, with Frank Ruhl Libre for headings, in light and dark. The test paper always stays light.
+- **Test date**: a small Hebrew calendar opens from the date field, with quick picks (in a week, in two weeks).
+- **Levels**: מתחיל / מתקדם / מאתגר, chosen separately in every tool (quiz, practice by topic, teacher-style questions, test, words) and saved per subject. Questions inside a set are marked קל / בינוני / קשה.
+
+## How a study set is built
+
+Building is kept cheap, because every call to Claude counts against the student's own usage. When material is added, only the summary is written; everything else is written the first time the student opens it.
+
+1. **Summary sheet** (strong model, built right away). It is written straight from the material in **one call** for a normal page. Material longer than about 14,000 characters is cut into pieces, and each call gets only its own piece. A teacher sheet is marked so the summary teaches what its questions test (gold "נשאל בתרגול של המורה" tags) without answering them. Pieces already written are saved, so when one piece fails the rest of the summary still shows and "להשלים את הסיכום" writes only what is missing. Big calls are never repeated automatically. The summary holds only the material, summarised, with no exercises. Each part is a chapter:
+   - a title and a short intro
+   - numbered sections with bullets and sub-bullets (bold labels where they help), comparison tables and quotes from the source
+   - rules and formulas in a blue box for math and grammar; math is written as `$LaTeX$` and shown with KaTeX (0.16.9 from cdnjs, MathML output) in a left-to-right block, so equations read correctly inside Hebrew text
+   - a short conclusion ("לסיכום")
+
+   The length follows the material. The page numbers the sections itself, so numbers the model writes ("1. ", "א. ") are removed. A word list adds a word table at the end (made by code, no call). Copy gives clean text, and "הורדה להדפסה" gives the same summary as a page.
+2. **Planner** (strong model, on request). The first time a tool needs it (flashcards, practice by topic, teacher-style questions, the test), Claude reads each material once and decides what the student must learn: topics in parts with a study order, starred topics, prior knowledge, and the teacher's questions. A word list is planned during the build, because that is where its words come from.
+3. **Word cards** are made by code from the word list, in both directions.
+4. **Flashcards** (fast model, on request): "להכין כרטיסיות" on the cards screen. Cards make the student use the content.
+5. **Short quiz** (fast model, on request): 10 mixed questions, checked when each is answered. It needs no plan.
+
+Cards, quiz, practice and tests have no separate checker passes; each writer is asked to check its own answer (the word sentences, below, keep theirs).
+
+6. **Practice by topic** (strong model, on request). The practice screen offers three choices: the short quiz, practice by topic and a real test. Practice by topic is written only when the student asks for it, and can be stopped while it is being written. It opens with a sticky bar of links to each topic, a study plan and a "must know" box. Every topic follows the same template:
+   - what it is, and why it is starred (⭐ with a reason) when it is
+   - rules and formulas in a blue box, and the common mistake in a red box (both always visible)
+   - under "full explanation": terms, numbered steps, an optional table or diagram with a caption, a worked example in green (a proof ends with "מסקנה"), and practice
+
+   **Practice inside each topic**: three exercises (basic, medium, test level). Types: a number, a short answer, multiple choice whose wrong options are real mistakes, ordering proof lines, matching a claim to its reason, and open questions with a model answer and self-check criteria. A wrong answer names the likely mistake. Help comes in order: a hint (yellow), then step by step, then the full solution. Wrong exercises go to a "לחזור על זה" (go over again) list, and the pre-test checklist updates itself from the results.
+
+   **Study plan**: the topics are spread over the days left until the test (one week when there is no date). The last day is for the mistakes list and a mock test. Only the first day shows; the whole plan opens on request. Days can be marked done ("סיימתי ✓").
+
+   The page ends with a review sheet (rules and formulas only, each once), how to check an answer and the checklist. When material is added after the practice was written, a note offers to write it again.
+
+   Diagrams are drawn by code from small JSON descriptions: number line, axes with lines, triangles with equal marks and medians or heights, parallel lines with a transversal.
+7. **Real test** (strong model, on request: 45, 60 or 90 minutes). It is built like an Israeli school test: header, instructions, parts A and B, questions with sub-questions and points that add up to 100, and figures. The one-hour test has 8–10 mixed questions, including a proof and a word problem when the material allows.
+   - **Solve it here**: a timer, answer fields and multiple choice. After handing in, the solutions and marking guide appear; multiple choice is marked automatically and the student gives themselves points for the rest. Handing in with blank parts asks first, and until the self-marking is done the result says how many points still wait for it instead of showing a low score. The result shows the score and a table by topic, and partly-wrong items join the review list.
+   - **Word file**: the app writes it itself (a ZIP of WordprocessingML, RTL, figures as PNG), with the full solution and marking guide on the last pages.
+
+## Practice from the teacher
+
+"Add a sheet from your teacher" takes the teacher's practice sheets and past tests (pasted, PDF or photos; 40 characters are enough).
+- **Planner**: it lists the teacher's questions (question, topic, kind, points) and the knowledge needed to answer them. Units the questions test are marked as asked.
+- **Summary**: it is written to cover every fact, rule and method the questions need, even when no study material was added, and does not solve the questions. Sections the questions test carry a gold "נשאל בתרגול של המורה" tag.
+- **Teacher-style questions**: a card on the practice screen (first when there is teacher material, and a button after building a teacher sheet) writes one or two new questions per teacher question, with the same kind, topic and wording but other numbers and context, in the same practice format as practice by topic. Batches of 10, one call each. A note offers new questions after more teacher material is added.
+- **Test**: the mock test is written in the teacher's structure, kinds of questions, points and difficulty, without copying questions, and says so on screen.
+
+## Words and dictation
+
+When the material holds a word list (English vocabulary or Arabic words), the subject gets a **Words** tile ("מילים", or "מילים והכתבה" for Arabic). Subjects without a word list do not show it. The words always come from the student's list: the AI writes sentences and exercises around them but never adds words to learn.
+
+- **Hub**: one progress sentence ("ידועות לך 3 מתוך 20 מילים"), today's practice, the level, dictation, the word quiz (English), word cards, practice on all the words, a "hard words" box and the plan until the test. A word counts as known when its last answer was right.
+- **Levels**: basic (choosing from options, short simple sentences, matching), medium (the level of most tests: typing the meaning or the word, gaps, "is the word used correctly here?") and hard (a little harder than most tests: words that look or mean alike, word forms, translating a sentence). Arabic never asks the student to type Arabic; it uses spelling choices and gap choices instead. The level is saved per subject.
+- **AI sentences** (fast model, per level): a writer pass and then a checker pass that fixes or drops wrong items. The basic exercises work while the sentences are being written, and if writing fails a note with Retry appears and the local exercises still work.
+- **Daily plan and spaced repetition** (plain code, not AI): new words are spread over the days left until the test (one week when there is no date), and the last day is a full review with a dictation or quiz. A word answered right on a new day comes back later (tomorrow, in 3 days, then the day before the test); a wrong answer brings it back tomorrow. None of this is shown as boxes.
+- **A round**: each word comes back in up to three kinds of exercise, so even two words make a round of about ten items. A wrong answer comes back once at the end. Typed answers forgive case, "a/an/the/to" and a leading "ה"; a spelling slip within a small distance is shown as "כמעט!" with the different letters marked, and still counts as a mistake.
+- **Dictation**: the browser's own voice says each word (nothing is sent anywhere) while the student writes the word and its meaning on paper. Basic is slow with unlimited replays, medium allows two plays, hard plays once and ends with a short sentence. Answers can be shown after each word or at the end, like in class. The student then marks each word (right, spelling mistake, meaning mistake); the score is shown only when all are marked, and a word with one mistake earns half a point. "Dictation of the mistakes" repeats only the words that were not right. When the device has no voice for the language, the dictation is reversed: the meaning appears and the student writes the word.
+- **Word quiz** (English): one item per word, it moves on by itself, and ends with a score and a table of every question, the answer given and the right answer. **Word file**: the same quiz as a test on paper (translate, write the word, fill the gap) with the answers on the last page, written by the same Word writer as the real test.
+
+## Where it differs from the original spec
+
+| Spec | Now | Why |
+| --- | --- | --- |
+| English first | Hebrew first | Asked by the product owner |
+| AI uses only the student's material | It also teaches topics the material only names, marked as extra | Asked by the product owner |
+| One AI call per job | Building writes only the summary (one call for a normal page); every other tool is written when opened | The student pays for each call; one page used to cost 8 calls |
+| Quiz is multiple choice only | A choice between a short mixed quiz, practice by topic and a real test as a Word file | Asked by the product owner |
+| Summary in Markdown with Copy and Print | Structured summary in chapters with Copy and Save as file; the practice and study plan are on the practice screen | The viewer blocks printing; the summary design follows the owner's reference page |
+| Mastery % and Leitner boxes on screen | One progress sentence | The percentage and the boxes were confusing |
+
+Old data still works: saved English settings switch to Hebrew once, and an old summary shows with a button to rewrite it in the new format. A summary from the previous versions (with practice inside it) keeps its practice: it opens under practice by topic without a new AI call, and the summary screen offers the rewrite button.
+
+## Updating the published artifact
+
+The file has no `<!doctype>`, `<html>`, `<head>` or `<body>` tags, because the artifact publisher adds them. Republish it with the `sample` and `downloads` capabilities.
